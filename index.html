@@ -62,8 +62,8 @@ body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'IBM Pl
 
 /* ── CUF TABLE ── */
 #table-wrap{overflow-x:auto}
-.col-hdr{display:grid;grid-template-columns:26px 148px 62px 62px 62px 62px 62px 180px 80px 80px 72px 66px 54px 58px 52px 52px 52px;gap:0 6px;padding:7px 24px;border-bottom:1px solid #0a0f18;font-size:9px;color:var(--text5);text-transform:uppercase;letter-spacing:.1em;background:#080c16;position:sticky;top:0;z-index:10}
-.trow{display:grid;grid-template-columns:26px 148px 62px 62px 62px 62px 62px 180px 80px 80px 72px 66px 54px 58px 52px 52px 52px;gap:0 6px;padding:7px 24px;border-bottom:1px solid #090d16;align-items:center;cursor:pointer;transition:background .1s}
+.col-hdr{display:grid;grid-template-columns:26px 148px 62px 62px 62px 62px 62px 180px 80px 80px 72px 130px 54px 62px 58px 52px 52px 52px;gap:0 6px;padding:7px 24px;border-bottom:1px solid #0a0f18;font-size:9px;color:var(--text5);text-transform:uppercase;letter-spacing:.1em;background:#080c16;position:sticky;top:0;z-index:10}
+.trow{display:grid;grid-template-columns:26px 148px 62px 62px 62px 62px 62px 180px 80px 80px 72px 130px 54px 62px 58px 52px 52px 52px;gap:0 6px;padding:7px 24px;border-bottom:1px solid #090d16;align-items:center;cursor:pointer;transition:background .1s}
 .trow:hover{background:#0c1220}
 .site-name{display:flex;align-items:center;gap:5px;overflow:hidden}
 .site-name span{font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -100,6 +100,21 @@ body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'IBM Pl
 .remarks-box{background:#1a0f00;border:1px solid #3d2600;border-left:2px solid var(--amber);border-radius:6px;padding:11px 14px}
 .remarks-line{font-size:11px;color:var(--amber);line-height:1.9}
 .section-label{font-size:9px;color:var(--text4);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px}
+
+
+/* ── CYCLE BADGES ── */
+.cyc-wrap{display:flex;flex-direction:column;gap:2px;align-items:center}
+.cyc-row{display:flex;gap:3px}
+.cyc{display:inline-flex;align-items:center;gap:2px;font-size:8px;padding:1px 5px;border-radius:3px;border:1px solid;white-space:nowrap;font-family:'IBM Plex Mono',monospace}
+.cyc-done{color:#22c55e;border-color:#22c55e;background:#051a0a}
+.cyc-partial{color:#fbbf24;border-color:#fbbf24;background:#1a1005}
+.cyc-pending{color:#ef4444;border-color:#ef4444;background:#1a0505}
+.cyc-vendor{color:#f97316;border-color:#f97316;background:#1a0800}
+.cyc-water{color:#38bdf8;border-color:#38bdf8;background:#051018}
+.cyc-others{color:#64748b;border-color:#64748b;background:#0d1520}
+.cyc-blank{color:#1a2a3a;border-color:#1a2a3a;background:transparent}
+.cyc-alert{animation:cycpulse 1.5s infinite}
+@keyframes cycpulse{0%,100%{opacity:1}50%{opacity:.4}}
 
 /* ── FOOTER ── */
 #footer{padding:12px 24px;border-top:1px solid #0a0f18;font-size:10px;color:var(--text6);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
@@ -276,8 +291,9 @@ body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'IBM Pl
         <div class="tr">Radiation</div>
         <div style="padding-left:6px">Waterfall ← target line</div>
         <div class="tc">Grid Loss</div><div class="tc">Plant Loss</div>
-        <div class="tc">Unaccntd</div><div class="tc">Cleaning</div>
+        <div class="tc">Unaccntd</div><div class="tc">Cleaning Cycles</div>
         <div class="tr">Gen MWh</div>
+      <div class="tr" style="color:#a855f7">Inv Loss</div>
       <div class="tr" style="color:#38bdf8">Last Day</div>
       <div class="tr" style="color:#64748b">W1</div>
       <div class="tr" style="color:#64748b">W2</div>
@@ -368,6 +384,7 @@ const CONFIG = {
     plantBreakdown:"Plant Breakdown Minute",
     dcCuf:         "DC CUF",
     acCuf:         "AC CUF",
+    cleaningSched: "Cleaning Schedule",
   },
   CLEANING: {
     "Dausar":           { days:[1,2],               tds:"712" },
@@ -496,18 +513,99 @@ function buildCapMap(rows,col){
 //  CUF DATA LOADER
 // ═══════════════════════════════════════════════════════
 let SITES=[], SUMMARY={}, currentFilter='all', currentSort='cuf';
+let CLEANING_SCHED = {}; // keyed by normalized site name
+
+function parseCleanDate(str) {
+  if (!str) return null;
+  const s = String(str).trim();
+  // formats: "3-March", "10-March", "3/3/2026", day number "3"
+  const monthMap = {january:1,february:2,march:3,april:4,may:5,june:6,july:7,august:8,september:9,october:10,november:11,december:12};
+  const m1 = s.match(/^(\d{1,2})[\-\/\s](\w+)/i);
+  if (m1) {
+    const day = parseInt(m1[1]);
+    const mon = monthMap[m1[2].toLowerCase()];
+    if (mon) return new Date(2026, mon-1, day);
+  }
+  const m2 = s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})/);
+  if (m2) return new Date(parseInt(m2[3]), parseInt(m2[2])-1, parseInt(m2[1]));
+  const dayOnly = parseInt(s);
+  if (!isNaN(dayOnly)) return new Date(2026, 2, dayOnly); // assume March 2026
+  return null;
+}
+
+function cycleStatusClass(status) {
+  if (!status) return 'cyc-blank';
+  const s = status.toLowerCase().trim();
+  if (s.includes('done') && !s.includes('partial')) return 'cyc-done';
+  if (s.includes('partial')) return 'cyc-partial';
+  if (s.includes('vendor')) return 'cyc-vendor';
+  if (s.includes('water') || s.includes('motor')) return 'cyc-water';
+  if (s.includes('pending')) return 'cyc-pending';
+  if (s.includes('others') || s.includes('other')) return 'cyc-others';
+  return 'cyc-blank';
+}
+
+function cycleStatusLabel(status) {
+  if (!status) return '—';
+  const s = status.toLowerCase().trim();
+  if (s.includes('done') && !s.includes('partial')) return '✓';
+  if (s.includes('partial')) return '~';
+  if (s.includes('vendor')) return 'V';
+  if (s.includes('water') || s.includes('motor')) return 'W';
+  if (s.includes('pending')) return '!';
+  if (s.includes('others') || s.includes('other')) return '?';
+  return '—';
+}
+
+function buildCleaningHTML(siteName) {
+  const sc = CLEANING_SCHED[siteName];
+  if (!sc) return '<span style="color:var(--text6);font-size:9px">—</span>';
+  const today = new Date(2026, 2, 12); // current date
+  let html = '<div class="cyc-row">';
+  [1,2,3].forEach(c => {
+    const cyc = sc['c'+c] || {};
+    const status = cyc.status || '';
+    const cls = cycleStatusClass(status);
+    const lbl = cycleStatusLabel(status);
+    const endDate = parseCleanDate(cyc.end);
+    const overdue = !status && endDate && today > endDate;
+    const alertCls = overdue ? ' cyc-alert' : '';
+    const tooltip = [
+      cyc.start ? 'Start: '+cyc.start : '',
+      cyc.end   ? 'End: '+cyc.end     : '',
+      cyc.tds   ? 'TDS: '+cyc.tds     : '',
+      status    ? status               : overdue ? 'OVERDUE' : ''
+    ].filter(Boolean).join(' · ');
+    html += `<span class="cyc ${cls}${alertCls}" title="${tooltip}">C${c} ${lbl}</span>`;
+  });
+  html += '</div>';
+  return html;
+}
+
 
 async function loadData() {
   document.getElementById('refresh-btn').textContent='…';
   try {
-    const [genR,radR,gridR,plantR,dcR,acR] = await Promise.all([
+    const [genR,radR,gridR,plantR,dcR,acR,cleanR] = await Promise.all([
       fetchTab(CONFIG.SHEET_ID, CONFIG.TABS.generation),
       fetchTab(CONFIG.SHEET_ID, CONFIG.TABS.radiation),
       fetchTab(CONFIG.SHEET_ID, CONFIG.TABS.gridOutage),
       fetchTab(CONFIG.SHEET_ID, CONFIG.TABS.plantBreakdown),
       fetchTab(CONFIG.SHEET_ID, CONFIG.TABS.dcCuf),
       fetchTab(CONFIG.SHEET_ID, CONFIG.TABS.acCuf),
+      fetchTab(CONFIG.SHEET_ID, CONFIG.TABS.cleaningSched).catch(()=>[]),
     ]);
+    // Parse cleaning schedule — columns: Sr | Site | C1Start | C1End | C1TDS | C1Status | C2Start | C2End | C2TDS | C2Status | C3Start | C3End | C3TDS | C3Status
+    CLEANING_SCHED = {};
+    for (let r = 3; r < cleanR.length; r++) {
+      const row = cleanR[r]; if (!row || !row[1]) continue;
+      const sn = row[1].trim();
+      CLEANING_SCHED[sn] = {
+        c1:{ start:row[2]||'', end:row[3]||'', tds:row[4]||'', status:row[5]||'' },
+        c2:{ start:row[6]||'', end:row[7]||'', tds:row[8]||'', status:row[9]||'' },
+        c3:{ start:row[10]||'', end:row[11]||'', tds:row[12]||'', status:row[13]||'' },
+      };
+    }
     const gen=buildDailyMap(genR), rad=buildDailyMap(radR);
     const grid=buildDailyMap(gridR), plant=buildDailyMap(plantR);
     const dcCap=buildCapMap(dcR,3), acCap=buildCapMap(acR,2);
@@ -561,7 +659,8 @@ async function loadData() {
         l_grid:+lGrid.toFixed(2), l_plant:+lPlant.toFixed(2),
         unaccounted:unaccounted!==null?+unaccounted.toFixed(2):null,
         cleanDays, cleaning:cl, remarks:CONFIG.REMARKS[name]||'',
-        lastDayCuf, w1Cuf, w2Cuf, w3Cuf
+        lastDayCuf, w1Cuf, w2Cuf, w3Cuf,
+        get invLoss(){ return INV_LOSS_MAP[name] ?? null; }
       };
     }).filter(Boolean).sort((a,b)=>b.cuf-a.cuf);
 
@@ -710,8 +809,9 @@ function renderTable(){
       <div class="tc">${d.l_grid>0?`<div style="color:${d.l_grid>=3?'#f97316':'#7a4520'};font-weight:600;font-size:11px">−${d.l_grid.toFixed(2)}%</div><div style="font-size:9px;color:var(--text5)">${(d.grid_kwh/1000).toFixed(1)} MWh</div>`:'<span style="color:var(--text6)">—</span>'}</div>
       <div class="tc">${d.l_plant>0?`<div style="color:${d.l_plant>=3?'#a855f7':'#5a3a7a'};font-weight:600;font-size:11px">−${d.l_plant.toFixed(2)}%</div><div style="font-size:9px;color:var(--text5)">${(d.plant_kwh/1000).toFixed(1)} MWh</div>`:'<span style="color:var(--text6)">—</span>'}</div>
       <div class="tc">${d.unaccounted>0.1?`<div style="color:#475569;font-size:11px">−${d.unaccounted.toFixed(2)}%</div>`:d.unaccounted===null?'<span style="color:var(--text6);font-size:10px">n/a</span>':'<span style="color:var(--text6)">~0</span>'}</div>
-      <div style="display:flex;flex-direction:column;align-items:center;gap:2px">${d.cleanDays>0?`<div class="cal">${calHtml}</div><span style="font-size:9px;color:#38bdf8">${d.cleanDays}d</span>`:'<span style="color:var(--text6)">—</span>'}</div>
+      <div class="tc" style="font-size:10px">${buildCleaningHTML(d.name)}</div>
       <div class="tr" style="font-size:11px;color:var(--text5)">${d.gen_mwh.toFixed(0)}</div>
+      <div class="tr" style="font-size:11px;font-weight:600;color:${d.invLoss>2?'#a855f7':d.invLoss>0.5?'#7a3fa0':'#22c55e'}">${d.invLoss!==null&&d.invLoss>0?'−'+d.invLoss.toFixed(2)+'%':'<span style=\"color:var(--text6)\">—</span>'}</div>
       <div class="tr" style="font-size:11px;font-weight:600;color:${d.lastDayCuf?cufColor(d.lastDayCuf,d.effTgt):'#1a2a3a'}">${d.lastDayCuf?d.lastDayCuf.toFixed(1)+'%':'—'}</div>
       <div class="tr" style="font-size:11px;color:${d.w1Cuf?cufColor(d.w1Cuf,d.effTgt):'#1a2a3a'}">${d.w1Cuf?d.w1Cuf.toFixed(1)+'%':'—'}</div>
       <div class="tr" style="font-size:11px;color:${d.w2Cuf?cufColor(d.w2Cuf,d.effTgt):'#1a2a3a'}">${d.w2Cuf?d.w2Cuf.toFixed(1)+'%':'—'}</div>
@@ -789,6 +889,33 @@ function closeModal(){ document.getElementById('overlay').classList.remove('open
 // ═══════════════════════════════════════════════════════
 let INV_DATA = [];       // parsed rows
 let INV_MODE = 'day';    // 'day' or 'trend'
+let INV_LOSS_MAP = {};   // keyed by normalized site name -> MTD loss %
+
+function computeInvLossMap() {
+  INV_LOSS_MAP = {};
+  // Group by site
+  const bySite = {};
+  INV_DATA.forEach(d => {
+    if (!bySite[d.siteName]) bySite[d.siteName] = [];
+    bySite[d.siteName].push(d);
+  });
+  Object.entries(bySite).forEach(([site, recs]) => {
+    let totalLostKwh = 0, totalAvgKwh = 0;
+    recs.forEach(rec => {
+      const valid = rec.invGen.filter(v => v !== null && v > 0);
+      if (!valid.length) return;
+      const avg = valid.reduce((s,v) => s+v, 0) / valid.length;
+      const threshold = avg * 0.90;
+      valid.forEach(v => {
+        totalAvgKwh += avg;
+        if (v < threshold) totalLostKwh += (avg - v);
+      });
+    });
+    // Express as % of total expected generation
+    const lossPct = totalAvgKwh > 0 ? (totalLostKwh / totalAvgKwh) * 100 : 0;
+    INV_LOSS_MAP[site] = +lossPct.toFixed(2);
+  });
+}
 
 // Normalize site names to canonical form
 function normSiteName(raw) {
@@ -982,6 +1109,7 @@ async function loadInverterData() {
     sel.innerHTML = `<option value="__all__">— All Sites Overview —</option>` +
       sites.map(s=>`<option value="${s}">${s}</option>`).join('');
 
+    computeInvLossMap();
     renderInverterPage();
     document.getElementById('inv-refresh-btn').textContent='↻';
   } catch(e) {
