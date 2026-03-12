@@ -769,45 +769,146 @@ let INV_MODE = 'day';    // 'day' or 'trend'
 
 // Normalize site names to canonical form
 function normSiteName(raw) {
-  const s = (raw||'').trim().toLowerCase()
-    .replace(/\s+/g,' ')
-    .replace(/site\s*(plant\s*)?(no\.?\s*)?/gi,'')
-    .replace(/\s*-\s*/g,'-')
-    .trim();
+  const key = (raw||'').trim().toLowerCase().replace(/\s+/g,' ');
   const MAP = {
-    'ghantiyal bari':'Bidasar','ghantiyal bari (bidasar)':'Bidasar','gantiyal bari':'Bidasar',
-    'bidasar':'Bidasar',
-    'ratnaniya site':'Ratnania Cohra','ratnaniys':'Ratnania Cohra','ratnaniya johra':'Ratnania Cohra','ratnania johra':'Ratnania Cohra',
-    'khakholi':'Khakholi',
-    'kunpalsir':'Kunpalsar','kunpalsar':'Kunpalsar',
-    'kherla nagar 1':'Kherla nagar-1','kherla nagar-1':'Kherla nagar-1',
-    'kherla nagar 2':'Kherla nagar-2','kherla nagar-2':'Kherla nagar-2',
-    'sindhu 1':'Sindhu-1','sindhu-1':'Sindhu-1',
-    'sindhu 2':'Sindhu-2','sindhu-2':'Sindhu-2',
-    'dausar':'Dausar',
-    'budharon ki dhani nokha':'Bhudhro Ki dhani','budharon ki dhani':'Bhudhro Ki dhani','bhudhro ki dhani':'Bhudhro Ki dhani',
-    'haspura':'Haspur','haspur':'Haspur',
-    'pehal':'Pahel','pahel':'Pahel',
-    'birmana tal':'Birmana Tal','birmana tal dhadheru bhamuwan bidasar':'Birmana Tal',
-    'jetpura':'Jetpura',
-    'udwala':'Udwala',
-    'badsar':'Badsar',
-    'rajaldesar':'RaJaldesar','rajaldesar':'RaJaldesar',
-    'chitawa-1':'Chitawa-1','chitawa-2':'Chitawa-2','chitawa-3':'Chitawa-3',
-    'lalasar':'Lalasar',
-    'pilania pau':'Pilania pau',
-    'choti serva':'Choti serwa','choti serwa':'Choti serwa',
-    'rohisa':'Rohisa',
-    'khunkhuna':'Khunkhuna',
-    'dhirasar':'Dhirasar',
-    'ramdevra-2':'ramdevra-2','ramdevra 2':'ramdevra-2',
-    'purnadatal':'Purnadatal',
-    'nadiya tal':'Nadiya Tal',
-    'keshloi tal':'Keshloi tal',
-    'satra -1':'Satra-1','satra- -1':'Satra-1','satra-1':'Satra-1',
-    'satra - 2':'Satra-2','satra- 2':'Satra-2','satra-2':'Satra-2',
+    // Bidasar / Ghantiyal
+    'ghantiyal bari':          'Bidasar',
+    'ghantiyal bari (bidasar)':'Bidasar',
+    'gantiyal bari':           'Bidasar',
+    'ghantel':                 'Ghantel',
+    'bidasar':                 'Bidasar',
+    'bidaser site':            'Bidasar',
+
+    // Ratnania
+    'ratnaniya site':          'Ratnania Cohra',
+    'ratnaniys site':          'Ratnania Cohra',
+    'ratnania johra':          'Ratnania Cohra',
+    'ratnaniya johra':         'Ratnania Cohra',
+    'ratnania cohra':          'Ratnania Cohra',
+
+    // Khakholi
+    'khakholi':                'Khakholi',
+    'khakholi site':           'Khakholi',
+    'khakholi site ':          'Khakholi',
+    'khakholi ':               'Khakholi',
+    'khakholi site  ':         'Khakholi',
+
+    // Kunpalsar
+    'kunpalsir':               'Kunpalsar',
+    'kunpalsar':               'Kunpalsar',
+
+    // Kherla Nagar
+    'kherla nagar site plant 1':'Kherla nagar-1',
+    'kherla nagar site plant 2':'Kherla nagar-2',
+    'kherla nagar plant 1':    'Kherla nagar-1',
+    'kherla nagar site 1':     'Kherla nagar-1',
+    'kherla nagar-1':          'Kherla nagar-1',
+    'kherla nagar-2':          'Kherla nagar-2',
+
+    // Sindhu
+    'sindhu site plant no 1':  'Sindhu-1',
+    'sindhu site plant no 2':  'Sindhu-2',
+    'sindhu site plant 1':     'Sindhu-1',
+    'sindhu site plant 2':     'Sindhu-2',
+    'sindhu-1':                'Sindhu-1',
+    'sindhu-2':                'Sindhu-2',
+
+    // Dausar
+    'dausar site':             'Dausar',
+    'dausar':                  'Dausar',
+
+    // Bhudhro Ki Dhani
+    'budharon ki dhani nokha':      'Bhudhro Ki dhani',
+    'budharon ki dhani site nokha': 'Bhudhro Ki dhani',
+    'budharon ki dhani site nokha ':'Bhudhro Ki dhani',
+    'bhudhro ki dhani':             'Bhudhro Ki dhani',
+    'bhudhro ki dhani ':            'Bhudhro Ki dhani',
+
+    // Haspur
+    'haspura':                 'Haspur',
+    'haspura klan':            'Haspur',
+    'haspur':                  'Haspur',
+
+    // Pahel
+    'pehal':                   'Pahel',
+    'pahel':                   'Pahel',
+
+    // Birmana Tal
+    'birmana tal':             'Birmana Tal',
+    'birmana tal, dhadheru bhamuwan, bidasar': 'Birmana Tal',
+    'birmana tal ':            'Birmana Tal',
+
+    // Jetpura
+    'jetpura site':            'Jetpura',
+    'jetpura':                 'Jetpura',
+
+    // Udwala
+    'udwala site':             'Udwala',
+    'udwala':                  'Udwala',
+
+    // Badsar
+    'badsar':                  'Badsar',
+
+    // Rajaldesar
+    'rajaldesar':              'RaJaldesar',
+
+    // Chitawa
+    'chitawa-1':               'Chitawa-1',
+    'chitawa-2':               'Chitawa-2',
+    'chitawa-3':               'Chitawa-3',
+
+    // Lalasar
+    'lalasar':                 'Lalasar',
+
+    // Pilania Pau
+    'pilania pau':             'Pilania pau',
+
+    // Choti Serwa
+    'choti serva':             'Choti serwa',
+    'choti serwa':             'Choti serwa',
+
+    // Rohisa
+    'rohisa':                  'Rohisa',
+
+    // Khunkhuna
+    'khunkhuna':               'Khunkhuna',
+
+    // Dhirasar
+    'dhirasar':                'Dhirasar',
+
+    // Ramdevra
+    'ramdevra-2':              'Ramdevra-2',
+
+    // Purnadatal
+    'purnadatal':              'Purnadatal',
+
+    // Nadiya Tal
+    'nadiya tal':              'Nadiya Tal',
+    'nadiya tal ':             'Nadiya Tal',
+
+    // Keshloi Tal
+    'keshloi tal':             'Keshloi tal',
+
+    // Satra
+    'satra- -1':               'Satra-1',
+    'satra -1':                'Satra-1',
+    'satra-1':                 'Satra-1',
+    'satra - 2':               'Satra-2',
+    'satra- 2':                'Satra-2',
+    'satra-2':                 'Satra-2',
+
+    // Godwanti
+    'godwanti tal':            'Godwanti Tal',
+    'godwanti tal ':           'Godwanti Tal',
+
+    // Additional sites
+    'ankhisar-1':              'Ankhisar-1',
+    'mukam-1':                 'Mukam-1',
+    'mukam-2':                 'Mukam-2',
+    'jamola':                  'Jamola',
+    'krishna kumar mali saini':'Krishna Kumar Mali',
   };
-  return MAP[s] || (raw||'').trim();
+  return MAP[key] || (raw||'').trim();
 }
 
 function parseDate(str) {
