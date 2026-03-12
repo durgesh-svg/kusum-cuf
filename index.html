@@ -520,12 +520,12 @@ async function loadData() {
       const hasRad=radPairs.length>=3;
       const avgRad=hasRad?radPairs.reduce((s,p)=>s+p.r,0)/radPairs.length:null;
       const actualPR=(hasRad&&dc)?(radPairs.reduce((s,p)=>s+dg[p.i],0)/(radPairs.reduce((s,p)=>s+p.r,0)*dc))*100:null;
-      const gridKwh=validIdx.reduce((s,i)=>s+((dgo[i]||0)/60*(ac)),0);
-      const plantKwh=validIdx.reduce((s,i)=>s+((dpb[i]||0)/60*(ac)),0);
+      const gridKwh=validIdx.reduce((s,i)=>s+((dgo[i]||0)/60*(dc||ac)),0);
+      const plantKwh=validIdx.reduce((s,i)=>s+((dpb[i]||0)/60*(dc||ac)),0);
       const dcCuf=dc?(genKwh/(dc*24*n))*100:null;
       const acCuf=(genKwh/(ac*24*n))*100;
       const cuf=dcCuf??acCuf;
-      const lGrid=(gridKwh/(ac*24*n))*100, lPlant=(plantKwh/(ac*24*n))*100;
+      const lGrid=(gridKwh/((dc||ac)*24*n))*100, lPlant=(plantKwh/((dc||ac)*24*n))*100;
       const tgtPR=(hasRad&&avgRad)?(avgRad/24)*(CONFIG.BENCHMARK_PR/100)*100:null;
       const effTgt=tgtPR??CONFIG.FLAT_TARGET;
       const gap=effTgt-cuf;
