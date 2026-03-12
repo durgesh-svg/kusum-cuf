@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>PM KUSUM · CUF Dashboard · Stockwell Solar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&family=Syne:wght@700;800&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#070b12;--bg2:#090d18;--bg3:#0d1520;--bg4:#0c1018;
+  --border:#0f1a28;--border2:#1a2035;
+  --text:#e2e8f0;--text2:#c8d8e8;--text3:#64748b;--text4:#334155;--text5:#2a3a52;--text6:#1a2a3a;
+  --green:#22c55e;--lime:#84cc16;--yellow:#eab308;--red:#ef4444;
+  --orange:#f97316;--purple:#a855f7;--slate:#475569;--sky:#38bdf8;--amber:#fbbf24;
+}
+body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'IBM Plex Mono','Courier New',monospace;font-size:12px}
+::-webkit-scrollbar{width:4px;height:4px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:#1e2a3a;border-radius:2px}
+
+/* HEADER */
+#header{border-bottom:1px solid var(--border);padding:15px 24px 12px;background:var(--bg2)}
+.header-top{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px}
+.header-eyebrow{font-size:10px;color:var(--text5);letter-spacing:.18em;text-transform:uppercase;margin-bottom:4px}
+.header-title{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:#eef4ff;letter-spacing:-.02em}
+.header-sub{font-size:10px;color:var(--text5);margin-top:3px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.live-dot{width:6px;height:6px;border-radius:50%;background:var(--green);display:inline-block;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.method-box{margin-top:10px;padding:10px 14px;background:var(--bg3);border:1px solid var(--border2);border-radius:6px;font-size:10px;color:var(--text3);line-height:1.9;max-width:660px;display:none}
+.method-box.open{display:block}
+
+/* STAT CARDS */
+.stats{display:flex;gap:8px;flex-wrap:wrap}
+.stat-card{background:var(--bg3);border:1px solid var(--border2);border-radius:6px;padding:10px 13px;min-width:82px}
+.stat-label{font-size:9px;color:var(--text4);text-transform:uppercase;letter-spacing:.1em;margin-bottom:3px}
+.stat-value{font-family:'Syne',sans-serif;font-size:16px;font-weight:800}
+.stat-sub{font-size:9px;color:var(--text4);margin-top:2px}
+
+/* LEGEND */
+.legend{display:flex;gap:12px;margin-top:12px;flex-wrap:wrap;align-items:center}
+.legend-item{display:flex;align-items:center;gap:5px;font-size:9px;color:var(--text5)}
+.legend-dot{width:8px;height:8px;border-radius:2px}
+.legend-line{width:1.5px;height:12px;background:#f0f6ff;opacity:.6}
+
+/* FILTER BAR */
+#filterbar{padding:8px 24px;border-bottom:1px solid #0a0f18;background:var(--bg2);display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.filter-label{font-size:9px;color:var(--text5);letter-spacing:.12em;margin-right:4px}
+.chip{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:11px;font-size:10px;cursor:pointer;border:1px solid transparent;transition:all .15s;letter-spacing:.03em;white-space:nowrap;font-family:'IBM Plex Mono',monospace}
+.chip-dot{width:5px;height:5px;border-radius:50%}
+.sort-wrap{margin-left:auto;display:flex;gap:3px;align-items:center}
+.sortbtn{background:none;border:none;color:var(--text4);cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.07em;padding:4px 7px;border-radius:3px;transition:all .15s;white-space:nowrap}
+.sortbtn:hover{color:#94a3b8;background:#0c1220}
+.sortbtn.on{color:var(--sky);background:#0a1929}
+
+/* TABLE */
+#table-wrap{overflow-x:auto}
+.col-hdr{display:grid;grid-template-columns:26px 148px 62px 62px 62px 62px 62px 180px 80px 80px 72px 66px 54px;gap:0 6px;padding:7px 24px;border-bottom:1px solid #0a0f18;font-size:9px;color:var(--text5);text-transform:uppercase;letter-spacing:.1em;background:#080c16;position:sticky;top:0;z-index:10}
+.trow{display:grid;grid-template-columns:26px 148px 62px 62px 62px 62px 62px 180px 80px 80px 72px 66px 54px;gap:0 6px;padding:7px 24px;border-bottom:1px solid #090d16;align-items:center;cursor:pointer;transition:background .1s}
+.trow:hover{background:#0c1220}
+.site-name{display:flex;align-items:center;gap:5px;overflow:hidden}
+.site-name span{font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.warn-badge{font-size:9px;color:var(--amber);flex-shrink:0}
+.ac-badge{font-size:8px;color:var(--text5);border:1px solid var(--text6);padding:0 3px;border-radius:2px;flex-shrink:0}
+.tr{text-align:right}
+.tc{text-align:center}
+
+/* WATERFALL BAR */
+.wf-wrap{position:relative;height:18px;background:var(--bg3);border-radius:3px;overflow:visible;width:100%}
+.wf-seg{position:absolute;top:0;height:100%}
+.wf-line{position:absolute;top:-3px;height:calc(100% + 6px);width:1.5px;background:#f0f6ff;opacity:.65;z-index:3}
+
+/* CAL DOTS */
+.cal{display:flex;gap:2px}
+.cal-dot{width:5px;height:11px;border-radius:1px}
+
+/* MODAL */
+#overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:50;display:none;align-items:center;justify-content:center;padding:20px}
+#overlay.open{display:flex}
+#modal{background:var(--bg4);border:1px solid #1a2a3a;border-radius:10px;padding:26px;width:580px;max-height:90vh;overflow-y:auto}
+.modal-hdr{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px}
+.modal-title{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#eef4ff}
+.modal-sub{font-size:10px;color:var(--text4);margin-top:2px}
+.close-btn{background:var(--bg3);border:1px solid var(--border2);color:var(--slate);cursor:pointer;font-size:13px;padding:5px 11px;border-radius:4px;font-family:inherit}
+.modal-grid5{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:14px}
+.modal-grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:12px}
+.mcard{background:var(--bg3);border:1px solid var(--border2);border-radius:6px;padding:10px 12px}
+.mcard-label{font-size:9px;color:var(--text4);text-transform:uppercase;letter-spacing:.08em;margin-bottom:3px}
+.mcard-value{font-family:'Syne',sans-serif;font-size:15px;font-weight:800}
+.pr-box{background:var(--bg3);border:1px solid var(--border2);border-radius:6px;padding:11px 14px;margin-bottom:12px;font-size:11px;color:var(--text3);line-height:1.8}
+.wf-bar-modal{height:24px;border-radius:4px;display:flex;background:var(--bg3);overflow:hidden;margin-bottom:10px}
+.clean-box{background:var(--bg3);border:1px solid var(--border2);border-radius:6px;padding:11px 14px;margin-bottom:10px}
+.remarks-box{background:#1a0f00;border:1px solid #3d2600;border-left:2px solid var(--amber);border-radius:6px;padding:11px 14px}
+.remarks-line{font-size:11px;color:var(--amber);line-height:1.9}
+.section-label{font-size:9px;color:var(--text4);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px}
+
+/* FOOTER */
+#footer{padding:12px 24px;border-top:1px solid #0a0f18;font-size:10px;color:var(--text6);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+
+/* LOADING / ERROR */
+#loading,#error-msg{min-height:100vh;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace}
+#loading{flex-direction:column;gap:12px;color:var(--text4)}
+.spinner{font-size:32px;animation:spin 1.5s linear infinite}
+@keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+#error-msg{flex-direction:column;gap:8px;color:var(--red);text-align:center;padding:40px;max-width:500px;margin:auto}
+.retry-btn{background:var(--bg3);border:1px solid var(--text4);color:var(--text);padding:8px 20px;border-radius:4px;cursor:pointer;font-family:inherit;font-size:12px;margin-top:8px}
+</style>
+</head>
+<body>
+
+<!-- LOADING STATE -->
+<div id="loading">
+  <div class="spinner">◌</div>
+  <div style="font-size:12px;letter-spacing:.1em">LOADING LIVE DATA…</div>
+</div>
+
+<!-- MAIN APP (hidden until data loads) -->
+<div id="app" style="display:none">
+
+  <!-- HEADER -->
+  <div id="header">
+    <div class="header-top">
+      <div>
+        <div class="header-eyebrow">PM KUSUM · Rajasthan · <span id="report-month"></span></div>
+        <div class="header-title">CUF Loss Waterfall — Live Dashboard</div>
+        <div class="header-sub">
+          <span>Benchmark PR: <span style="color:var(--sky)" id="bench-pr-label"></span></span>
+          <span style="color:var(--text6)">·</span>
+          <span>Target CUF = radiation × PR ÷ 24h</span>
+          <button onclick="toggleMethod()" style="font-size:9px;color:var(--text4);background:var(--bg3);border:1px solid var(--border2);border-radius:3px;padding:1px 6px;cursor:pointer;font-family:inherit" id="method-btn">method ▼</button>
+          <span style="display:flex;align-items:center;gap:4px;margin-left:8px">
+            <span class="live-dot"></span>
+            <span style="font-size:9px;color:var(--text4)">Live · <span id="last-fetch"></span></span>
+            <button onclick="loadData()" style="font-size:9px;color:var(--text4);background:var(--bg3);border:1px solid var(--border2);border-radius:3px;padding:1px 6px;cursor:pointer;font-family:inherit;margin-left:2px" id="refresh-btn">↻</button>
+          </span>
+        </div>
+        <div class="method-box" id="method-box"></div>
+      </div>
+      <div class="stats" id="stats-row"></div>
+    </div>
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot" style="background:var(--green)"></div>≥ Target</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--lime)"></div>Within 0.5%</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--yellow)"></div>0.5–2% below</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--red)"></div>&gt;2% below</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--orange)"></div>Grid loss</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--purple)"></div>Plant loss</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--slate)"></div>Unaccounted</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--sky)"></div>Cleaning days</div>
+      <div class="legend-item"><div class="legend-line"></div>Dynamic target</div>
+    </div>
+  </div>
+
+  <!-- FILTER BAR -->
+  <div id="filterbar">
+    <span class="filter-label">FILTER</span>
+    <div id="chips"></div>
+    <div class="sort-wrap">
+      <span class="filter-label">SORT</span>
+      <div id="sort-btns"></div>
+    </div>
+  </div>
+
+  <!-- TABLE -->
+  <div id="table-wrap">
+    <div class="col-hdr">
+      <div>#</div><div>Site</div>
+      <div class="tr">DC CUF</div><div class="tr">Actual PR</div>
+      <div class="tr">Tgt CUF</div><div class="tr">vs Tgt</div>
+      <div class="tr">Radiation</div>
+      <div style="padding-left:6px">Waterfall ← target line</div>
+      <div class="tc">Grid Loss</div><div class="tc">Plant Loss</div>
+      <div class="tc">Unaccntd</div><div class="tc">Cleaning</div>
+      <div class="tr">Gen MWh</div>
+    </div>
+    <div id="table-body"></div>
+  </div>
+
+  <div id="footer">
+    <span>Auto-refreshes every 30 min · Source: Google Sheets · <span id="total-sites"></span> sites</span>
+    <span id="last-updated-footer"></span>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div id="overlay" onclick="closeModal()">
+  <div id="modal" onclick="event.stopPropagation()">
+    <div class="modal-hdr">
+      <div>
+        <div style="font-size:9px;color:var(--text4);text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px">Site Detail</div>
+        <div class="modal-title" id="m-name"></div>
+        <div class="modal-sub" id="m-sub"></div>
+      </div>
+      <button class="close-btn" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-grid5" id="m-top-metrics"></div>
+    <div class="pr-box" id="m-pr-box" style="display:none"></div>
+    <div style="margin-bottom:12px">
+      <div class="section-label">Loss Waterfall</div>
+      <div class="wf-bar-modal" id="m-wf-bar"></div>
+      <div class="modal-grid4" id="m-loss-cards"></div>
+    </div>
+    <div class="clean-box" id="m-clean-box" style="display:none"></div>
+    <div class="remarks-box" id="m-remarks-box" style="display:none"></div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════
+//  CONFIG — only edit this section
+// ═══════════════════════════════════════════════════════
+const CONFIG = {
+  SHEET_ID:     "1agcGb0nTi1u-hEOlHU1eXt30wsWyEeK_",
+  REPORT_MONTH: "March 2026",
+  BENCHMARK_PR: 83.2,
+  FLAT_TARGET:  23,
+  TABS: {
+    generation:    "Generation",
+    radiation:     "Radiation",
+    gridOutage:    "Grid Outage Minutes",
+    plantBreakdown:"Plant Breakdown Minute",
+    dcCuf:         "DC CUF",
+    acCuf:         "AC CUF",
+  },
+  CLEANING: {
+    "Dausar":           { days:[1,2],               tds:"712" },
+    "Haspur":           { days:[1,2,3,4],            tds:"—" },
+    "Pahel":            { days:[1,2,3,4,5],          tds:"—" },
+    "Khakholi":         { days:[3,4,5,6],            tds:"148" },
+    "Jetpura":          { days:[8,9],                tds:"1430" },
+    "Sindhu-1":         { days:[4,5,6,7,8,9],        tds:"200-400" },
+    "Sindhu-2":         { days:[2,3,4,5,6,7,8,9],    tds:"200-401" },
+    "Kherla nagar-1":   { days:[6,7,8,9],            tds:"no TDS" },
+    "Kherla nagar-2":   { days:[],                   tds:"no TDS" },
+    "Ratnania Cohra":   { days:[2,3],                tds:"524" },
+    "Birmana Tal":      { days:[7,8,9],              tds:"800-2200" },
+    "Nadiya Tal":       { days:[1],                  tds:"2680" },
+    "Keshloi tal":      { days:[3,4],                tds:"1520" },
+    "Udwala":           { days:[1,2],                tds:"887" },
+    "Bidasar":          { days:[2,3,4,5,6,7],        tds:"313" },
+    "Kunpalsar":        { days:[1,2,3,4,5,6,7,8,9],  tds:"931 (pending)" },
+    "Bhudhro Ki dhani": { days:[1,2,3,4,5,6,7,8],    tds:"no TDS" },
+    "Ghantel":          { days:[4,5,6,7],            tds:"1160" },
+    "Dhirasar":         { days:[5,6,7],              tds:"961" },
+    "ramdevra-2":       { days:[3,4,5],              tds:"1800" },
+    "Purnadatal":       { days:[6,7,8],              tds:"1200" },
+    "Badsar":           { days:[3,4,5,6],            tds:"518" },
+    "RaJaldesar":       { days:[],                   tds:"1100" },
+    "Chitawa-1":        { days:[1,2],                tds:"rain" },
+    "Chitawa-2":        { days:[3,4],                tds:"rain" },
+    "Chitawa-3":        { days:[5,6],                tds:"rain" },
+    "Lalasar":          { days:[4,5,6,7],            tds:"1200" },
+    "Pilania pau":      { days:[8,9],                tds:"2030" },
+    "Choti serwa":      { days:[2,3,4],              tds:"145" },
+    "Rohisa":           { days:[],                   tds:"572" },
+    "Khunkhuna":        { days:[1,2],                tds:"2000-3500" },
+  },
+  REMARKS: {
+    "Rohisa":           "Module additional-37; Fuse requirement; SCADA to install",
+    "Dhirasar":         "Letter to GSS pending; TDS check MC; WMS inspection",
+    "Sindhu-1":         "Undervoltage issue",
+    "Bhudhro Ki dhani": "Undervoltage issue",
+    "Keshloi tal":      "SCADA not working; Camera not working; SIM not working",
+  }
+};
+
+// ═══════════════════════════════════════════════════════
+//  COLOUR HELPERS
+// ═══════════════════════════════════════════════════════
+function cufColor(cuf, tgt) {
+  const g = tgt - cuf;
+  if (g <= 0)  return '#22c55e';
+  if (g < 0.5) return '#84cc16';
+  if (g < 2)   return '#eab308';
+  return '#ef4444';
+}
+function prColor(pr) {
+  if (!pr)      return '#475569';
+  if (pr >= 85) return '#22c55e';
+  if (pr >= 80) return '#84cc16';
+  if (pr >= 75) return '#eab308';
+  return '#ef4444';
+}
+
+// ═══════════════════════════════════════════════════════
+//  CSV FETCH + PARSE
+// ═══════════════════════════════════════════════════════
+async function fetchTab(tabName) {
+  const url = `https://docs.google.com/spreadsheets/d/${CONFIG.SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(tabName)}`;
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`Cannot fetch tab "${tabName}" (${res.status})`);
+  return parseCSV(await res.text());
+}
+function parseCSV(text) {
+  return text.split('\n').filter(l=>l.trim()).map(line=>{
+    const cols=[]; let cur='',inQ=false;
+    for(let i=0;i<line.length;i++){
+      const c=line[i];
+      if(c==='"'){inQ=!inQ;continue}
+      if(c===','&&!inQ){cols.push(cur.trim());cur='';continue}
+      cur+=c;
+    }
+    cols.push(cur.trim()); return cols;
+  });
+}
+function toNum(v){
+  if(v==null||v==='')return null;
+  const n=parseFloat(String(v).replace(/[^0-9.\-]/g,''));
+  return isNaN(n)?null:n;
+}
+function buildDailyMap(rows){
+  const m={};
+  for(let r=2;r<rows.length;r++){
+    const row=rows[r]; const name=(row[1]||'').trim(); if(!name)continue;
+    m[name]=Array.from({length:31},(_,i)=>toNum(row[i+2]));
+  }
+  return m;
+}
+function buildCapMap(rows,col){
+  const m={};
+  for(let r=2;r<rows.length;r++){
+    const row=rows[r]; const name=(row[1]||'').trim(); if(!name)continue;
+    const v=toNum(row[col]); if(v)m[name]=v;
+  }
+  return m;
+}
+
+// ═══════════════════════════════════════════════════════
+//  MAIN DATA LOADER
+// ═══════════════════════════════════════════════════════
+let SITES=[], SUMMARY={}, currentFilter='all', currentSort='cuf';
+
+async function loadData() {
+  document.getElementById('refresh-btn').textContent='…';
+  try {
+    const [genR,radR,gridR,plantR,dcR,acR] = await Promise.all([
+      fetchTab(CONFIG.TABS.generation),
+      fetchTab(CONFIG.TABS.radiation),
+      fetchTab(CONFIG.TABS.gridOutage),
+      fetchTab(CONFIG.TABS.plantBreakdown),
+      fetchTab(CONFIG.TABS.dcCuf),
+      fetchTab(CONFIG.TABS.acCuf),
+    ]);
+    const gen=buildDailyMap(genR), rad=buildDailyMap(radR);
+    const grid=buildDailyMap(gridR), plant=buildDailyMap(plantR);
+    const dcCap=buildCapMap(dcR,3), acCap=buildCapMap(acR,2);
+
+    const allSites=Object.keys(gen);
+    SITES = allSites.map(name=>{
+      const dg=gen[name]||[], dr=rad[name]||[], dgo=grid[name]||[], dpb=plant[name]||[];
+      const ac=acCap[name], dc=dcCap[name]; if(!ac)return null;
+      const validIdx=dg.reduce((a,v,i)=>v!==null?[...a,i]:a,[]);
+      if(!validIdx.length)return null;
+      const n=validIdx.length;
+      const genKwh=validIdx.reduce((s,i)=>s+(dg[i]||0),0);
+      const radPairs=validIdx.map(i=>({i,r:dr[i]})).filter(p=>p.r&&p.r>0);
+      const hasRad=radPairs.length>=3;
+      const avgRad=hasRad?radPairs.reduce((s,p)=>s+p.r,0)/radPairs.length:null;
+      const actualPR=(hasRad&&dc)?(radPairs.reduce((s,p)=>s+dg[p.i],0)/(radPairs.reduce((s,p)=>s+p.r,0)*dc))*100:null;
+      const gridKwh=validIdx.reduce((s,i)=>s+((dgo[i]||0)/60*(ac)),0);
+      const plantKwh=validIdx.reduce((s,i)=>s+((dpb[i]||0)/60*(ac)),0);
+      const dcCuf=dc?(genKwh/(dc*24*n))*100:null;
+      const acCuf=(genKwh/(ac*24*n))*100;
+      const cuf=dcCuf??acCuf;
+      const lGrid=(gridKwh/(ac*24*n))*100, lPlant=(plantKwh/(ac*24*n))*100;
+      const tgtPR=(hasRad&&avgRad)?(avgRad/24)*(CONFIG.BENCHMARK_PR/100)*100:null;
+      const effTgt=tgtPR??CONFIG.FLAT_TARGET;
+      const gap=effTgt-cuf;
+      const unaccounted=tgtPR!==null?Math.max(0,gap-lGrid-lPlant):null;
+      const cl=CONFIG.CLEANING[name]||{days:[],tds:'—'};
+      const cleanDays=cl.days.filter(d=>d<=n).length;
+      return {
+        name,dc_cap:dc,ac_cap:ac,n_days:n,n_rad:radPairs.length,
+        avg_rad:avgRad?+avgRad.toFixed(2):null,
+        gen_mwh:+(genKwh/1000).toFixed(2),
+        dc_cuf:dcCuf?+dcCuf.toFixed(2):null, ac_cuf:+acCuf.toFixed(2), cuf:+cuf.toFixed(2),
+        actual_pr:actualPR?+actualPR.toFixed(1):null,
+        target_cuf:tgtPR?+tgtPR.toFixed(2):null, effTgt:+effTgt.toFixed(2), gap:+gap.toFixed(2),
+        grid_kwh:+gridKwh.toFixed(0), plant_kwh:+plantKwh.toFixed(0),
+        l_grid:+lGrid.toFixed(2), l_plant:+lPlant.toFixed(2),
+        unaccounted:unaccounted!==null?+unaccounted.toFixed(2):null,
+        cleanDays, cleaning:cl, remarks:CONFIG.REMARKS[name]||''
+      };
+    }).filter(Boolean).sort((a,b)=>b.cuf-a.cuf);
+
+    const withDC=SITES.filter(d=>d.dc_cuf!==null);
+    const withPR=SITES.filter(d=>d.actual_pr!==null);
+    SUMMARY = {
+      totalSites:SITES.length,
+      avgDcCuf:withDC.length?+(withDC.reduce((s,d)=>s+d.dc_cuf,0)/withDC.length).toFixed(1):null,
+      avgPR:withPR.length?+(withPR.reduce((s,d)=>s+d.actual_pr,0)/withPR.length).toFixed(1):null,
+      gridMwh:+(SITES.reduce((s,d)=>s+d.grid_kwh,0)/1000).toFixed(1),
+      plantMwh:+(SITES.reduce((s,d)=>s+d.plant_kwh,0)/1000).toFixed(1),
+      genMwh:+(SITES.reduce((s,d)=>s+d.gen_mwh,0)).toFixed(1),
+      above:SITES.filter(d=>d.cuf>=d.effTgt).length,
+      below:SITES.filter(d=>d.cuf<d.effTgt).length,
+      lastUpdated:new Date().toLocaleString('en-IN',{timeZone:'Asia/Kolkata'}),
+    };
+
+    document.getElementById('loading').style.display='none';
+    document.getElementById('app').style.display='block';
+    renderAll();
+    document.getElementById('last-fetch').textContent=new Date().toLocaleTimeString('en-IN');
+    document.getElementById('last-updated-footer').textContent='Last fetched: '+SUMMARY.lastUpdated;
+  } catch(e) {
+    document.getElementById('loading').innerHTML=
+      `<div style="color:var(--red);font-size:13px;max-width:480px;text-align:center;padding:40px">
+        <div style="margin-bottom:8px">⚠ Failed to load data</div>
+        <div style="font-size:11px;margin-bottom:12px">${e.message}</div>
+        <div style="font-size:10px;color:var(--text3);margin-bottom:16px">
+          Make sure the Google Sheet is shared as <strong>Anyone with the link → Viewer</strong>
+        </div>
+        <button class="retry-btn" onclick="loadData()">↻ Retry</button>
+      </div>`;
+  }
+  document.getElementById('refresh-btn').textContent='↻';
+}
+
+// ═══════════════════════════════════════════════════════
+//  RENDER
+// ═══════════════════════════════════════════════════════
+function renderAll(){
+  renderHeader();
+  renderFilters();
+  renderTable();
+}
+
+function renderHeader(){
+  document.getElementById('report-month').textContent=CONFIG.REPORT_MONTH;
+  document.getElementById('bench-pr-label').textContent=CONFIG.BENCHMARK_PR+'%';
+  document.getElementById('total-sites').textContent=SUMMARY.totalSites;
+  document.getElementById('method-box').innerHTML=
+    `<span style="color:var(--sky)">Why not flat ${CONFIG.FLAT_TARGET}%?</span> A flat target ignores that sites receiving more sunlight should generate more.<br>
+     <span style="color:var(--sky)">Dynamic target</span> = site's actual radiation × ${CONFIG.BENCHMARK_PR}% ÷ 24. A 7.1 kWh/m² site targets ${((7.1/24)*CONFIG.BENCHMARK_PR).toFixed(1)}% CUF; a 6.2 kWh/m² site targets ${((6.2/24)*CONFIG.BENCHMARK_PR).toFixed(1)}%.<br>
+     <span style="color:var(--sky)">Benchmark ${CONFIG.BENCHMARK_PR}% PR</span> = mean of your 6 cleanest sites. Updates monthly.`;
+
+  const stats=[
+    {l:'Avg DC CUF', v:`${SUMMARY.avgDcCuf}%`, c:SUMMARY.avgDcCuf>=22?'#84cc16':'#ef4444'},
+    {l:'Avg PR',     v:SUMMARY.avgPR?`${SUMMARY.avgPR}%`:'—', c:SUMMARY.avgPR>=82?'#22c55e':'#eab308'},
+    {l:'≥ Target',   v:`${SUMMARY.above} sites`, c:'#22c55e'},
+    {l:'< Target',   v:`${SUMMARY.below} sites`, c:'#ef4444'},
+    {l:'Grid Lost',  v:`${SUMMARY.gridMwh} MWh`, c:'#f97316'},
+    {l:'Plant Lost', v:`${SUMMARY.plantMwh} MWh`, c:'#a855f7'},
+    {l:'Portfolio',  v:`${SUMMARY.genMwh} MWh`, c:'#64748b'},
+  ];
+  document.getElementById('stats-row').innerHTML=stats.map(s=>
+    `<div class="stat-card"><div class="stat-label">${s.l}</div><div class="stat-value" style="color:${s.c}">${s.v}</div></div>`
+  ).join('');
+}
+
+function renderFilters(){
+  const chips=[
+    ['all','All Sites','#334155'],['above','≥ Target','#22c55e'],['below','< Target','#ef4444'],
+    ['grid','Grid Issues','#f97316'],['plant','Plant Issues','#a855f7'],
+    ['cleaning','Cleaning Active','#38bdf8'],['norad','No Radiation','#475569'],['issues','Has Remarks','#fbbf24'],
+  ];
+  document.getElementById('chips').innerHTML=chips.map(([v,l,c])=>
+    `<span class="chip" onclick="setFilter('${v}')" id="chip-${v}"
+      style="background:${currentFilter===v?c+'18':'transparent'};border-color:${currentFilter===v?c:'#111f30'};color:${currentFilter===v?c:'#334155'}">
+      <span class="chip-dot" style="background:${c}"></span>${l}
+    </span>`
+  ).join('');
+
+  const sorts=[['cuf','DC CUF'],['pr','Actual PR'],['gap','Gap'],['grid','Grid'],['plant','Plant'],['clean','Cleaning']];
+  document.getElementById('sort-btns').innerHTML=sorts.map(([k,l])=>
+    `<button class="sortbtn${currentSort===k?' on':''}" onclick="setSort('${k}')">${l} ↕</button>`
+  ).join('');
+}
+
+function setFilter(v){ currentFilter=v; renderFilters(); renderTable(); }
+function setSort(k){ currentSort=k; renderFilters(); renderTable(); }
+function toggleMethod(){
+  const box=document.getElementById('method-box');
+  const btn=document.getElementById('method-btn');
+  box.classList.toggle('open');
+  btn.textContent=box.classList.contains('open')?'method ▲':'method ▼';
+}
+
+function getFiltered(){
+  let s=[...SITES];
+  if(currentFilter==='above')   s=s.filter(d=>d.cuf>=d.effTgt);
+  if(currentFilter==='below')   s=s.filter(d=>d.cuf<d.effTgt);
+  if(currentFilter==='grid')    s=s.filter(d=>d.l_grid>=1);
+  if(currentFilter==='plant')   s=s.filter(d=>d.l_plant>=1);
+  if(currentFilter==='cleaning')s=s.filter(d=>d.cleanDays>0);
+  if(currentFilter==='norad')   s=s.filter(d=>d.n_rad<3);
+  if(currentFilter==='issues')  s=s.filter(d=>d.remarks.length>0);
+  s.sort((a,b)=>{
+    if(currentSort==='cuf')   return b.cuf-a.cuf;
+    if(currentSort==='pr')    return (b.actual_pr||0)-(a.actual_pr||0);
+    if(currentSort==='gap')   return b.gap-a.gap;
+    if(currentSort==='grid')  return b.l_grid-a.l_grid;
+    if(currentSort==='plant') return b.l_plant-a.l_plant;
+    if(currentSort==='clean') return b.cleanDays-a.cleanDays;
+    return 0;
+  });
+  return s;
+}
+
+function renderTable(){
+  const MAX=38;
+  const rows=getFiltered();
+  document.getElementById('table-body').innerHTML=rows.map(d=>{
+    const rank=SITES.findIndex(s=>s.name===d.name)+1;
+    const below=d.cuf<d.effTgt;
+    const cc=cufColor(d.cuf,d.effTgt);
+    // waterfall
+    const tPct=(d.effTgt/MAX)*100;
+    const cPct=(Math.min(d.cuf,d.effTgt)/MAX)*100;
+    const exPct=d.cuf>d.effTgt?((d.cuf-d.effTgt)/MAX)*100:0;
+    const gPct=(d.l_grid/MAX)*100, pPct=(d.l_plant/MAX)*100;
+    const uPct=(d.unaccounted||0)/MAX*100;
+    const wfSegs=`
+      <div class="wf-seg" style="left:0;width:${cPct}%;background:${cc};border-radius:3px 0 0 3px"></div>
+      ${exPct>0?`<div class="wf-seg" style="left:${tPct}%;width:${exPct}%;background:#22c55e;opacity:.35"></div>`:''}
+      ${gPct>0.1?`<div class="wf-seg" style="left:${cPct+exPct}%;width:${gPct}%;background:#f97316;opacity:.9"></div>`:''}
+      ${pPct>0.1?`<div class="wf-seg" style="left:${cPct+exPct+gPct}%;width:${pPct}%;background:#a855f7;opacity:.9"></div>`:''}
+      ${uPct>0.1?`<div class="wf-seg" style="left:${cPct+exPct+gPct+pPct}%;width:${uPct}%;background:#475569;opacity:.7"></div>`:''}
+      <div class="wf-line" style="left:${tPct}%"></div>`;
+    // cal dots
+    const calDots=(d.cleaning.days||[]).filter(x=>x<=d.n_days);
+    const calHtml=Array.from({length:d.n_days},(_,i)=>
+      `<div class="cal-dot" title="Mar ${i+1}" style="background:${calDots.includes(i+1)?'#38bdf8':'#1a2035'}"></div>`
+    ).join('');
+
+    return `<div class="trow" onclick="openModal('${d.name}')">
+      <div style="font-size:10px;color:var(--text6)">${rank}</div>
+      <div class="site-name">
+        <div style="width:5px;height:5px;border-radius:50%;flex-shrink:0;background:${cc}"></div>
+        <span style="color:${d.dc_cuf?'#c8d8e8':'#475569'}">${d.name}</span>
+        ${d.remarks?'<span class="warn-badge">⚠</span>':''}
+        ${!d.dc_cuf?'<span class="ac-badge">AC</span>':''}
+      </div>
+      <div class="tr" style="font-weight:600;font-size:13px;color:${cc}">${d.dc_cuf?d.dc_cuf.toFixed(1)+'%':'—'}</div>
+      <div class="tr" style="font-size:12px;color:${d.actual_pr?prColor(d.actual_pr):'#1a2a3a'}">${d.actual_pr?d.actual_pr+'%':'—'}</div>
+      <div class="tr" style="font-size:11px;color:var(--text4)">${d.target_cuf?d.target_cuf.toFixed(1)+'%':'≈'+CONFIG.FLAT_TARGET+'%'}</div>
+      <div class="tr" style="font-size:11px;font-weight:600;color:${below?'#ef4444':'#22c55e'}">${below?'−'+(d.effTgt-d.cuf).toFixed(1)+'%':'+' +(d.cuf-d.effTgt).toFixed(1)+'%'}</div>
+      <div class="tr" style="font-size:11px;color:var(--text4)">${d.avg_rad?d.avg_rad+' <span style="font-size:9px;color:var(--text6)">kWh/m²</span>':'—'}</div>
+      <div style="padding-left:6px"><div class="wf-wrap">${wfSegs}</div></div>
+      <div class="tc">${d.l_grid>0?`<div style="color:${d.l_grid>=3?'#f97316':'#7a4520'};font-weight:600;font-size:11px">−${d.l_grid.toFixed(2)}%</div><div style="font-size:9px;color:var(--text5)">${(d.grid_kwh/1000).toFixed(1)} MWh</div>`:'<span style="color:var(--text6)">—</span>'}</div>
+      <div class="tc">${d.l_plant>0?`<div style="color:${d.l_plant>=3?'#a855f7':'#5a3a7a'};font-weight:600;font-size:11px">−${d.l_plant.toFixed(2)}%</div><div style="font-size:9px;color:var(--text5)">${(d.plant_kwh/1000).toFixed(1)} MWh</div>`:'<span style="color:var(--text6)">—</span>'}</div>
+      <div class="tc">${d.unaccounted>0.1?`<div style="color:#475569;font-size:11px">−${d.unaccounted.toFixed(2)}%</div>`:d.unaccounted===null?'<span style="color:var(--text6);font-size:10px">n/a</span>':'<span style="color:var(--text6)">~0</span>'}</div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:2px">${d.cleanDays>0?`<div class="cal">${calHtml}</div><span style="font-size:9px;color:#38bdf8">${d.cleanDays}d</span>`:'<span style="color:var(--text6)">—</span>'}</div>
+      <div class="tr" style="font-size:11px;color:var(--text5)">${d.gen_mwh.toFixed(0)}</div>
+    </div>`;
+  }).join('');
+}
+
+// ═══════════════════════════════════════════════════════
+//  MODAL
+// ═══════════════════════════════════════════════════════
+function openModal(name){
+  const d=SITES.find(s=>s.name===name); if(!d)return;
+  const cc=cufColor(d.cuf,d.effTgt);
+  document.getElementById('m-name').textContent=d.name;
+  document.getElementById('m-sub').textContent=
+    `AC ${d.ac_cap} kW${d.dc_cap?' · DC '+d.dc_cap.toFixed(0)+' kWp':''} · ${d.n_days} days · ${d.n_rad} rad days`;
+
+  // Top metrics
+  document.getElementById('m-top-metrics').innerHTML=[
+    {l:'DC CUF',      v:d.dc_cuf?d.dc_cuf.toFixed(2)+'%':'—',    c:cc},
+    {l:'Actual PR',   v:d.actual_pr?d.actual_pr+'%':'n/a',         c:d.actual_pr?prColor(d.actual_pr):'#334155'},
+    {l:'Target CUF',  v:d.target_cuf?d.target_cuf.toFixed(2)+'%':'≈'+CONFIG.FLAT_TARGET+'%', c:'#38bdf8'},
+    {l:'vs Target',   v:d.gap<=0?'+'+Math.abs(d.gap).toFixed(2)+'%':'−'+d.gap.toFixed(2)+'%', c:d.gap<=0?'#22c55e':'#ef4444'},
+    {l:'Avg Radiation',v:d.avg_rad?d.avg_rad+' kWh/m²':'—',       c:'#64748b'},
+  ].map(m=>`<div class="mcard"><div class="mcard-label">${m.l}</div><div class="mcard-value" style="color:${m.c}">${m.v}</div></div>`).join('');
+
+  // PR box
+  const prBox=document.getElementById('m-pr-box');
+  if(d.actual_pr){
+    prBox.style.display='block';
+    prBox.style.borderLeft=`2px solid ${prColor(d.actual_pr)}`;
+    prBox.innerHTML=`<div class="section-label" style="margin-bottom:5px">PR Interpretation</div>
+      Converting <span style="color:${prColor(d.actual_pr)};font-weight:600">${d.actual_pr}%</span> of available irradiation.
+      Benchmark is <span style="color:#38bdf8;font-weight:600">${CONFIG.BENCHMARK_PR}%</span>.
+      ${d.actual_pr>=CONFIG.BENCHMARK_PR
+        ?'<span style="color:#22c55e">✓ Above benchmark — module & inverter health is good.</span>'
+        :`<span style="color:#eab308">Gap of ${(CONFIG.BENCHMARK_PR-d.actual_pr).toFixed(1)}% — investigate soiling, shading, or inverter losses.</span>`}
+      ${d.gap>0&&(d.l_grid+d.l_plant)>=d.gap*0.8?'<div style="color:#f97316;margin-top:4px">⚡ CUF gap mostly explained by grid/plant outages — fix availability first.</div>':''}`;
+  } else { prBox.style.display='none'; }
+
+  // Waterfall bar modal
+  const T=37;
+  document.getElementById('m-wf-bar').innerHTML=
+    `<div style="flex:${d.ac_cuf/T};background:${cc}"></div>
+     <div style="flex:${d.l_grid/T};background:#f97316"></div>
+     <div style="flex:${d.l_plant/T};background:#a855f7"></div>
+     <div style="flex:${(d.unaccounted||0)/T};background:#475569"></div>`;
+
+  // Loss cards
+  document.getElementById('m-loss-cards').innerHTML=[
+    {l:'Actual CUF', v:d.ac_cuf.toFixed(2)+'%', sub:d.gen_mwh+' MWh', c:cc},
+    {l:'Grid Loss',  v:d.l_grid>0?'−'+d.l_grid.toFixed(2)+'%':'—', sub:d.grid_kwh>0?(d.grid_kwh/1000).toFixed(1)+' MWh':'', c:'#f97316'},
+    {l:'Plant Loss', v:d.l_plant>0?'−'+d.l_plant.toFixed(2)+'%':'—', sub:d.plant_kwh>0?(d.plant_kwh/1000).toFixed(1)+' MWh':'', c:'#a855f7'},
+    {l:'Unaccounted',v:d.unaccounted>0.1?'−'+d.unaccounted.toFixed(2)+'%':'—', sub:'soiling/shading/inv', c:'#475569'},
+  ].map(x=>`<div class="mcard" style="border-left:2px solid ${x.c}"><div class="mcard-label">${x.l}</div>
+    <div class="mcard-value" style="color:${x.c}">${x.v}</div>
+    ${x.sub?`<div style="font-size:9px;color:var(--text6);margin-top:2px">${x.sub}</div>`:''}</div>`).join('');
+
+  // Cleaning
+  const cleanBox=document.getElementById('m-clean-box');
+  if(d.cleaning){
+    cleanBox.style.display='block';
+    const calDots=d.cleaning.days.filter(x=>x<=d.n_days);
+    const calHtml=Array.from({length:d.n_days},(_,i)=>
+      `<div class="cal-dot" style="background:${calDots.includes(i+1)?'#38bdf8':'#1a2035'}"></div>`
+    ).join('');
+    cleanBox.innerHTML=`<div class="section-label">Cleaning — March 2026 (Est. from Feb pattern)</div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
+        <div class="cal">${calHtml}</div>
+        <span style="font-size:11px;color:#38bdf8">${d.cleanDays} day${d.cleanDays!==1?'s':''} in window</span>
+      </div>
+      <div style="font-size:10px;color:var(--text4)">Feb TDS: <span style="color:#94a3b8">${d.cleaning.tds}</span></div>`;
+  } else { cleanBox.style.display='none'; }
+
+  // Remarks
+  const rmBox=document.getElementById('m-remarks-box');
+  if(d.remarks){
+    rmBox.style.display='block';
+    rmBox.innerHTML=`<div style="font-size:9px;color:#92400e;text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px">⚠ Open Issues</div>`+
+      d.remarks.split(';').map(r=>`<div class="remarks-line">${r.trim()}</div>`).join('');
+  } else { rmBox.style.display='none'; }
+
+  document.getElementById('overlay').classList.add('open');
+}
+function closeModal(){ document.getElementById('overlay').classList.remove('open'); }
+
+// ═══════════════════════════════════════════════════════
+//  BOOT
+// ═══════════════════════════════════════════════════════
+loadData();
+setInterval(loadData, 30*60*1000); // auto-refresh every 30 min
+</script>
+</body>
+</html>
