@@ -1073,6 +1073,7 @@ async function loadInverterData() {
       sites.map(s=>`<option value="${s}">${s}</option>`).join('');
 
     computeInvLossMap();
+    if(SITES.length) renderTable(); // refresh CUF table with inv loss
     renderInverterPage();
     document.getElementById('inv-refresh-btn').textContent='↻';
   } catch(e) {
@@ -1443,7 +1444,9 @@ function renderInvTrendView(siteName) {
 //  BOOT
 // ═══════════════════════════════════════════════════════
 loadData();
+loadInverterData(); // load in background so Inv Loss column populates
 setInterval(loadData, 30*60*1000);
+setInterval(loadInverterData, 30*60*1000);
 </script>
 </body>
 </html>
