@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>PM KUSUM · CUF Dashboard · Stockwell Solar</title>
+<title>PM KUSUM · Stockwell Solar · Dashboard</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&family=Syne:wght@700;800&display=swap" rel="stylesheet"/>
 <style>
@@ -20,7 +20,13 @@ body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'IBM Pl
 ::-webkit-scrollbar-track{background:var(--bg)}
 ::-webkit-scrollbar-thumb{background:#1e2a3a;border-radius:2px}
 
-/* HEADER */
+/* ── TAB NAV ── */
+#tab-nav{display:flex;gap:0;border-bottom:1px solid var(--border2);background:var(--bg2);padding:0 24px}
+.tab-btn{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:11px 18px;border:none;background:none;color:var(--text4);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .15s}
+.tab-btn:hover{color:var(--text2)}
+.tab-btn.active{color:var(--sky);border-bottom-color:var(--sky)}
+
+/* ── HEADER ── */
 #header{border-bottom:1px solid var(--border);padding:15px 24px 12px;background:var(--bg2)}
 .header-top{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px}
 .header-eyebrow{font-size:10px;color:var(--text5);letter-spacing:.18em;text-transform:uppercase;margin-bottom:4px}
@@ -31,20 +37,20 @@ body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'IBM Pl
 .method-box{margin-top:10px;padding:10px 14px;background:var(--bg3);border:1px solid var(--border2);border-radius:6px;font-size:10px;color:var(--text3);line-height:1.9;max-width:660px;display:none}
 .method-box.open{display:block}
 
-/* STAT CARDS */
+/* ── STAT CARDS ── */
 .stats{display:flex;gap:8px;flex-wrap:wrap}
 .stat-card{background:var(--bg3);border:1px solid var(--border2);border-radius:6px;padding:10px 13px;min-width:82px}
 .stat-label{font-size:9px;color:var(--text4);text-transform:uppercase;letter-spacing:.1em;margin-bottom:3px}
 .stat-value{font-family:'Syne',sans-serif;font-size:16px;font-weight:800}
 .stat-sub{font-size:9px;color:var(--text4);margin-top:2px}
 
-/* LEGEND */
+/* ── LEGEND ── */
 .legend{display:flex;gap:12px;margin-top:12px;flex-wrap:wrap;align-items:center}
 .legend-item{display:flex;align-items:center;gap:5px;font-size:9px;color:var(--text5)}
 .legend-dot{width:8px;height:8px;border-radius:2px}
 .legend-line{width:1.5px;height:12px;background:#f0f6ff;opacity:.6}
 
-/* FILTER BAR */
+/* ── FILTER BAR ── */
 #filterbar{padding:8px 24px;border-bottom:1px solid #0a0f18;background:var(--bg2);display:flex;align-items:center;gap:6px;flex-wrap:wrap}
 .filter-label{font-size:9px;color:var(--text5);letter-spacing:.12em;margin-right:4px}
 .chip{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:11px;font-size:10px;cursor:pointer;border:1px solid transparent;transition:all .15s;letter-spacing:.03em;white-space:nowrap;font-family:'IBM Plex Mono',monospace}
@@ -54,7 +60,7 @@ body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'IBM Pl
 .sortbtn:hover{color:#94a3b8;background:#0c1220}
 .sortbtn.on{color:var(--sky);background:#0a1929}
 
-/* TABLE */
+/* ── CUF TABLE ── */
 #table-wrap{overflow-x:auto}
 .col-hdr{display:grid;grid-template-columns:26px 148px 62px 62px 62px 62px 62px 180px 80px 80px 72px 66px 54px;gap:0 6px;padding:7px 24px;border-bottom:1px solid #0a0f18;font-size:9px;color:var(--text5);text-transform:uppercase;letter-spacing:.1em;background:#080c16;position:sticky;top:0;z-index:10}
 .trow{display:grid;grid-template-columns:26px 148px 62px 62px 62px 62px 62px 180px 80px 80px 72px 66px 54px;gap:0 6px;padding:7px 24px;border-bottom:1px solid #090d16;align-items:center;cursor:pointer;transition:background .1s}
@@ -66,16 +72,16 @@ body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'IBM Pl
 .tr{text-align:right}
 .tc{text-align:center}
 
-/* WATERFALL BAR */
+/* ── WATERFALL BAR ── */
 .wf-wrap{position:relative;height:18px;background:var(--bg3);border-radius:3px;overflow:visible;width:100%}
 .wf-seg{position:absolute;top:0;height:100%}
 .wf-line{position:absolute;top:-3px;height:calc(100% + 6px);width:1.5px;background:#f0f6ff;opacity:.65;z-index:3}
 
-/* CAL DOTS */
+/* ── CAL DOTS ── */
 .cal{display:flex;gap:2px}
 .cal-dot{width:5px;height:11px;border-radius:1px}
 
-/* MODAL */
+/* ── CUF MODAL ── */
 #overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:50;display:none;align-items:center;justify-content:center;padding:20px}
 #overlay.open{display:flex}
 #modal{background:var(--bg4);border:1px solid #1a2a3a;border-radius:10px;padding:26px;width:580px;max-height:90vh;overflow-y:auto}
@@ -95,16 +101,110 @@ body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'IBM Pl
 .remarks-line{font-size:11px;color:var(--amber);line-height:1.9}
 .section-label{font-size:9px;color:var(--text4);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px}
 
-/* FOOTER */
+/* ── FOOTER ── */
 #footer{padding:12px 24px;border-top:1px solid #0a0f18;font-size:10px;color:var(--text6);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
 
-/* LOADING / ERROR */
-#loading,#error-msg{min-height:100vh;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace}
+/* ── LOADING / ERROR ── */
+#loading,#error-msg{min-height:60vh;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace}
 #loading{flex-direction:column;gap:12px;color:var(--text4)}
 .spinner{font-size:32px;animation:spin 1.5s linear infinite}
 @keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
 #error-msg{flex-direction:column;gap:8px;color:var(--red);text-align:center;padding:40px;max-width:500px;margin:auto}
 .retry-btn{background:var(--bg3);border:1px solid var(--text4);color:var(--text);padding:8px 20px;border-radius:4px;cursor:pointer;font-family:inherit;font-size:12px;margin-top:8px}
+
+/* ══════════════════════════════════════════
+   INVERTER HEALTH TAB
+══════════════════════════════════════════ */
+#inv-page{display:none}
+#inv-page.active{display:block}
+#cuf-page{display:block}
+#cuf-page.hidden{display:none}
+
+/* INV controls bar */
+#inv-controls{padding:10px 24px;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+#inv-site-select{background:var(--bg3);border:1px solid var(--border2);color:var(--text2);font-family:'IBM Plex Mono',monospace;font-size:11px;padding:5px 10px;border-radius:4px;cursor:pointer;min-width:200px}
+#inv-date-select{background:var(--bg3);border:1px solid var(--border2);color:var(--text2);font-family:'IBM Plex Mono',monospace;font-size:11px;padding:5px 10px;border-radius:4px;cursor:pointer;min-width:130px}
+#inv-date-select option, #inv-site-select option{background:var(--bg3)}
+.inv-ctrl-label{font-size:9px;color:var(--text5);letter-spacing:.12em;text-transform:uppercase}
+#inv-refresh-btn{background:var(--bg3);border:1px solid var(--border2);color:var(--text4);font-family:'IBM Plex Mono',monospace;font-size:11px;padding:5px 10px;border-radius:4px;cursor:pointer;transition:all .15s}
+#inv-refresh-btn:hover{color:var(--sky);border-color:var(--sky)}
+.inv-mode-wrap{margin-left:auto;display:flex;gap:3px}
+.inv-mode-btn{background:none;border:1px solid var(--border2);color:var(--text4);font-family:'IBM Plex Mono',monospace;font-size:10px;padding:4px 10px;border-radius:3px;cursor:pointer;transition:all .15s}
+.inv-mode-btn.on{color:var(--sky);background:#0a1929;border-color:var(--sky)}
+
+/* INV summary cards */
+#inv-summary{display:flex;gap:8px;flex-wrap:wrap;padding:14px 24px;background:var(--bg2);border-bottom:1px solid var(--border)}
+
+/* INV content area */
+#inv-content{padding:16px 24px}
+
+/* INV site header */
+.inv-site-hdr{display:flex;align-items:baseline;gap:12px;margin-bottom:14px;flex-wrap:wrap}
+.inv-site-name{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;color:#eef4ff}
+.inv-site-meta{font-size:10px;color:var(--text4)}
+
+/* Bar chart */
+.inv-bar-chart{background:var(--bg3);border:1px solid var(--border2);border-radius:8px;padding:16px;margin-bottom:14px}
+.inv-chart-title{font-size:9px;color:var(--text4);text-transform:uppercase;letter-spacing:.12em;margin-bottom:14px}
+.inv-bars{display:flex;align-items:flex-end;gap:6px;height:120px;width:100%}
+.inv-bar-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;height:100%}
+.inv-bar-outer{width:100%;flex:1;display:flex;align-items:flex-end;position:relative}
+.inv-bar-inner{width:100%;border-radius:3px 3px 0 0;transition:height .3s ease;min-height:2px;position:relative}
+.inv-bar-inner:hover .inv-bar-tooltip{display:block}
+.inv-bar-tooltip{display:none;position:absolute;bottom:calc(100% + 4px);left:50%;transform:translateX(-50%);background:#0d1a2a;border:1px solid var(--border2);border-radius:4px;padding:4px 8px;font-size:9px;color:var(--text2);white-space:nowrap;z-index:5;pointer-events:none}
+.inv-bar-label{font-size:9px;color:var(--text4);text-align:center}
+.inv-bar-val{font-size:9px;color:var(--text3);text-align:center}
+.inv-avg-line{position:absolute;left:0;right:0;border-top:1px dashed rgba(56,189,248,.5);z-index:2;pointer-events:none}
+
+/* INV table */
+.inv-table{background:var(--bg3);border:1px solid var(--border2);border-radius:8px;overflow:hidden;margin-bottom:14px}
+.inv-table-hdr{display:grid;grid-template-columns:80px 90px 90px 80px 80px 1fr 120px;gap:6px;padding:8px 14px;background:#080c16;font-size:9px;color:var(--text5);text-transform:uppercase;letter-spacing:.1em;border-bottom:1px solid var(--border)}
+.inv-table-row{display:grid;grid-template-columns:80px 90px 90px 80px 80px 1fr 120px;gap:6px;padding:8px 14px;border-bottom:1px solid var(--border);align-items:center;transition:background .1s}
+.inv-table-row:last-child{border-bottom:none}
+.inv-table-row:hover{background:#0c1220}
+.inv-health-bar{height:6px;border-radius:3px;background:var(--border2);overflow:hidden}
+.inv-health-fill{height:100%;border-radius:3px;transition:width .3s}
+.inv-status-badge{display:inline-flex;align-items:center;gap:4px;font-size:9px;padding:2px 7px;border-radius:10px;border:1px solid}
+
+/* Trend sparkline area */
+.inv-trend-section{background:var(--bg3);border:1px solid var(--border2);border-radius:8px;padding:16px;margin-bottom:14px}
+.inv-trend-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-top:12px}
+.inv-spark-card{background:var(--bg4);border:1px solid var(--border);border-radius:6px;padding:10px 12px}
+.inv-spark-name{font-size:10px;color:var(--text3);margin-bottom:2px}
+.inv-spark-val{font-family:'Syne',sans-serif;font-size:14px;font-weight:800;margin-bottom:6px}
+.inv-spark-svg{width:100%;height:32px}
+
+/* Corrective action panel */
+.inv-action-panel{background:var(--bg3);border:1px solid var(--border2);border-radius:8px;padding:16px}
+.inv-action-title{font-size:9px;color:var(--text4);text-transform:uppercase;letter-spacing:.12em;margin-bottom:12px}
+.inv-action-row{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);flex-wrap:wrap}
+.inv-action-row:last-child{border-bottom:none}
+.inv-action-inv{font-size:10px;color:var(--sky);min-width:80px;flex-shrink:0}
+.inv-action-issue{font-size:11px;color:var(--text2);flex:1;line-height:1.5}
+.inv-action-status{flex-shrink:0}
+
+/* Status badges */
+.badge-open{color:#ef4444;border-color:#ef4444;background:#1a0505}
+.badge-progress{color:#fbbf24;border-color:#fbbf24;background:#1a1005}
+.badge-resolved{color:#22c55e;border-color:#22c55e;background:#051a0a}
+.badge-monitor{color:#a855f7;border-color:#a855f7;background:#12051a}
+
+/* Breakdown alert */
+.inv-breakdown-alert{background:#1a0800;border:1px solid #5a2000;border-left:3px solid var(--orange);border-radius:6px;padding:10px 14px;margin-bottom:14px;font-size:11px;color:var(--orange);line-height:1.8}
+
+/* empty state */
+.inv-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 24px;color:var(--text4);gap:10px}
+.inv-empty-icon{font-size:32px;opacity:.3}
+.inv-empty-text{font-size:11px;letter-spacing:.05em}
+
+/* multi-site overview table */
+.inv-overview-table{background:var(--bg3);border:1px solid var(--border2);border-radius:8px;overflow:hidden}
+.inv-ov-hdr{display:grid;grid-template-columns:160px 70px 70px 80px 80px 80px 1fr;gap:6px;padding:8px 14px;background:#080c16;font-size:9px;color:var(--text5);text-transform:uppercase;letter-spacing:.1em;border-bottom:1px solid var(--border)}
+.inv-ov-row{display:grid;grid-template-columns:160px 70px 70px 80px 80px 80px 1fr;gap:6px;padding:8px 14px;border-bottom:1px solid var(--border);align-items:center;cursor:pointer;transition:background .1s}
+.inv-ov-row:last-child{border-bottom:none}
+.inv-ov-row:hover{background:#0c1220}
+.inv-mini-bars{display:flex;gap:2px;align-items:flex-end;height:20px}
+.inv-mini-bar{width:6px;border-radius:1px 1px 0 0;min-height:2px}
 </style>
 </head>
 <body>
@@ -115,75 +215,115 @@ body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'IBM Pl
   <div style="font-size:12px;letter-spacing:.1em">LOADING LIVE DATA…</div>
 </div>
 
-<!-- MAIN APP (hidden until data loads) -->
+<!-- MAIN APP -->
 <div id="app" style="display:none">
 
-  <!-- HEADER -->
-  <div id="header">
-    <div class="header-top">
-      <div>
-        <div class="header-eyebrow">PM KUSUM · Rajasthan · <span id="report-month"></span></div>
-        <div class="header-title">CUF Loss Waterfall — Live Dashboard</div>
-        <div class="header-sub">
-          <span>Benchmark PR: <span style="color:var(--sky)" id="bench-pr-label"></span></span>
-          <span style="color:var(--text6)">·</span>
-          <span>Target CUF = radiation × PR ÷ 24h</span>
-          <button onclick="toggleMethod()" style="font-size:9px;color:var(--text4);background:var(--bg3);border:1px solid var(--border2);border-radius:3px;padding:1px 6px;cursor:pointer;font-family:inherit" id="method-btn">method ▼</button>
-          <span style="display:flex;align-items:center;gap:4px;margin-left:8px">
-            <span class="live-dot"></span>
-            <span style="font-size:9px;color:var(--text4)">Live · <span id="last-fetch"></span></span>
-            <button onclick="loadData()" style="font-size:9px;color:var(--text4);background:var(--bg3);border:1px solid var(--border2);border-radius:3px;padding:1px 6px;cursor:pointer;font-family:inherit;margin-left:2px" id="refresh-btn">↻</button>
-          </span>
+  <!-- TAB NAV -->
+  <div id="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('cuf')" id="tab-cuf">⬡ CUF Dashboard</button>
+    <button class="tab-btn" onclick="switchTab('inv')" id="tab-inv">⚡ Inverter Health</button>
+  </div>
+
+  <!-- ═══════ CUF PAGE ═══════ -->
+  <div id="cuf-page">
+    <div id="header">
+      <div class="header-top">
+        <div>
+          <div class="header-eyebrow">PM KUSUM · Rajasthan · <span id="report-month"></span></div>
+          <div class="header-title">CUF Loss Waterfall — Live Dashboard</div>
+          <div class="header-sub">
+            <span>Benchmark PR: <span style="color:var(--sky)" id="bench-pr-label"></span></span>
+            <span style="color:var(--text6)">·</span>
+            <span>Target CUF = radiation × PR ÷ 24h</span>
+            <button onclick="toggleMethod()" style="font-size:9px;color:var(--text4);background:var(--bg3);border:1px solid var(--border2);border-radius:3px;padding:1px 6px;cursor:pointer;font-family:inherit" id="method-btn">method ▼</button>
+            <span style="display:flex;align-items:center;gap:4px;margin-left:8px">
+              <span class="live-dot"></span>
+              <span style="font-size:9px;color:var(--text4)">Live · <span id="last-fetch"></span></span>
+              <button onclick="loadData()" style="font-size:9px;color:var(--text4);background:var(--bg3);border:1px solid var(--border2);border-radius:3px;padding:1px 6px;cursor:pointer;font-family:inherit;margin-left:2px" id="refresh-btn">↻</button>
+            </span>
+          </div>
+          <div class="method-box" id="method-box"></div>
         </div>
-        <div class="method-box" id="method-box"></div>
+        <div class="stats" id="stats-row"></div>
       </div>
-      <div class="stats" id="stats-row"></div>
+      <div class="legend">
+        <div class="legend-item"><div class="legend-dot" style="background:var(--green)"></div>≥ Target</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--lime)"></div>Within 0.5%</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--yellow)"></div>0.5–2% below</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--red)"></div>&gt;2% below</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--orange)"></div>Grid loss</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--purple)"></div>Plant loss</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--slate)"></div>Unaccounted</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--sky)"></div>Cleaning days</div>
+        <div class="legend-item"><div class="legend-line"></div>Dynamic target</div>
+      </div>
     </div>
-    <div class="legend">
-      <div class="legend-item"><div class="legend-dot" style="background:var(--green)"></div>≥ Target</div>
-      <div class="legend-item"><div class="legend-dot" style="background:var(--lime)"></div>Within 0.5%</div>
-      <div class="legend-item"><div class="legend-dot" style="background:var(--yellow)"></div>0.5–2% below</div>
-      <div class="legend-item"><div class="legend-dot" style="background:var(--red)"></div>&gt;2% below</div>
-      <div class="legend-item"><div class="legend-dot" style="background:var(--orange)"></div>Grid loss</div>
-      <div class="legend-item"><div class="legend-dot" style="background:var(--purple)"></div>Plant loss</div>
-      <div class="legend-item"><div class="legend-dot" style="background:var(--slate)"></div>Unaccounted</div>
-      <div class="legend-item"><div class="legend-dot" style="background:var(--sky)"></div>Cleaning days</div>
-      <div class="legend-item"><div class="legend-line"></div>Dynamic target</div>
+
+    <div id="filterbar">
+      <span class="filter-label">FILTER</span>
+      <div id="chips"></div>
+      <div class="sort-wrap">
+        <span class="filter-label">SORT</span>
+        <div id="sort-btns"></div>
+      </div>
+    </div>
+
+    <div id="table-wrap">
+      <div class="col-hdr">
+        <div>#</div><div>Site</div>
+        <div class="tr">DC CUF</div><div class="tr">Actual PR</div>
+        <div class="tr">Tgt CUF</div><div class="tr">vs Tgt</div>
+        <div class="tr">Radiation</div>
+        <div style="padding-left:6px">Waterfall ← target line</div>
+        <div class="tc">Grid Loss</div><div class="tc">Plant Loss</div>
+        <div class="tc">Unaccntd</div><div class="tc">Cleaning</div>
+        <div class="tr">Gen MWh</div>
+      </div>
+      <div id="table-body"></div>
+    </div>
+
+    <div id="footer">
+      <span>Auto-refreshes every 30 min · Source: Google Sheets · <span id="total-sites"></span> sites</span>
+      <span id="last-updated-footer"></span>
     </div>
   </div>
 
-  <!-- FILTER BAR -->
-  <div id="filterbar">
-    <span class="filter-label">FILTER</span>
-    <div id="chips"></div>
-    <div class="sort-wrap">
-      <span class="filter-label">SORT</span>
-      <div id="sort-btns"></div>
+  <!-- ═══════ INVERTER PAGE ═══════ -->
+  <div id="inv-page">
+
+    <!-- Controls bar -->
+    <div id="inv-controls">
+      <span class="inv-ctrl-label">Site</span>
+      <select id="inv-site-select" onchange="renderInverterPage()">
+        <option value="__all__">— All Sites Overview —</option>
+      </select>
+      <span class="inv-ctrl-label">Date</span>
+      <select id="inv-date-select" onchange="renderInverterPage()">
+        <option value="__latest__">Latest available</option>
+      </select>
+      <button id="inv-refresh-btn" onclick="loadInverterData()">↻ Refresh</button>
+      <div class="inv-mode-wrap">
+        <button class="inv-mode-btn on" id="inv-mode-day" onclick="setInvMode('day')">Day View</button>
+        <button class="inv-mode-btn" id="inv-mode-trend" onclick="setInvMode('trend')">7-Day Trend</button>
+      </div>
     </div>
+
+    <!-- Summary stats -->
+    <div id="inv-summary"></div>
+
+    <!-- Main content -->
+    <div id="inv-content">
+      <div class="inv-empty">
+        <div class="inv-empty-icon">◌</div>
+        <div class="inv-empty-text">Loading inverter data…</div>
+      </div>
+    </div>
+
   </div>
 
-  <!-- TABLE -->
-  <div id="table-wrap">
-    <div class="col-hdr">
-      <div>#</div><div>Site</div>
-      <div class="tr">DC CUF</div><div class="tr">Actual PR</div>
-      <div class="tr">Tgt CUF</div><div class="tr">vs Tgt</div>
-      <div class="tr">Radiation</div>
-      <div style="padding-left:6px">Waterfall ← target line</div>
-      <div class="tc">Grid Loss</div><div class="tc">Plant Loss</div>
-      <div class="tc">Unaccntd</div><div class="tc">Cleaning</div>
-      <div class="tr">Gen MWh</div>
-    </div>
-    <div id="table-body"></div>
-  </div>
-
-  <div id="footer">
-    <span>Auto-refreshes every 30 min · Source: Google Sheets · <span id="total-sites"></span> sites</span>
-    <span id="last-updated-footer"></span>
-  </div>
 </div>
 
-<!-- MODAL -->
+<!-- CUF MODAL -->
 <div id="overlay" onclick="closeModal()">
   <div id="modal" onclick="event.stopPropagation()">
     <div class="modal-hdr">
@@ -208,10 +348,12 @@ body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'IBM Pl
 
 <script>
 // ═══════════════════════════════════════════════════════
-//  CONFIG — only edit this section
+//  CONFIG
 // ═══════════════════════════════════════════════════════
 const CONFIG = {
   SHEET_ID:     "1agcGb0nTi1u-hEOlHU1eXt30wsWyEeK_",
+  INV_SHEET_ID: "1OT-_q7LjKVoO8708Lgs5PUVn8jLyT35fZbEgp9UyKOk",
+  INV_TAB:      "Form responses 1",
   REPORT_MONTH: "March 2026",
   BENCHMARK_PR: 83.2,
   FLAT_TARGET:  23,
@@ -282,12 +424,32 @@ function prColor(pr) {
   if (pr >= 75) return '#eab308';
   return '#ef4444';
 }
+function invHealthColor(pct) {
+  if (pct >= 97) return '#22c55e';
+  if (pct >= 93) return '#84cc16';
+  if (pct >= 85) return '#eab308';
+  return '#ef4444';
+}
+
+// ═══════════════════════════════════════════════════════
+//  TAB SWITCHING
+// ═══════════════════════════════════════════════════════
+let activeTab = 'cuf';
+function switchTab(t) {
+  activeTab = t;
+  document.getElementById('tab-cuf').classList.toggle('active', t==='cuf');
+  document.getElementById('tab-inv').classList.toggle('active', t==='inv');
+  document.getElementById('cuf-page').classList.toggle('hidden', t!=='cuf');
+  document.getElementById('inv-page').style.display = t==='inv' ? 'block' : 'none';
+  if (t === 'inv' && INV_DATA.length === 0) loadInverterData();
+  else if (t === 'inv') renderInverterPage();
+}
 
 // ═══════════════════════════════════════════════════════
 //  CSV FETCH + PARSE
 // ═══════════════════════════════════════════════════════
-async function fetchTab(tabName) {
-  const url = `https://docs.google.com/spreadsheets/d/${CONFIG.SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(tabName)}`;
+async function fetchTab(sheetId, tabName) {
+  const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(tabName)}`;
   const res = await fetch(url);
   if (!res.ok) throw new Error(`Cannot fetch tab "${tabName}" (${res.status})`);
   return parseCSV(await res.text());
@@ -327,7 +489,7 @@ function buildCapMap(rows,col){
 }
 
 // ═══════════════════════════════════════════════════════
-//  MAIN DATA LOADER
+//  CUF DATA LOADER
 // ═══════════════════════════════════════════════════════
 let SITES=[], SUMMARY={}, currentFilter='all', currentSort='cuf';
 
@@ -335,12 +497,12 @@ async function loadData() {
   document.getElementById('refresh-btn').textContent='…';
   try {
     const [genR,radR,gridR,plantR,dcR,acR] = await Promise.all([
-      fetchTab(CONFIG.TABS.generation),
-      fetchTab(CONFIG.TABS.radiation),
-      fetchTab(CONFIG.TABS.gridOutage),
-      fetchTab(CONFIG.TABS.plantBreakdown),
-      fetchTab(CONFIG.TABS.dcCuf),
-      fetchTab(CONFIG.TABS.acCuf),
+      fetchTab(CONFIG.SHEET_ID, CONFIG.TABS.generation),
+      fetchTab(CONFIG.SHEET_ID, CONFIG.TABS.radiation),
+      fetchTab(CONFIG.SHEET_ID, CONFIG.TABS.gridOutage),
+      fetchTab(CONFIG.SHEET_ID, CONFIG.TABS.plantBreakdown),
+      fetchTab(CONFIG.SHEET_ID, CONFIG.TABS.dcCuf),
+      fetchTab(CONFIG.SHEET_ID, CONFIG.TABS.acCuf),
     ]);
     const gen=buildDailyMap(genR), rad=buildDailyMap(radR);
     const grid=buildDailyMap(gridR), plant=buildDailyMap(plantR);
@@ -418,13 +580,9 @@ async function loadData() {
 }
 
 // ═══════════════════════════════════════════════════════
-//  RENDER
+//  CUF RENDER
 // ═══════════════════════════════════════════════════════
-function renderAll(){
-  renderHeader();
-  renderFilters();
-  renderTable();
-}
+function renderAll(){ renderHeader(); renderFilters(); renderTable(); }
 
 function renderHeader(){
   document.getElementById('report-month').textContent=CONFIG.REPORT_MONTH;
@@ -434,7 +592,6 @@ function renderHeader(){
     `<span style="color:var(--sky)">Why not flat ${CONFIG.FLAT_TARGET}%?</span> A flat target ignores that sites receiving more sunlight should generate more.<br>
      <span style="color:var(--sky)">Dynamic target</span> = site's actual radiation × ${CONFIG.BENCHMARK_PR}% ÷ 24. A 7.1 kWh/m² site targets ${((7.1/24)*CONFIG.BENCHMARK_PR).toFixed(1)}% CUF; a 6.2 kWh/m² site targets ${((6.2/24)*CONFIG.BENCHMARK_PR).toFixed(1)}%.<br>
      <span style="color:var(--sky)">Benchmark ${CONFIG.BENCHMARK_PR}% PR</span> = mean of your 6 cleanest sites. Updates monthly.`;
-
   const stats=[
     {l:'Avg DC CUF', v:`${SUMMARY.avgDcCuf}%`, c:SUMMARY.avgDcCuf>=22?'#84cc16':'#ef4444'},
     {l:'Avg PR',     v:SUMMARY.avgPR?`${SUMMARY.avgPR}%`:'—', c:SUMMARY.avgPR>=82?'#22c55e':'#eab308'},
@@ -461,13 +618,11 @@ function renderFilters(){
       <span class="chip-dot" style="background:${c}"></span>${l}
     </span>`
   ).join('');
-
   const sorts=[['cuf','DC CUF'],['pr','Actual PR'],['gap','Gap'],['grid','Grid'],['plant','Plant'],['clean','Cleaning']];
   document.getElementById('sort-btns').innerHTML=sorts.map(([k,l])=>
     `<button class="sortbtn${currentSort===k?' on':''}" onclick="setSort('${k}')">${l} ↕</button>`
   ).join('');
 }
-
 function setFilter(v){ currentFilter=v; renderFilters(); renderTable(); }
 function setSort(k){ currentSort=k; renderFilters(); renderTable(); }
 function toggleMethod(){
@@ -476,7 +631,6 @@ function toggleMethod(){
   box.classList.toggle('open');
   btn.textContent=box.classList.contains('open')?'method ▲':'method ▼';
 }
-
 function getFiltered(){
   let s=[...SITES];
   if(currentFilter==='above')   s=s.filter(d=>d.cuf>=d.effTgt);
@@ -497,7 +651,6 @@ function getFiltered(){
   });
   return s;
 }
-
 function renderTable(){
   const MAX=38;
   const rows=getFiltered();
@@ -505,7 +658,6 @@ function renderTable(){
     const rank=SITES.findIndex(s=>s.name===d.name)+1;
     const below=d.cuf<d.effTgt;
     const cc=cufColor(d.cuf,d.effTgt);
-    // waterfall
     const tPct=(d.effTgt/MAX)*100;
     const cPct=(Math.min(d.cuf,d.effTgt)/MAX)*100;
     const exPct=d.cuf>d.effTgt?((d.cuf-d.effTgt)/MAX)*100:0;
@@ -518,12 +670,10 @@ function renderTable(){
       ${pPct>0.1?`<div class="wf-seg" style="left:${cPct+exPct+gPct}%;width:${pPct}%;background:#a855f7;opacity:.9"></div>`:''}
       ${uPct>0.1?`<div class="wf-seg" style="left:${cPct+exPct+gPct+pPct}%;width:${uPct}%;background:#475569;opacity:.7"></div>`:''}
       <div class="wf-line" style="left:${tPct}%"></div>`;
-    // cal dots
     const calDots=(d.cleaning.days||[]).filter(x=>x<=d.n_days);
     const calHtml=Array.from({length:d.n_days},(_,i)=>
       `<div class="cal-dot" title="Mar ${i+1}" style="background:${calDots.includes(i+1)?'#38bdf8':'#1a2035'}"></div>`
     ).join('');
-
     return `<div class="trow" onclick="openModal('${d.name}')">
       <div style="font-size:10px;color:var(--text6)">${rank}</div>
       <div class="site-name">
@@ -547,17 +697,13 @@ function renderTable(){
   }).join('');
 }
 
-// ═══════════════════════════════════════════════════════
-//  MODAL
-// ═══════════════════════════════════════════════════════
+// CUF MODAL
 function openModal(name){
   const d=SITES.find(s=>s.name===name); if(!d)return;
   const cc=cufColor(d.cuf,d.effTgt);
   document.getElementById('m-name').textContent=d.name;
   document.getElementById('m-sub').textContent=
     `AC ${d.ac_cap} kW${d.dc_cap?' · DC '+d.dc_cap.toFixed(0)+' kWp':''} · ${d.n_days} days · ${d.n_rad} rad days`;
-
-  // Top metrics
   document.getElementById('m-top-metrics').innerHTML=[
     {l:'DC CUF',      v:d.dc_cuf?d.dc_cuf.toFixed(2)+'%':'—',    c:cc},
     {l:'Actual PR',   v:d.actual_pr?d.actual_pr+'%':'n/a',         c:d.actual_pr?prColor(d.actual_pr):'#334155'},
@@ -565,8 +711,6 @@ function openModal(name){
     {l:'vs Target',   v:d.gap<=0?'+'+Math.abs(d.gap).toFixed(2)+'%':'−'+d.gap.toFixed(2)+'%', c:d.gap<=0?'#22c55e':'#ef4444'},
     {l:'Avg Radiation',v:d.avg_rad?d.avg_rad+' kWh/m²':'—',       c:'#64748b'},
   ].map(m=>`<div class="mcard"><div class="mcard-label">${m.l}</div><div class="mcard-value" style="color:${m.c}">${m.v}</div></div>`).join('');
-
-  // PR box
   const prBox=document.getElementById('m-pr-box');
   if(d.actual_pr){
     prBox.style.display='block';
@@ -579,16 +723,12 @@ function openModal(name){
         :`<span style="color:#eab308">Gap of ${(CONFIG.BENCHMARK_PR-d.actual_pr).toFixed(1)}% — investigate soiling, shading, or inverter losses.</span>`}
       ${d.gap>0&&(d.l_grid+d.l_plant)>=d.gap*0.8?'<div style="color:#f97316;margin-top:4px">⚡ CUF gap mostly explained by grid/plant outages — fix availability first.</div>':''}`;
   } else { prBox.style.display='none'; }
-
-  // Waterfall bar modal
   const T=37;
   document.getElementById('m-wf-bar').innerHTML=
     `<div style="flex:${d.ac_cuf/T};background:${cc}"></div>
      <div style="flex:${d.l_grid/T};background:#f97316"></div>
      <div style="flex:${d.l_plant/T};background:#a855f7"></div>
      <div style="flex:${(d.unaccounted||0)/T};background:#475569"></div>`;
-
-  // Loss cards
   document.getElementById('m-loss-cards').innerHTML=[
     {l:'Actual CUF', v:d.ac_cuf.toFixed(2)+'%', sub:d.gen_mwh+' MWh', c:cc},
     {l:'Grid Loss',  v:d.l_grid>0?'−'+d.l_grid.toFixed(2)+'%':'—', sub:d.grid_kwh>0?(d.grid_kwh/1000).toFixed(1)+' MWh':'', c:'#f97316'},
@@ -597,8 +737,6 @@ function openModal(name){
   ].map(x=>`<div class="mcard" style="border-left:2px solid ${x.c}"><div class="mcard-label">${x.l}</div>
     <div class="mcard-value" style="color:${x.c}">${x.v}</div>
     ${x.sub?`<div style="font-size:9px;color:var(--text6);margin-top:2px">${x.sub}</div>`:''}</div>`).join('');
-
-  // Cleaning
   const cleanBox=document.getElementById('m-clean-box');
   if(d.cleaning){
     cleanBox.style.display='block';
@@ -613,24 +751,484 @@ function openModal(name){
       </div>
       <div style="font-size:10px;color:var(--text4)">Feb TDS: <span style="color:#94a3b8">${d.cleaning.tds}</span></div>`;
   } else { cleanBox.style.display='none'; }
-
-  // Remarks
   const rmBox=document.getElementById('m-remarks-box');
   if(d.remarks){
     rmBox.style.display='block';
     rmBox.innerHTML=`<div style="font-size:9px;color:#92400e;text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px">⚠ Open Issues</div>`+
       d.remarks.split(';').map(r=>`<div class="remarks-line">${r.trim()}</div>`).join('');
   } else { rmBox.style.display='none'; }
-
   document.getElementById('overlay').classList.add('open');
 }
 function closeModal(){ document.getElementById('overlay').classList.remove('open'); }
 
 // ═══════════════════════════════════════════════════════
+//  INVERTER DATA LOADER
+// ═══════════════════════════════════════════════════════
+let INV_DATA = [];       // parsed rows
+let INV_MODE = 'day';    // 'day' or 'trend'
+
+// Normalize site names to canonical form
+function normSiteName(raw) {
+  const s = (raw||'').trim().toLowerCase()
+    .replace(/\s+/g,' ')
+    .replace(/site\s*(plant\s*)?(no\.?\s*)?/gi,'')
+    .replace(/\s*-\s*/g,'-')
+    .trim();
+  const MAP = {
+    'ghantiyal bari':'Bidasar','ghantiyal bari (bidasar)':'Bidasar','gantiyal bari':'Bidasar',
+    'bidasar':'Bidasar',
+    'ratnaniya site':'Ratnania Cohra','ratnaniys':'Ratnania Cohra','ratnaniya johra':'Ratnania Cohra','ratnania johra':'Ratnania Cohra',
+    'khakholi':'Khakholi',
+    'kunpalsir':'Kunpalsar','kunpalsar':'Kunpalsar',
+    'kherla nagar 1':'Kherla nagar-1','kherla nagar-1':'Kherla nagar-1',
+    'kherla nagar 2':'Kherla nagar-2','kherla nagar-2':'Kherla nagar-2',
+    'sindhu 1':'Sindhu-1','sindhu-1':'Sindhu-1',
+    'sindhu 2':'Sindhu-2','sindhu-2':'Sindhu-2',
+    'dausar':'Dausar',
+    'budharon ki dhani nokha':'Bhudhro Ki dhani','budharon ki dhani':'Bhudhro Ki dhani','bhudhro ki dhani':'Bhudhro Ki dhani',
+    'haspura':'Haspur','haspur':'Haspur',
+    'pehal':'Pahel','pahel':'Pahel',
+    'birmana tal':'Birmana Tal','birmana tal dhadheru bhamuwan bidasar':'Birmana Tal',
+    'jetpura':'Jetpura',
+    'udwala':'Udwala',
+    'badsar':'Badsar',
+    'rajaldesar':'RaJaldesar','rajaldesar':'RaJaldesar',
+    'chitawa-1':'Chitawa-1','chitawa-2':'Chitawa-2','chitawa-3':'Chitawa-3',
+    'lalasar':'Lalasar',
+    'pilania pau':'Pilania pau',
+    'choti serva':'Choti serwa','choti serwa':'Choti serwa',
+    'rohisa':'Rohisa',
+    'khunkhuna':'Khunkhuna',
+    'dhirasar':'Dhirasar',
+    'ramdevra-2':'ramdevra-2','ramdevra 2':'ramdevra-2',
+    'purnadatal':'Purnadatal',
+    'nadiya tal':'Nadiya Tal',
+    'keshloi tal':'Keshloi tal',
+    'satra -1':'Satra-1','satra- -1':'Satra-1','satra-1':'Satra-1',
+    'satra - 2':'Satra-2','satra- 2':'Satra-2','satra-2':'Satra-2',
+  };
+  return MAP[s] || (raw||'').trim();
+}
+
+function parseDate(str) {
+  // handles dd/mm/yyyy and dd/mm/yyyy formats
+  const m = String(str).match(/(\d{1,2})\/(\d{1,2})\/(\d{2,4})/);
+  if (!m) return null;
+  let y = parseInt(m[3]);
+  if (y < 100) y += 2000;
+  // clamp weird years like 0025 -> 2025
+  if (y < 2020) y += 2000;
+  return new Date(y, parseInt(m[2])-1, parseInt(m[1]));
+}
+
+async function loadInverterData() {
+  document.getElementById('inv-refresh-btn').textContent='…';
+  document.getElementById('inv-content').innerHTML=
+    `<div class="inv-empty"><div class="spinner" style="font-size:24px">◌</div><div class="inv-empty-text">Loading inverter data…</div></div>`;
+  try {
+    const rows = await fetchTab(CONFIG.INV_SHEET_ID, CONFIG.INV_TAB);
+    // rows[0] = headers, rows[1+] = data
+    INV_DATA = [];
+    for (let r = 1; r < rows.length; r++) {
+      const row = rows[r];
+      if (!row || row.length < 6) continue;
+      const siteName = normSiteName(row[1]);
+      const dateRaw = (row[4]||'').trim();
+      const dateObj = parseDate(dateRaw);
+      if (!dateObj || isNaN(dateObj)) continue;
+      // parse up to 15 inverters (cols 5-19)
+      const invGen = [];
+      for (let i = 0; i < 15; i++) {
+        const v = toNum(row[5+i]);
+        invGen.push(v);
+      }
+      const totalGen = toNum(row[20]);
+      const pr = toNum(row[21]);
+      const cuf = toNum(row[22]);
+      const plantBreakdown = (row[23]||'').trim();
+      const gridBreakdown = (row[24]||'').trim();
+      const radiation = toNum(row[25]);
+      const weather = (row[29]||'').trim();
+      INV_DATA.push({ siteName, dateObj, dateRaw, invGen, totalGen, pr, cuf, plantBreakdown, gridBreakdown, radiation, weather });
+    }
+
+    // populate site selector
+    const sites = [...new Set(INV_DATA.map(d=>d.siteName))].sort();
+    const sel = document.getElementById('inv-site-select');
+    sel.innerHTML = `<option value="__all__">— All Sites Overview —</option>` +
+      sites.map(s=>`<option value="${s}">${s}</option>`).join('');
+
+    renderInverterPage();
+    document.getElementById('inv-refresh-btn').textContent='↻';
+  } catch(e) {
+    document.getElementById('inv-content').innerHTML=
+      `<div class="inv-empty" style="color:var(--red)">
+        <div style="font-size:24px">⚠</div>
+        <div>${e.message}</div>
+        <div style="font-size:10px;color:var(--text4);margin-top:4px">Check Sheet ID and sharing settings</div>
+        <button class="retry-btn" onclick="loadInverterData()">↻ Retry</button>
+      </div>`;
+    document.getElementById('inv-refresh-btn').textContent='↻';
+  }
+}
+
+function setInvMode(m) {
+  INV_MODE = m;
+  document.getElementById('inv-mode-day').classList.toggle('on', m==='day');
+  document.getElementById('inv-mode-trend').classList.toggle('on', m==='trend');
+  renderInverterPage();
+}
+
+function renderInverterPage() {
+  if (INV_DATA.length === 0) return;
+  const siteSel = document.getElementById('inv-site-select').value;
+
+  // populate date dropdown for chosen site
+  const dateSel = document.getElementById('inv-date-select');
+  if (siteSel !== '__all__') {
+    const siteDates = [...new Set(
+      INV_DATA.filter(d=>d.siteName===siteSel)
+        .map(d=>d.dateRaw)
+    )].sort((a,b)=>parseDate(b)-parseDate(a));
+    const curDate = dateSel.value;
+    dateSel.innerHTML = siteDates.map((d,i)=>
+      `<option value="${d}" ${i===0&&curDate==='__latest__'?'selected':d===curDate?'selected':''}>${d}</option>`
+    ).join('');
+    dateSel.disabled = false;
+  } else {
+    dateSel.innerHTML = `<option value="__latest__">Latest per site</option>`;
+    dateSel.disabled = true;
+  }
+
+  if (siteSel === '__all__') {
+    renderInvOverview();
+  } else {
+    const chosenDate = dateSel.value;
+    if (INV_MODE === 'day') renderInvDayView(siteSel, chosenDate);
+    else renderInvTrendView(siteSel);
+  }
+}
+
+// ─── OVERVIEW MODE ───
+function renderInvOverview() {
+  // Get latest record per site
+  const latestBySite = {};
+  INV_DATA.forEach(d => {
+    if (!latestBySite[d.siteName] || d.dateObj > latestBySite[d.siteName].dateObj)
+      latestBySite[d.siteName] = d;
+  });
+  const entries = Object.values(latestBySite).sort((a,b)=>a.siteName.localeCompare(b.siteName));
+
+  // Summary bar
+  let totalInv=0, weakInv=0, sitesWithIssue=0;
+  entries.forEach(e=>{
+    const valid = e.invGen.filter(v=>v!==null&&v>0);
+    totalInv += valid.length;
+    const avg = valid.length ? valid.reduce((s,v)=>s+v,0)/valid.length : 0;
+    const weak = valid.filter(v => avg>0 && v < avg*0.85).length;
+    weakInv += weak;
+    if (weak>0 || (e.plantBreakdown&&e.plantBreakdown!=='No'&&e.plantBreakdown!=='NO'&&e.plantBreakdown!=='Na'&&e.plantBreakdown!=='no')) sitesWithIssue++;
+  });
+  document.getElementById('inv-summary').innerHTML=[
+    {l:'Sites Tracked', v:entries.length, c:'#64748b'},
+    {l:'Total Inverters', v:totalInv, c:'#38bdf8'},
+    {l:'Underperforming', v:weakInv, c:weakInv>0?'#ef4444':'#22c55e'},
+    {l:'Sites w/ Issues', v:sitesWithIssue, c:sitesWithIssue>0?'#fbbf24':'#22c55e'},
+  ].map(s=>`<div class="stat-card"><div class="stat-label">${s.l}</div><div class="stat-value" style="color:${s.c}">${s.v}</div></div>`).join('');
+
+  // Overview table
+  document.getElementById('inv-content').innerHTML=`
+    <div style="margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">
+      <div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:800;color:#eef4ff">All Sites — Latest Inverter Snapshot</div>
+      <div style="font-size:10px;color:var(--text4)">Click a site row to drill in</div>
+    </div>
+    <div class="inv-overview-table">
+      <div class="inv-ov-hdr">
+        <div>Site</div>
+        <div class="tc">Date</div>
+        <div class="tc">Inverters</div>
+        <div class="tc">Avg Gen</div>
+        <div class="tc">Weakest</div>
+        <div class="tc">PR%</div>
+        <div>Generation Profile</div>
+      </div>
+      ${entries.map(e=>{
+        const valid = e.invGen.filter(v=>v!==null&&v>0);
+        const avg = valid.length ? valid.reduce((s,v)=>s+v,0)/valid.length : 0;
+        const minV = valid.length ? Math.min(...valid) : 0;
+        const maxV = valid.length ? Math.max(...valid) : 1;
+        const weakPct = avg>0 ? ((avg-minV)/avg*100) : 0;
+        const hasBreakdown = e.plantBreakdown && !['no','na','No','NA','No breakdown occurs upto 16:30pm',''].includes(e.plantBreakdown.trim());
+        const miniBars = valid.map(v=>{
+          const h = Math.round((v/maxV)*16)+2;
+          const c = avg>0&&v<avg*0.85?'#ef4444':avg>0&&v<avg*0.93?'#eab308':'#22c55e';
+          return `<div class="inv-mini-bar" style="height:${h}px;background:${c}"></div>`;
+        }).join('');
+        return `<div class="inv-ov-row" onclick="drillSite('${e.siteName}')">
+          <div style="display:flex;align-items:center;gap:6px">
+            <div style="width:5px;height:5px;border-radius:50%;background:${weakPct>15?'#ef4444':weakPct>7?'#eab308':'#22c55e'}"></div>
+            <span style="font-size:11px;color:#c8d8e8">${e.siteName}</span>
+            ${hasBreakdown?'<span style="color:var(--amber);font-size:9px">⚠</span>':''}
+          </div>
+          <div class="tc" style="font-size:10px;color:var(--text4)">${e.dateRaw}</div>
+          <div class="tc" style="font-size:11px;color:var(--sky)">${valid.length}</div>
+          <div class="tc" style="font-size:11px;color:var(--text2)">${avg>0?avg.toFixed(0)+' kWh':'—'}</div>
+          <div class="tc" style="font-size:11px;color:${weakPct>15?'#ef4444':weakPct>7?'#eab308':'#22c55e'}">${minV>0?(100-weakPct).toFixed(0)+'%':'—'}</div>
+          <div class="tc" style="font-size:11px;color:${prColor(e.pr)}">${e.pr?e.pr+'%':'—'}</div>
+          <div><div class="inv-mini-bars">${miniBars}</div></div>
+        </div>`;
+      }).join('')}
+    </div>`;
+}
+
+function drillSite(siteName) {
+  document.getElementById('inv-site-select').value = siteName;
+  renderInverterPage();
+}
+
+// ─── DAY VIEW ───
+function renderInvDayView(siteName, dateStr) {
+  const records = INV_DATA.filter(d=>d.siteName===siteName && d.dateRaw===dateStr);
+  if (!records.length) {
+    document.getElementById('inv-content').innerHTML=`<div class="inv-empty"><div class="inv-empty-icon">○</div><div class="inv-empty-text">No data for this date</div></div>`;
+    return;
+  }
+  // Use most recent record for this date
+  const rec = records[records.length-1];
+  const valid = rec.invGen.map((v,i)=>({idx:i,kWh:v})).filter(x=>x.kWh!==null&&x.kWh>0);
+  const avg = valid.length ? valid.reduce((s,x)=>s+x.kWh,0)/valid.length : 0;
+  const maxKwh = valid.length ? Math.max(...valid.map(x=>x.kWh)) : 1;
+  const minKwh = valid.length ? Math.min(...valid.map(x=>x.kWh)) : 0;
+  const deviation = avg>0 ? ((maxKwh-minKwh)/avg*100).toFixed(1) : 0;
+  const weakInvs = valid.filter(x=>avg>0&&x.kWh<avg*0.85);
+
+  // Summary
+  document.getElementById('inv-summary').innerHTML=[
+    {l:'Inverters Active', v:valid.length, c:'#38bdf8'},
+    {l:'Avg Generation', v:avg>0?avg.toFixed(0)+' kWh':'—', c:'#64748b'},
+    {l:'Max/Min Spread', v:deviation+'%', c:parseFloat(deviation)>15?'#ef4444':parseFloat(deviation)>8?'#eab308':'#22c55e'},
+    {l:'Underperforming', v:weakInvs.length, c:weakInvs.length>0?'#ef4444':'#22c55e'},
+    {l:'PR', v:rec.pr?rec.pr+'%':'—', c:prColor(rec.pr)},
+    {l:'Total Gen', v:rec.totalGen?rec.totalGen.toFixed(0)+' kWh':'—', c:'#64748b'},
+    {l:'Radiation', v:rec.radiation?rec.radiation+' kWh/m²':'—', c:'#475569'},
+  ].map(s=>`<div class="stat-card"><div class="stat-label">${s.l}</div><div class="stat-value" style="color:${s.c}">${s.v}</div></div>`).join('');
+
+  // Build content
+  let html = `<div class="inv-site-hdr">
+    <div class="inv-site-name">${siteName}</div>
+    <div class="inv-site-meta">${dateStr} · ${rec.weather||'—'}</div>
+  </div>`;
+
+  // Breakdown alert
+  const hasPlant = rec.plantBreakdown && !['no','na','No','NA',''].includes(rec.plantBreakdown.trim());
+  const hasGrid  = rec.gridBreakdown  && !['no','na','No','NA',''].includes(rec.gridBreakdown.trim());
+  if (hasPlant || hasGrid) {
+    html += `<div class="inv-breakdown-alert">
+      ${hasPlant?`<div>⚙ <strong>Plant Breakdown:</strong> ${rec.plantBreakdown}</div>`:''}
+      ${hasGrid?`<div>⚡ <strong>Grid Breakdown:</strong> ${rec.gridBreakdown}</div>`:''}
+    </div>`;
+  }
+
+  // Bar chart
+  html += `<div class="inv-bar-chart">
+    <div class="inv-chart-title">Inverter Generation Comparison — ${dateStr}
+      <span style="margin-left:12px;color:var(--text5)">Avg: <span style="color:#38bdf8">${avg>0?avg.toFixed(0)+' kWh':'—'}</span></span>
+      <span style="margin-left:10px;color:var(--text5)">── dashed line = avg</span>
+    </div>
+    <div class="inv-bars" style="position:relative">`;
+  const avgPct = maxKwh>0?(avg/maxKwh)*100:0;
+  // avg line overlay
+  html += `<div style="position:absolute;left:0;right:0;bottom:${avgPct}%;height:1px;border-top:1px dashed rgba(56,189,248,.45);z-index:2;pointer-events:none"></div>`;
+  valid.forEach(x=>{
+    const pct = maxKwh>0?(x.kWh/maxKwh)*100:0;
+    const isWeak = avg>0&&x.kWh<avg*0.85;
+    const isLow  = avg>0&&x.kWh<avg*0.93&&!isWeak;
+    const col = isWeak?'#ef4444':isLow?'#eab308':'#22c55e';
+    const diff = avg>0?((x.kWh-avg)/avg*100):0;
+    html += `<div class="inv-bar-wrap">
+      <div class="inv-bar-outer">
+        <div class="inv-bar-inner" style="width:100%;height:${pct}%;background:${col};opacity:.85">
+          <div class="inv-bar-tooltip">INV-${x.idx+1}<br>${x.kWh.toFixed(0)} kWh<br>${diff>=0?'+':''}${diff.toFixed(1)}% vs avg</div>
+        </div>
+      </div>
+      <div class="inv-bar-label" style="color:${isWeak?'#ef4444':isLow?'#eab308':'#64748b'}">INV${x.idx+1}</div>
+      <div class="inv-bar-val">${x.kWh>=1000?(x.kWh/1000).toFixed(1)+'M':x.kWh.toFixed(0)}</div>
+    </div>`;
+  });
+  html += `</div></div>`;
+
+  // Detailed table
+  html += `<div class="inv-table">
+    <div class="inv-table-hdr">
+      <div>Inverter</div>
+      <div class="tr">Generation</div>
+      <div class="tr">vs Average</div>
+      <div class="tr">vs Best</div>
+      <div class="tc">Health</div>
+      <div>Performance Bar</div>
+      <div class="tc">Status</div>
+    </div>`;
+  valid.sort((a,b)=>b.kWh-a.kWh).forEach(x=>{
+    const vsAvg = avg>0?((x.kWh-avg)/avg*100):0;
+    const vsBest = maxKwh>0?((x.kWh/maxKwh)*100):100;
+    const isWeak = avg>0&&x.kWh<avg*0.85;
+    const isLow  = avg>0&&x.kWh<avg*0.93&&!isWeak;
+    const col = isWeak?'#ef4444':isLow?'#eab308':'#22c55e';
+    let statusHtml, statusLabel;
+    if (isWeak) { statusLabel='Investigate'; statusHtml='badge-open'; }
+    else if (isLow) { statusLabel='Monitor'; statusHtml='badge-monitor'; }
+    else { statusLabel='Normal'; statusHtml='badge-resolved'; }
+    html += `<div class="inv-table-row">
+      <div style="font-size:11px;color:#38bdf8">INV-${x.idx+1}</div>
+      <div class="tr" style="font-size:12px;font-weight:600;color:${col}">${x.kWh.toFixed(0)} kWh</div>
+      <div class="tr" style="font-size:11px;color:${vsAvg<-8?'#ef4444':vsAvg<-3?'#eab308':'#22c55e'}">${vsAvg>=0?'+':''}${vsAvg.toFixed(1)}%</div>
+      <div class="tr" style="font-size:11px;color:var(--text3)">${vsBest.toFixed(1)}%</div>
+      <div class="tc">
+        <div class="inv-health-bar" style="width:60px;margin:auto">
+          <div class="inv-health-fill" style="width:${vsBest}%;background:${col}"></div>
+        </div>
+      </div>
+      <div>
+        <div class="inv-health-bar">
+          <div class="inv-health-fill" style="width:${vsBest}%;background:${col}"></div>
+        </div>
+      </div>
+      <div class="tc"><span class="inv-status-badge ${statusHtml}">${statusLabel}</span></div>
+    </div>`;
+  });
+  html += `</div>`;
+
+  // Corrective actions for underperforming
+  if (weakInvs.length > 0) {
+    html += `<div class="inv-action-panel">
+      <div class="inv-action-title">⚙ Corrective Action Required — ${weakInvs.length} inverter${weakInvs.length>1?'s':''} underperforming (&lt;85% of avg)</div>`;
+    weakInvs.sort((a,b)=>a.kWh-b.kWh).forEach(x=>{
+      const vsAvg = avg>0?((x.kWh-avg)/avg*100):0;
+      const lostKwh = avg - x.kWh;
+      html += `<div class="inv-action-row">
+        <div class="inv-action-inv">INV-${x.idx+1}</div>
+        <div class="inv-action-issue">
+          Generation: <span style="color:#ef4444">${x.kWh.toFixed(0)} kWh</span>
+          · <span style="color:#ef4444">${vsAvg.toFixed(1)}% below avg</span>
+          · Est. loss: <span style="color:#fbbf24">${lostKwh.toFixed(0)} kWh</span><br>
+          <span style="font-size:10px;color:var(--text4)">Check: DC string fuses · MPPT tracking · Soiling on linked array · Communication fault · Thermal trip</span>
+        </div>
+        <div class="inv-action-status"><span class="inv-status-badge badge-open">⚠ Open</span></div>
+      </div>`;
+    });
+    html += `</div>`;
+  }
+
+  document.getElementById('inv-content').innerHTML = html;
+}
+
+// ─── TREND VIEW ───
+function renderInvTrendView(siteName) {
+  const siteRecs = INV_DATA.filter(d=>d.siteName===siteName)
+    .sort((a,b)=>a.dateObj-b.dateObj)
+    .slice(-7); // last 7 records
+
+  if (!siteRecs.length) {
+    document.getElementById('inv-content').innerHTML=`<div class="inv-empty"><div class="inv-empty-icon">○</div><div class="inv-empty-text">No trend data available</div></div>`;
+    return;
+  }
+
+  // Find max inverter count
+  const maxInv = Math.max(...siteRecs.map(r=>r.invGen.filter(v=>v!==null&&v>0).length));
+  const dates = siteRecs.map(r=>r.dateRaw);
+
+  document.getElementById('inv-summary').innerHTML=[
+    {l:'Days Shown', v:siteRecs.length, c:'#38bdf8'},
+    {l:'Inverters Tracked', v:maxInv, c:'#64748b'},
+    {l:'Avg PR', v:(()=>{const prVals=siteRecs.filter(r=>r.pr).map(r=>r.pr);return prVals.length?(prVals.reduce((s,v)=>s+v,0)/prVals.length).toFixed(1)+'%':'—'})(), c:'#22c55e'},
+    {l:'Avg Generation', v:(()=>{const genVals=siteRecs.filter(r=>r.totalGen).map(r=>r.totalGen);return genVals.length?(genVals.reduce((s,v)=>s+v,0)/genVals.length/1000).toFixed(1)+' MWh':'—'})(), c:'#64748b'},
+  ].map(s=>`<div class="stat-card"><div class="stat-label">${s.l}</div><div class="stat-value" style="color:${s.c}">${s.v}</div></div>`).join('');
+
+  let html = `<div class="inv-site-hdr">
+    <div class="inv-site-name">${siteName}</div>
+    <div class="inv-site-meta">Last ${siteRecs.length} days trend</div>
+  </div>`;
+
+  html += `<div class="inv-trend-section">
+    <div class="inv-chart-title">Per-Inverter Generation Trend (kWh/day)</div>
+    <div class="inv-trend-grid">`;
+
+  for (let i = 0; i < maxInv; i++) {
+    const vals = siteRecs.map(r=>r.invGen[i]);
+    const validVals = vals.filter(v=>v!==null&&v>0);
+    if (!validVals.length) continue;
+    const maxVal = Math.max(...validVals);
+    const avgVal = validVals.reduce((s,v)=>s+v,0)/validVals.length;
+    const latestVal = vals[vals.length-1];
+    const trend = validVals.length>=2 ? validVals[validVals.length-1]-validVals[0] : 0;
+    const col = latestVal&&avgVal ? invHealthColor((latestVal/avgVal)*100) : '#64748b';
+
+    // build sparkline SVG
+    const w=160,h=32,pad=4;
+    const points = vals.map((v,idx)=>{
+      const x = pad + (idx/(siteRecs.length-1||1))*(w-pad*2);
+      const y = v&&maxVal>0 ? h-pad - ((v/maxVal)*(h-pad*2)) : h-pad;
+      return `${x},${y}`;
+    }).join(' ');
+    const sparkSvg = `<svg viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" class="inv-spark-svg">
+      <polyline points="${points}" fill="none" stroke="${col}" stroke-width="1.5" stroke-linejoin="round" opacity=".8"/>
+      ${vals.map((v,idx)=>{
+        if(v===null||v<=0)return '';
+        const x = pad+(idx/(siteRecs.length-1||1))*(w-pad*2);
+        const y = h-pad-((v/maxVal)*(h-pad*2));
+        return `<circle cx="${x}" cy="${y}" r="2.5" fill="${col}" opacity=".7"/>`;
+      }).join('')}
+    </svg>`;
+
+    html += `<div class="inv-spark-card">
+      <div class="inv-spark-name">INV-${i+1}</div>
+      <div class="inv-spark-val" style="color:${col}">${latestVal?latestVal.toFixed(0)+' kWh':'—'}
+        <span style="font-size:10px;font-family:'IBM Plex Mono',monospace;color:${trend>=0?'#22c55e':'#ef4444'}">${trend>=0?'↑':'↓'}${Math.abs(trend).toFixed(0)}</span>
+      </div>
+      ${sparkSvg}
+      <div style="display:flex;justify-content:space-between;font-size:9px;color:var(--text5);margin-top:4px">
+        <span>${dates[0]}</span><span>${dates[dates.length-1]}</span>
+      </div>
+    </div>`;
+  }
+  html += `</div></div>`;
+
+  // PR trend
+  const prRecs = siteRecs.filter(r=>r.pr);
+  if (prRecs.length >= 2) {
+    const prMax = Math.max(...prRecs.map(r=>r.pr));
+    const prPts = prRecs.map((r,i)=>{
+      const x = 8+(i/(prRecs.length-1||1))*(280-16);
+      const y = 8+((prMax-r.pr)/Math.max(prMax-50,10))*(60-16);
+      return `${x},${y}`;
+    }).join(' ');
+    html += `<div class="inv-trend-section">
+      <div class="inv-chart-title">PR% Trend</div>
+      <svg viewBox="0 0 280 70" style="width:100%;max-width:560px;height:70px">
+        <line x1="8" y1="8" x2="8" y2="62" stroke="#1a2a3a" stroke-width="1"/>
+        <line x1="8" y1="62" x2="272" y2="62" stroke="#1a2a3a" stroke-width="1"/>
+        <polyline points="${prPts}" fill="none" stroke="#22c55e" stroke-width="1.5"/>
+        ${prRecs.map((r,i)=>{
+          const x = 8+(i/(prRecs.length-1||1))*(280-16);
+          const y = 8+((prMax-r.pr)/Math.max(prMax-50,10))*(60-16);
+          return `<circle cx="${x}" cy="${y}" r="3" fill="${prColor(r.pr)}"/>
+          <text x="${x}" y="${y-5}" font-size="7" fill="#64748b" text-anchor="middle" font-family="monospace">${r.pr}%</text>`;
+        }).join('')}
+      </svg>
+      <div style="display:flex;justify-content:space-between;font-size:9px;color:var(--text5);margin-top:4px;max-width:560px">
+        <span>${prRecs[0].dateRaw}</span><span>${prRecs[prRecs.length-1].dateRaw}</span>
+      </div>
+    </div>`;
+  }
+
+  document.getElementById('inv-content').innerHTML = html;
+}
+
+// ═══════════════════════════════════════════════════════
 //  BOOT
 // ═══════════════════════════════════════════════════════
 loadData();
-setInterval(loadData, 30*60*1000); // auto-refresh every 30 min
+setInterval(loadData, 30*60*1000);
 </script>
 </body>
 </html>
