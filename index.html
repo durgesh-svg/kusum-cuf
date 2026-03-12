@@ -562,7 +562,7 @@ function cycleStatusLabel(status) {
 }
 
 function buildCleaningHTML(siteName) {
-  const sc = CLEANING_SCHED[siteName];
+  const sc = CLEANING_SCHED[normKey(siteName)];
   if (!sc) return '<span style="color:var(--text6);font-size:9px">—</span>';
   const today = new Date(2026, 2, 12); // current date
   let html = '<div class="cyc-row">';
@@ -603,7 +603,8 @@ async function loadData() {
     CLEANING_SCHED = {};
     for (let r = 3; r < cleanR.length; r++) {
       const row = cleanR[r]; if (!row || !row[1]) continue;
-      const sn = row[1].trim();
+      const sn = normKey(row[1]);
+      if(sn==='site name'||sn==='plant location'||sn==='') continue;
       CLEANING_SCHED[sn] = {
         c1:{ start:row[2]||'', end:row[3]||'', tds:row[4]||'', status:row[5]||'' },
         c2:{ start:row[6]||'', end:row[7]||'', tds:row[8]||'', status:row[9]||'' },
