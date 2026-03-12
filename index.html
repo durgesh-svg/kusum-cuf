@@ -702,7 +702,7 @@ async function loadData() {
     // Assign invLoss from map if already loaded
     if(Object.keys(INV_LOSS_MAP).length){
       SITES.forEach(s => {
-        s.invLoss = INV_LOSS_MAP[s.name] ?? INV_LOSS_MAP[normKey(s.name)] ?? null;
+        s.invLoss = INV_LOSS_MAP[normKey(s.name)] ?? null;
       });
     }
     renderAll();
@@ -938,7 +938,7 @@ function computeInvLossMap() {
     });
     // Express as % of total expected generation
     const lossPct = totalAvgKwh > 0 ? (totalLostKwh / totalAvgKwh) * 100 : 0;
-    if(lossPct > 0) INV_LOSS_MAP[site] = +lossPct.toFixed(2);
+    if(lossPct > 0) INV_LOSS_MAP[normKey(site)] = +lossPct.toFixed(2);
   });
   console.log('INV_LOSS_MAP keys:', Object.keys(INV_LOSS_MAP));
   console.log('SITES names:', SITES.map(s=>s.name));
@@ -1084,7 +1084,7 @@ async function loadInverterData() {
     // Update invLoss on each site object directly
     if(SITES.length){
       SITES.forEach(s => {
-        s.invLoss = INV_LOSS_MAP[s.name] ?? INV_LOSS_MAP[normKey(s.name)] ?? null;
+        s.invLoss = INV_LOSS_MAP[normKey(s.name)] ?? null;
       });
       renderTable();
     }
