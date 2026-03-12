@@ -522,18 +522,23 @@ let CLEANING_SCHED = {}; // keyed by normalized site name
 function parseCleanDate(str) {
   if (!str) return null;
   const s = String(str).trim();
-  // formats: "3-March", "10-March", "3/3/2026", day number "3"
   const monthMap = {january:1,february:2,march:3,april:4,may:5,june:6,july:7,august:8,september:9,october:10,november:11,december:12};
-  const m1 = s.match(/^(\d{1,2})[\-\/\s](\w+)/i);
+  // "3/3/2026" or "3/3/26" — gviz datetime format
+  const m2 = s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{2,4})/);
+  if (m2) {
+    let y = parseInt(m2[3]); if(y<100) y+=2000;
+    return new Date(y, parseInt(m2[1])-1, parseInt(m2[2]));
+  }
+  // "3-March" or "10-March"
+  const m1 = s.match(/^(\d{1,2})[\-\s](\w+)/i);
   if (m1) {
     const day = parseInt(m1[1]);
     const mon = monthMap[m1[2].toLowerCase()];
     if (mon) return new Date(2026, mon-1, day);
   }
-  const m2 = s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})/);
-  if (m2) return new Date(parseInt(m2[3]), parseInt(m2[2])-1, parseInt(m2[1]));
+  // plain day number
   const dayOnly = parseInt(s);
-  if (!isNaN(dayOnly)) return new Date(2026, 2, dayOnly); // assume March 2026
+  if (!isNaN(dayOnly)) return new Date(2026, 2, dayOnly);
   return null;
 }
 
@@ -601,14 +606,23 @@ async function loadData() {
     ]);
     // Parse cleaning schedule — columns: Sr | Site | C1Start | C1End | C1TDS | C1Status | C2Start | C2End | C2TDS | C2Status | C3Start | C3End | C3TDS | C3Status
     CLEANING_SCHED = {};
-    for (let r = 5; r < cleanR.length; r++) {
+    console.log('Cleaning tab total rows:', cleanR.length);
+    console.log('Row 0:', cleanR[0]);
+    console.log('Row 1:', cleanR[1]);
+    console.log('Row 2:', cleanR[2]);
+    console.log('Row 3:', cleanR[3]);
+    console.log('Row 4:', cleanR[4]);
+    console.log('Row 5:', cleanR[5]);
+    for (let r = 0; r < cleanR.length; r++) {
       const row = cleanR[r]; if (!row || !row[1]) continue;
       const sn = normKey(row[1]);
-      if(sn==='site name'||sn==='plant location'||sn==='') continue;
+      if(sn==='site name'||sn==='plant location'||sn===''||sn==='sr. no.'||sn==='sr.no.'||isNaN(parseFloat(row[0]))==false&&sn.length<3) continue;
+      // skip header-like rows
+      if(['site name','plant location','sr. no.','sr.no.','cycle 1st','start date'].includes(sn)) continue;
       CLEANING_SCHED[sn] = {
-        c1:{ start:row[2]||'', end:row[3]||'', tds:row[4]||'', status:row[5]||'' },
-        c2:{ start:row[6]||'', end:row[7]||'', tds:row[8]||'', status:row[9]||'' },
-        c3:{ start:row[10]||'', end:row[11]||'', tds:row[12]||'', status:row[13]||'' },
+        c1:{ start:row[2]||'', end:row[3]||'', tds:row[4]||'', status:(row[5]||'').replace(/\s*▼\s*/g,'').trim() },
+        c2:{ start:row[6]||'', end:row[7]||'', tds:row[8]||'', status:(row[9]||'').replace(/\s*▼\s*/g,'').trim() },
+        c3:{ start:row[10]||'', end:row[11]||'', tds:row[12]||'', status:(row[13]||'').replace(/\s*▼\s*/g,'').trim() },
       };
     }
     const gen=buildDailyMap(genR), rad=buildDailyMap(radR);
