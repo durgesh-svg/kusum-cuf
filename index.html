@@ -62,8 +62,8 @@ body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'IBM Pl
 
 /* ── CUF TABLE ── */
 #table-wrap{overflow-x:auto}
-.col-hdr{display:grid;grid-template-columns:26px 148px 62px 62px 62px 62px 62px 180px 80px 80px 72px 66px 54px;gap:0 6px;padding:7px 24px;border-bottom:1px solid #0a0f18;font-size:9px;color:var(--text5);text-transform:uppercase;letter-spacing:.1em;background:#080c16;position:sticky;top:0;z-index:10}
-.trow{display:grid;grid-template-columns:26px 148px 62px 62px 62px 62px 62px 180px 80px 80px 72px 66px 54px;gap:0 6px;padding:7px 24px;border-bottom:1px solid #090d16;align-items:center;cursor:pointer;transition:background .1s}
+.col-hdr{display:grid;grid-template-columns:26px 148px 62px 62px 62px 62px 62px 180px 80px 80px 72px 66px 54px 58px 52px 52px 52px;gap:0 6px;padding:7px 24px;border-bottom:1px solid #0a0f18;font-size:9px;color:var(--text5);text-transform:uppercase;letter-spacing:.1em;background:#080c16;position:sticky;top:0;z-index:10}
+.trow{display:grid;grid-template-columns:26px 148px 62px 62px 62px 62px 62px 180px 80px 80px 72px 66px 54px 58px 52px 52px 52px;gap:0 6px;padding:7px 24px;border-bottom:1px solid #090d16;align-items:center;cursor:pointer;transition:background .1s}
 .trow:hover{background:#0c1220}
 .site-name{display:flex;align-items:center;gap:5px;overflow:hidden}
 .site-name span{font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -278,6 +278,10 @@ body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'IBM Pl
         <div class="tc">Grid Loss</div><div class="tc">Plant Loss</div>
         <div class="tc">Unaccntd</div><div class="tc">Cleaning</div>
         <div class="tr">Gen MWh</div>
+      <div class="tr" style="color:#38bdf8">Last Day</div>
+      <div class="tr" style="color:#64748b">W1</div>
+      <div class="tr" style="color:#64748b">W2</div>
+      <div class="tr" style="color:#64748b">W3</div>
       </div>
       <div id="table-body"></div>
     </div>
@@ -532,6 +536,20 @@ async function loadData() {
       const unaccounted=tgtPR!==null?Math.max(0,gap-lGrid-lPlant):null;
       const cl=CONFIG.CLEANING[name]||{days:[],tds:'—'};
       const cleanDays=cl.days.filter(d=>d<=n).length;
+      // Weekly CUF (DC basis) — avg daily CUF per week
+      const cap=dc||ac;
+      function weekCuf(startDay, endDay){
+        const wIdx=dg.reduce((a,v,i)=>v!==null&&i>=startDay-1&&i<=endDay-1?[...a,i]:a,[]);
+        if(!wIdx.length)return null;
+        const wGen=wIdx.reduce((s,i)=>s+(dg[i]||0),0);
+        return dc?+(wGen/(cap*24*wIdx.length)*100).toFixed(2):null;
+      }
+      // Last day with data
+      const lastDayIdx=validIdx[validIdx.length-1];
+      const lastDayCuf=dc?+((dg[lastDayIdx]||0)/(cap*24)*100).toFixed(2):null;
+      const w1Cuf=weekCuf(1,7);
+      const w2Cuf=weekCuf(8,14);
+      const w3Cuf=weekCuf(15,21);
       return {
         name,dc_cap:dc,ac_cap:ac,n_days:n,n_rad:radPairs.length,
         avg_rad:avgRad?+avgRad.toFixed(2):null,
@@ -542,7 +560,8 @@ async function loadData() {
         grid_kwh:+gridKwh.toFixed(0), plant_kwh:+plantKwh.toFixed(0),
         l_grid:+lGrid.toFixed(2), l_plant:+lPlant.toFixed(2),
         unaccounted:unaccounted!==null?+unaccounted.toFixed(2):null,
-        cleanDays, cleaning:cl, remarks:CONFIG.REMARKS[name]||''
+        cleanDays, cleaning:cl, remarks:CONFIG.REMARKS[name]||'',
+        lastDayCuf, w1Cuf, w2Cuf, w3Cuf
       };
     }).filter(Boolean).sort((a,b)=>b.cuf-a.cuf);
 
@@ -693,6 +712,10 @@ function renderTable(){
       <div class="tc">${d.unaccounted>0.1?`<div style="color:#475569;font-size:11px">−${d.unaccounted.toFixed(2)}%</div>`:d.unaccounted===null?'<span style="color:var(--text6);font-size:10px">n/a</span>':'<span style="color:var(--text6)">~0</span>'}</div>
       <div style="display:flex;flex-direction:column;align-items:center;gap:2px">${d.cleanDays>0?`<div class="cal">${calHtml}</div><span style="font-size:9px;color:#38bdf8">${d.cleanDays}d</span>`:'<span style="color:var(--text6)">—</span>'}</div>
       <div class="tr" style="font-size:11px;color:var(--text5)">${d.gen_mwh.toFixed(0)}</div>
+      <div class="tr" style="font-size:11px;font-weight:600;color:${d.lastDayCuf?cufColor(d.lastDayCuf,d.effTgt):'#1a2a3a'}">${d.lastDayCuf?d.lastDayCuf.toFixed(1)+'%':'—'}</div>
+      <div class="tr" style="font-size:11px;color:${d.w1Cuf?cufColor(d.w1Cuf,d.effTgt):'#1a2a3a'}">${d.w1Cuf?d.w1Cuf.toFixed(1)+'%':'—'}</div>
+      <div class="tr" style="font-size:11px;color:${d.w2Cuf?cufColor(d.w2Cuf,d.effTgt):'#1a2a3a'}">${d.w2Cuf?d.w2Cuf.toFixed(1)+'%':'—'}</div>
+      <div class="tr" style="font-size:11px;color:${d.w3Cuf?cufColor(d.w3Cuf,d.effTgt):'#1a2a3a'}">${d.w3Cuf?d.w3Cuf.toFixed(1)+'%':'—'}</div>
     </div>`;
   }).join('');
 }
