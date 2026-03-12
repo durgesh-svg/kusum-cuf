@@ -679,7 +679,7 @@ async function loadData() {
         unaccounted:unaccounted!==null?+unaccounted.toFixed(2):null,
         cleanDays, cleaning:cl, remarks:CONFIG.REMARKS[name]||'',
         lastDayCuf, w1Cuf, w2Cuf, w3Cuf,
-        get invLoss(){ return INV_LOSS_MAP[name] ?? null; }
+        invLoss: null // populated after inverter data loads
       };
     }).filter(Boolean).sort((a,b)=>b.cuf-a.cuf);
 
@@ -932,7 +932,7 @@ function computeInvLossMap() {
     });
     // Express as % of total expected generation
     const lossPct = totalAvgKwh > 0 ? (totalLostKwh / totalAvgKwh) * 100 : 0;
-    INV_LOSS_MAP[site] = +lossPct.toFixed(2);
+    if(lossPct > 0) INV_LOSS_MAP[site] = +lossPct.toFixed(2);
   });
 }
 
@@ -1073,7 +1073,13 @@ async function loadInverterData() {
       sites.map(s=>`<option value="${s}">${s}</option>`).join('');
 
     computeInvLossMap();
-    if(SITES.length) renderTable(); // refresh CUF table with inv loss
+    // Update invLoss on each site object directly
+    if(SITES.length){
+      SITES.forEach(s => {
+        s.invLoss = INV_LOSS_MAP[s.name] ?? INV_LOSS_MAP[normKey(s.name)] ?? null;
+      });
+      renderTable();
+    }
     renderInverterPage();
     document.getElementById('inv-refresh-btn').textContent='↻';
   } catch(e) {
