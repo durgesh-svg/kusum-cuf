@@ -699,6 +699,12 @@ async function loadData() {
 
     document.getElementById('loading').style.display='none';
     document.getElementById('app').style.display='block';
+    // Assign invLoss from map if already loaded
+    if(Object.keys(INV_LOSS_MAP).length){
+      SITES.forEach(s => {
+        s.invLoss = INV_LOSS_MAP[s.name] ?? INV_LOSS_MAP[normKey(s.name)] ?? null;
+      });
+    }
     renderAll();
     document.getElementById('last-fetch').textContent=new Date().toLocaleTimeString('en-IN');
     document.getElementById('last-updated-footer').textContent='Last fetched: '+SUMMARY.lastUpdated;
@@ -934,6 +940,8 @@ function computeInvLossMap() {
     const lossPct = totalAvgKwh > 0 ? (totalLostKwh / totalAvgKwh) * 100 : 0;
     if(lossPct > 0) INV_LOSS_MAP[site] = +lossPct.toFixed(2);
   });
+  console.log('INV_LOSS_MAP keys:', Object.keys(INV_LOSS_MAP));
+  console.log('SITES names:', SITES.map(s=>s.name));
 }
 
 // Normalize site names to canonical form
