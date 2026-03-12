@@ -409,7 +409,7 @@ const CONFIG = {
     "ramdevra-2":       { days:[3,4,5],              tds:"1800" },
     "Purnadatal":       { days:[6,7,8],              tds:"1200" },
     "Badsar":           { days:[3,4,5,6],            tds:"518" },
-    "RaJaldesar":       { days:[],                   tds:"1100" },
+    "Rajaldesar":       { days:[],                   tds:"1100" },
     "Chitawa-1":        { days:[1,2],                tds:"rain" },
     "Chitawa-2":        { days:[3,4],                tds:"rain" },
     "Chitawa-3":        { days:[5,6],                tds:"rain" },
@@ -494,17 +494,21 @@ function toNum(v){
 }
 function buildDailyMap(rows){
   const m={};
-  for(let r=2;r<rows.length;r++){
-    const row=rows[r]; const name=(row[1]||'').trim(); if(!name)continue;
-    m[name]=Array.from({length:31},(_,i)=>toNum(row[i+2]));
+  for(let r=1;r<rows.length;r++){
+    const row=rows[r]; const name=(row[1]||'').trim();
+    if(!name||name.toLowerCase()==='plant location'||name.toLowerCase()==='site name')continue;
+    if(row[2]&&isNaN(parseFloat(String(row[2]).replace(/[^0-9.\-]/g,''))))continue;
+    m[normKey(name)]=Array.from({length:31},(_,i)=>toNum(row[i+2]));
   }
   return m;
 }
+function normKey(s){ return (s||'').trim().toLowerCase().replace(/\s+/g,' '); }
 function buildCapMap(rows,col){
   const m={};
-  for(let r=2;r<rows.length;r++){
-    const row=rows[r]; const name=(row[1]||'').trim(); if(!name)continue;
-    const v=toNum(row[col]); if(v)m[name]=v;
+  for(let r=1;r<rows.length;r++){
+    const row=rows[r]; const name=(row[1]||'').trim();
+    if(!name||name.toLowerCase()==='plant location'||name.toLowerCase()==='site name')continue;
+    const v=toNum(row[col]); if(v)m[normKey(name)]=v;
   }
   return m;
 }
@@ -613,7 +617,7 @@ async function loadData() {
     const allSites=Object.keys(gen);
     SITES = allSites.map(name=>{
       const dg=gen[name]||[], dr=rad[name]||[], dgo=grid[name]||[], dpb=plant[name]||[];
-      const ac=acCap[name], dc=dcCap[name]; if(!ac)return null;
+      const ac=acCap[normKey(name)], dc=dcCap[normKey(name)]; if(!ac)return null;
       const validIdx=dg.reduce((a,v,i)=>v!==null?[...a,i]:a,[]);
       if(!validIdx.length)return null;
       const n=validIdx.length;
