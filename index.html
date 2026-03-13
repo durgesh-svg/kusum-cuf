@@ -62,8 +62,8 @@ body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'IBM Pl
 
 /* ── CUF TABLE ── */
 #table-wrap{overflow-x:auto}
-.col-hdr{display:grid;grid-template-columns:26px 148px 62px 62px 62px 62px 62px 180px 80px 80px 72px 66px 54px 58px 52px 52px 52px;gap:0 6px;padding:7px 24px;border-bottom:1px solid #0a0f18;font-size:9px;color:var(--text5);text-transform:uppercase;letter-spacing:.1em;background:#080c16;position:sticky;top:0;z-index:10}
-.trow{display:grid;grid-template-columns:26px 148px 62px 62px 62px 62px 62px 180px 80px 80px 72px 66px 54px 58px 52px 52px 52px;gap:0 6px;padding:7px 24px;border-bottom:1px solid #090d16;align-items:center;cursor:pointer;transition:background .1s}
+.col-hdr{display:grid;grid-template-columns:26px 148px 62px 62px 62px 62px 62px 180px 80px 80px 72px 130px 54px 62px 58px 52px 52px 52px;gap:0 6px;padding:7px 24px;border-bottom:1px solid #0a0f18;font-size:9px;color:var(--text5);text-transform:uppercase;letter-spacing:.1em;background:#080c16;position:sticky;top:0;z-index:10}
+.trow{display:grid;grid-template-columns:26px 148px 62px 62px 62px 62px 62px 180px 80px 80px 72px 130px 54px 62px 58px 52px 52px 52px;gap:0 6px;padding:7px 24px;border-bottom:1px solid #090d16;align-items:center;cursor:pointer;transition:background .1s}
 .trow:hover{background:#0c1220}
 .site-name{display:flex;align-items:center;gap:5px;overflow:hidden}
 .site-name span{font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -100,6 +100,21 @@ body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'IBM Pl
 .remarks-box{background:#1a0f00;border:1px solid #3d2600;border-left:2px solid var(--amber);border-radius:6px;padding:11px 14px}
 .remarks-line{font-size:11px;color:var(--amber);line-height:1.9}
 .section-label{font-size:9px;color:var(--text4);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px}
+
+
+/* ── CYCLE BADGES ── */
+.cyc-wrap{display:flex;flex-direction:column;gap:2px;align-items:center}
+.cyc-row{display:flex;gap:3px}
+.cyc{display:inline-flex;align-items:center;gap:2px;font-size:8px;padding:1px 5px;border-radius:3px;border:1px solid;white-space:nowrap;font-family:'IBM Plex Mono',monospace}
+.cyc-done{color:#22c55e;border-color:#22c55e;background:#051a0a}
+.cyc-partial{color:#fbbf24;border-color:#fbbf24;background:#1a1005}
+.cyc-pending{color:#ef4444;border-color:#ef4444;background:#1a0505}
+.cyc-vendor{color:#f97316;border-color:#f97316;background:#1a0800}
+.cyc-water{color:#38bdf8;border-color:#38bdf8;background:#051018}
+.cyc-others{color:#64748b;border-color:#64748b;background:#0d1520}
+.cyc-blank{color:#1a2a3a;border-color:#1a2a3a;background:transparent}
+.cyc-alert{animation:cycpulse 1.5s infinite}
+@keyframes cycpulse{0%,100%{opacity:1}50%{opacity:.4}}
 
 /* ── FOOTER ── */
 #footer{padding:12px 24px;border-top:1px solid #0a0f18;font-size:10px;color:var(--text6);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
@@ -197,6 +212,31 @@ body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'IBM Pl
 .inv-empty-icon{font-size:32px;opacity:.3}
 .inv-empty-text{font-size:11px;letter-spacing:.05em}
 
+/* Alert badges */
+.alert-badge{display:inline-block;font-size:9px;font-weight:700;padding:2px 6px;border-radius:3px;letter-spacing:.06em;border:1px solid;margin-left:4px;vertical-align:middle}
+.alert-dead{color:#ff4444;border-color:#ff4444;background:#1a0505;animation:pulse-red 1.2s infinite}
+.alert-chronic{color:#f97316;border-color:#f97316;background:#1a0800}
+.alert-fault{color:#eab308;border-color:#eab308;background:#1a1200}
+.alert-degrade{color:#a855f7;border-color:#a855f7;background:#12051a}
+@keyframes pulse-red{0%,100%{opacity:1}50%{opacity:.4}}
+
+/* Alert summary panel */
+.inv-alert-panel{background:#0d0d0d;border:1px solid #2a2a2a;border-radius:8px;padding:14px 16px;margin-bottom:16px}
+.inv-alert-title{font-size:9px;color:var(--text4);text-transform:uppercase;letter-spacing:.12em;margin-bottom:10px}
+.inv-alert-row{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #1a1a1a;font-size:11px;flex-wrap:wrap}
+.inv-alert-row:last-child{border-bottom:none}
+
+/* Cleaning effectiveness */
+.clean-eff-panel{background:var(--bg3);border:1px solid var(--border2);border-radius:8px;padding:16px;margin-top:16px}
+.clean-eff-row{display:grid;grid-template-columns:160px 80px 80px 80px 1fr;gap:8px;padding:7px 0;border-bottom:1px solid var(--border);align-items:center;font-size:11px}
+.clean-eff-row:last-child{border-bottom:none}
+.clean-eff-hdr{font-size:9px;color:var(--text5);text-transform:uppercase;letter-spacing:.1em}
+
+/* PR trend slope indicator */
+.pr-slope-up{color:#22c55e}
+.pr-slope-down{color:#ef4444}
+.pr-slope-flat{color:#64748b}
+
 /* multi-site overview table */
 .inv-overview-table{background:var(--bg3);border:1px solid var(--border2);border-radius:8px;overflow:hidden}
 .inv-ov-hdr{display:grid;grid-template-columns:160px 70px 70px 80px 80px 80px 1fr;gap:6px;padding:8px 14px;background:#080c16;font-size:9px;color:var(--text5);text-transform:uppercase;letter-spacing:.1em;border-bottom:1px solid var(--border)}
@@ -276,8 +316,9 @@ body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'IBM Pl
         <div class="tr">Radiation</div>
         <div style="padding-left:6px">Waterfall ← target line</div>
         <div class="tc">Grid Loss</div><div class="tc">Plant Loss</div>
-        <div class="tc">Unaccntd</div><div class="tc">Cleaning</div>
+        <div class="tc">Unaccntd</div><div class="tc">Cleaning Cycles</div>
         <div class="tr">Gen MWh</div>
+      <div class="tr" style="color:#a855f7">Inv Loss</div>
       <div class="tr" style="color:#38bdf8">Last Day</div>
       <div class="tr" style="color:#64748b">W1</div>
       <div class="tr" style="color:#64748b">W2</div>
@@ -368,6 +409,7 @@ const CONFIG = {
     plantBreakdown:"Plant Breakdown Minute",
     dcCuf:         "DC CUF",
     acCuf:         "AC CUF",
+    cleaningSched: "Cleaning Schedule",
   },
   CLEANING: {
     "Dausar":           { days:[1,2],               tds:"712" },
@@ -392,7 +434,7 @@ const CONFIG = {
     "ramdevra-2":       { days:[3,4,5],              tds:"1800" },
     "Purnadatal":       { days:[6,7,8],              tds:"1200" },
     "Badsar":           { days:[3,4,5,6],            tds:"518" },
-    "RaJaldesar":       { days:[],                   tds:"1100" },
+    "Rajaldesar":       { days:[],                   tds:"1100" },
     "Chitawa-1":        { days:[1,2],                tds:"rain" },
     "Chitawa-2":        { days:[3,4],                tds:"rain" },
     "Chitawa-3":        { days:[5,6],                tds:"rain" },
@@ -477,17 +519,21 @@ function toNum(v){
 }
 function buildDailyMap(rows){
   const m={};
-  for(let r=2;r<rows.length;r++){
-    const row=rows[r]; const name=(row[1]||'').trim(); if(!name)continue;
-    m[name]=Array.from({length:31},(_,i)=>toNum(row[i+2]));
+  for(let r=1;r<rows.length;r++){
+    const row=rows[r]; const name=(row[1]||'').trim();
+    if(!name||name.toLowerCase()==='plant location'||name.toLowerCase()==='site name')continue;
+    if(row[2]&&isNaN(parseFloat(String(row[2]).replace(/[^0-9.\-]/g,''))))continue;
+    m[normKey(name)]=Array.from({length:31},(_,i)=>toNum(row[i+2]));
   }
   return m;
 }
+function normKey(s){ return (s||'').trim().toLowerCase().replace(/\s+/g,' '); }
 function buildCapMap(rows,col){
   const m={};
-  for(let r=2;r<rows.length;r++){
-    const row=rows[r]; const name=(row[1]||'').trim(); if(!name)continue;
-    const v=toNum(row[col]); if(v)m[name]=v;
+  for(let r=1;r<rows.length;r++){
+    const row=rows[r]; const name=(row[1]||'').trim();
+    if(!name||name.toLowerCase()==='plant location'||name.toLowerCase()==='site name')continue;
+    const v=toNum(row[col]); if(v)m[normKey(name)]=v;
   }
   return m;
 }
@@ -496,18 +542,114 @@ function buildCapMap(rows,col){
 //  CUF DATA LOADER
 // ═══════════════════════════════════════════════════════
 let SITES=[], SUMMARY={}, currentFilter='all', currentSort='cuf';
+let CLEANING_SCHED = {}; // keyed by normalized site name
+
+function parseCleanDate(str) {
+  if (!str) return null;
+  const s = String(str).trim();
+  const monthMap = {january:1,february:2,march:3,april:4,may:5,june:6,july:7,august:8,september:9,october:10,november:11,december:12};
+  // "3/3/2026" or "3/3/26" — gviz datetime format
+  const m2 = s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{2,4})/);
+  if (m2) {
+    let y = parseInt(m2[3]); if(y<100) y+=2000;
+    return new Date(y, parseInt(m2[1])-1, parseInt(m2[2]));
+  }
+  // "3-March" or "10-March"
+  const m1 = s.match(/^(\d{1,2})[\-\s](\w+)/i);
+  if (m1) {
+    const day = parseInt(m1[1]);
+    const mon = monthMap[m1[2].toLowerCase()];
+    if (mon) return new Date(2026, mon-1, day);
+  }
+  // plain day number
+  const dayOnly = parseInt(s);
+  if (!isNaN(dayOnly)) return new Date(2026, 2, dayOnly);
+  return null;
+}
+
+function cycleStatusClass(status) {
+  if (!status) return 'cyc-blank';
+  const s = status.toLowerCase().trim();
+  if (s.includes('done') && !s.includes('partial')) return 'cyc-done';
+  if (s.includes('partial')) return 'cyc-partial';
+  if (s.includes('vendor')) return 'cyc-vendor';
+  if (s.includes('water') || s.includes('motor')) return 'cyc-water';
+  if (s.includes('pending')) return 'cyc-pending';
+  if (s.includes('others') || s.includes('other')) return 'cyc-others';
+  return 'cyc-blank';
+}
+
+function cycleStatusLabel(status) {
+  if (!status) return '—';
+  const s = status.toLowerCase().trim();
+  if (s.includes('done') && !s.includes('partial')) return '✓';
+  if (s.includes('partial')) return '~';
+  if (s.includes('vendor')) return 'V';
+  if (s.includes('water') || s.includes('motor')) return 'W';
+  if (s.includes('pending')) return '!';
+  if (s.includes('others') || s.includes('other')) return '?';
+  return '—';
+}
+
+function buildCleaningHTML(siteName) {
+  const sc = CLEANING_SCHED[normKey(siteName)];
+  if (!sc) return '<span style="color:var(--text6);font-size:9px">—</span>';
+  const today = new Date(2026, 2, 12); // current date
+  let html = '<div class="cyc-row">';
+  [1,2,3].forEach(c => {
+    const cyc = sc['c'+c] || {};
+    const status = cyc.status || '';
+    const cls = cycleStatusClass(status);
+    const lbl = cycleStatusLabel(status);
+    const endDate = parseCleanDate(cyc.end);
+    const overdue = !status && endDate && today > endDate;
+    const alertCls = overdue ? ' cyc-alert' : '';
+    const tooltip = [
+      cyc.start ? 'Start: '+cyc.start : '',
+      cyc.end   ? 'End: '+cyc.end     : '',
+      cyc.tds   ? 'TDS: '+cyc.tds     : '',
+      status    ? status               : overdue ? 'OVERDUE' : ''
+    ].filter(Boolean).join(' · ');
+    html += `<span class="cyc ${cls}${alertCls}" title="${tooltip}">C${c} ${lbl}</span>`;
+  });
+  html += '</div>';
+  return html;
+}
+
 
 async function loadData() {
   document.getElementById('refresh-btn').textContent='…';
   try {
-    const [genR,radR,gridR,plantR,dcR,acR] = await Promise.all([
+    const [genR,radR,gridR,plantR,dcR,acR,cleanR] = await Promise.all([
       fetchTab(CONFIG.SHEET_ID, CONFIG.TABS.generation),
       fetchTab(CONFIG.SHEET_ID, CONFIG.TABS.radiation),
       fetchTab(CONFIG.SHEET_ID, CONFIG.TABS.gridOutage),
       fetchTab(CONFIG.SHEET_ID, CONFIG.TABS.plantBreakdown),
       fetchTab(CONFIG.SHEET_ID, CONFIG.TABS.dcCuf),
       fetchTab(CONFIG.SHEET_ID, CONFIG.TABS.acCuf),
+      fetchTab(CONFIG.SHEET_ID, CONFIG.TABS.cleaningSched).catch(()=>[]),
     ]);
+    // Parse cleaning schedule — columns: Sr | Site | C1Start | C1End | C1TDS | C1Status | C2Start | C2End | C2TDS | C2Status | C3Start | C3End | C3TDS | C3Status
+    CLEANING_SCHED = {};
+    console.log('Cleaning tab total rows:', cleanR.length);
+    console.log('Row 0:', cleanR[0]);
+    console.log('Row 1:', cleanR[1]);
+    console.log('Row 2:', cleanR[2]);
+    console.log('Row 3:', cleanR[3]);
+    console.log('Row 4:', cleanR[4]);
+    console.log('Row 5:', cleanR[5]);
+    for (let r = 0; r < cleanR.length; r++) {
+      const row = cleanR[r]; if (!row || !row[1]) continue;
+      const sn = normKey(row[1]);
+      if(sn==='site name'||sn==='plant location'||sn===''||sn==='sr. no.'||sn==='sr.no.'||isNaN(parseFloat(row[0]))==false&&sn.length<3) continue;
+      // skip header-like rows
+      if(['site name','plant location','sr. no.','sr.no.','cycle 1st','start date'].includes(sn)) continue;
+      CLEANING_SCHED[sn] = {
+        c1:{ start:row[2]||'', end:row[3]||'', tds:row[4]||'', status:(row[5]||'').replace(/\s*▼\s*/g,'').trim() },
+        c2:{ start:row[6]||'', end:row[7]||'', tds:row[8]||'', status:(row[9]||'').replace(/\s*▼\s*/g,'').trim() },
+        c3:{ start:row[10]||'', end:row[11]||'', tds:row[12]||'', status:(row[13]||'').replace(/\s*▼\s*/g,'').trim() },
+      };
+    }
     const gen=buildDailyMap(genR), rad=buildDailyMap(radR);
     const grid=buildDailyMap(gridR), plant=buildDailyMap(plantR);
     const dcCap=buildCapMap(dcR,3), acCap=buildCapMap(acR,2);
@@ -515,7 +657,7 @@ async function loadData() {
     const allSites=Object.keys(gen);
     SITES = allSites.map(name=>{
       const dg=gen[name]||[], dr=rad[name]||[], dgo=grid[name]||[], dpb=plant[name]||[];
-      const ac=acCap[name], dc=dcCap[name]; if(!ac)return null;
+      const ac=acCap[normKey(name)], dc=dcCap[normKey(name)]; if(!ac)return null;
       const validIdx=dg.reduce((a,v,i)=>v!==null?[...a,i]:a,[]);
       if(!validIdx.length)return null;
       const n=validIdx.length;
@@ -561,7 +703,8 @@ async function loadData() {
         l_grid:+lGrid.toFixed(2), l_plant:+lPlant.toFixed(2),
         unaccounted:unaccounted!==null?+unaccounted.toFixed(2):null,
         cleanDays, cleaning:cl, remarks:CONFIG.REMARKS[name]||'',
-        lastDayCuf, w1Cuf, w2Cuf, w3Cuf
+        lastDayCuf, w1Cuf, w2Cuf, w3Cuf,
+        invLoss: null // populated after inverter data loads
       };
     }).filter(Boolean).sort((a,b)=>b.cuf-a.cuf);
 
@@ -581,6 +724,12 @@ async function loadData() {
 
     document.getElementById('loading').style.display='none';
     document.getElementById('app').style.display='block';
+    // Assign invLoss from map if already loaded
+    if(Object.keys(INV_LOSS_MAP).length){
+      SITES.forEach(s => {
+        s.invLoss = INV_LOSS_MAP[normKey(s.name)] ?? null;
+      });
+    }
     renderAll();
     document.getElementById('last-fetch').textContent=new Date().toLocaleTimeString('en-IN');
     document.getElementById('last-updated-footer').textContent='Last fetched: '+SUMMARY.lastUpdated;
@@ -710,8 +859,9 @@ function renderTable(){
       <div class="tc">${d.l_grid>0?`<div style="color:${d.l_grid>=3?'#f97316':'#7a4520'};font-weight:600;font-size:11px">−${d.l_grid.toFixed(2)}%</div><div style="font-size:9px;color:var(--text5)">${(d.grid_kwh/1000).toFixed(1)} MWh</div>`:'<span style="color:var(--text6)">—</span>'}</div>
       <div class="tc">${d.l_plant>0?`<div style="color:${d.l_plant>=3?'#a855f7':'#5a3a7a'};font-weight:600;font-size:11px">−${d.l_plant.toFixed(2)}%</div><div style="font-size:9px;color:var(--text5)">${(d.plant_kwh/1000).toFixed(1)} MWh</div>`:'<span style="color:var(--text6)">—</span>'}</div>
       <div class="tc">${d.unaccounted>0.1?`<div style="color:#475569;font-size:11px">−${d.unaccounted.toFixed(2)}%</div>`:d.unaccounted===null?'<span style="color:var(--text6);font-size:10px">n/a</span>':'<span style="color:var(--text6)">~0</span>'}</div>
-      <div style="display:flex;flex-direction:column;align-items:center;gap:2px">${d.cleanDays>0?`<div class="cal">${calHtml}</div><span style="font-size:9px;color:#38bdf8">${d.cleanDays}d</span>`:'<span style="color:var(--text6)">—</span>'}</div>
+      <div class="tc" style="font-size:10px">${buildCleaningHTML(d.name)}</div>
       <div class="tr" style="font-size:11px;color:var(--text5)">${d.gen_mwh.toFixed(0)}</div>
+      <div class="tr" style="font-size:11px;font-weight:600;color:${d.invLoss>2?'#a855f7':d.invLoss>0.5?'#7a3fa0':'#22c55e'}">${d.invLoss!==null&&d.invLoss>0?'−'+d.invLoss.toFixed(2)+'%':'<span style=\"color:var(--text6)\">—</span>'}</div>
       <div class="tr" style="font-size:11px;font-weight:600;color:${d.lastDayCuf?cufColor(d.lastDayCuf,d.effTgt):'#1a2a3a'}">${d.lastDayCuf?d.lastDayCuf.toFixed(1)+'%':'—'}</div>
       <div class="tr" style="font-size:11px;color:${d.w1Cuf?cufColor(d.w1Cuf,d.effTgt):'#1a2a3a'}">${d.w1Cuf?d.w1Cuf.toFixed(1)+'%':'—'}</div>
       <div class="tr" style="font-size:11px;color:${d.w2Cuf?cufColor(d.w2Cuf,d.effTgt):'#1a2a3a'}">${d.w2Cuf?d.w2Cuf.toFixed(1)+'%':'—'}</div>
@@ -789,147 +939,120 @@ function closeModal(){ document.getElementById('overlay').classList.remove('open
 // ═══════════════════════════════════════════════════════
 let INV_DATA = [];       // parsed rows
 let INV_MODE = 'day';    // 'day' or 'trend'
+let INV_LOSS_MAP = {};   // keyed by normalized site name -> MTD loss %
+
+function computeInvLossMap() {
+  INV_LOSS_MAP = {};
+  // Group by site
+  const bySite = {};
+  INV_DATA.forEach(d => {
+    if (!bySite[d.siteName]) bySite[d.siteName] = [];
+    bySite[d.siteName].push(d);
+  });
+  Object.entries(bySite).forEach(([site, recs]) => {
+    let totalLostKwh = 0, totalAvgKwh = 0;
+    recs.forEach(rec => {
+      const valid = rec.invGen.filter(v => v !== null && v > 0);
+      if (!valid.length) return;
+      const avg = valid.reduce((s,v) => s+v, 0) / valid.length;
+      const threshold = avg * 0.90;
+      valid.forEach(v => {
+        totalAvgKwh += avg;
+        if (v < threshold) totalLostKwh += (avg - v);
+      });
+    });
+    // Express as % of total expected generation
+    const lossPct = totalAvgKwh > 0 ? (totalLostKwh / totalAvgKwh) * 100 : 0;
+    if(lossPct > 0) INV_LOSS_MAP[normKey(site)] = +lossPct.toFixed(2);
+  });
+  console.log('INV_LOSS_MAP keys:', Object.keys(INV_LOSS_MAP));
+  console.log('SITES names:', SITES.map(s=>s.name));
+}
 
 // Normalize site names to canonical form
 function normSiteName(raw) {
   const key = (raw||'').trim().toLowerCase().replace(/\s+/g,' ');
   const MAP = {
-    // Bidasar / Ghantiyal
-    'ghantiyal bari':          'Bidasar',
-    'ghantiyal bari (bidasar)':'Bidasar',
-    'gantiyal bari':           'Bidasar',
-    'ghantel':                 'Ghantel',
-    'bidasar':                 'Bidasar',
-    'bidaser site':            'Bidasar',
-
-    // Ratnania
-    'ratnaniya site':          'Ratnania Cohra',
-    'ratnaniys site':          'Ratnania Cohra',
-    'ratnania johra':          'Ratnania Cohra',
-    'ratnaniya johra':         'Ratnania Cohra',
-    'ratnania cohra':          'Ratnania Cohra',
-
-    // Khakholi
-    'khakholi':                'Khakholi',
-    'khakholi site':           'Khakholi',
-    'khakholi site ':          'Khakholi',
-    'khakholi ':               'Khakholi',
-    'khakholi site  ':         'Khakholi',
-
-    // Kunpalsar
-    'kunpalsir':               'Kunpalsar',
-    'kunpalsar':               'Kunpalsar',
-
-    // Kherla Nagar
-    'kherla nagar site plant 1':'Kherla nagar-1',
-    'kherla nagar site plant 2':'Kherla nagar-2',
-    'kherla nagar plant 1':    'Kherla nagar-1',
-    'kherla nagar site 1':     'Kherla nagar-1',
-    'kherla nagar-1':          'Kherla nagar-1',
-    'kherla nagar-2':          'Kherla nagar-2',
-
-    // Sindhu
-    'sindhu site plant no 1':  'Sindhu-1',
-    'sindhu site plant no 2':  'Sindhu-2',
-    'sindhu site plant 1':     'Sindhu-1',
-    'sindhu site plant 2':     'Sindhu-2',
-    'sindhu-1':                'Sindhu-1',
-    'sindhu-2':                'Sindhu-2',
-
-    // Dausar
-    'dausar site':             'Dausar',
-    'dausar':                  'Dausar',
-
-    // Bhudhro Ki Dhani
-    'budharon ki dhani nokha':      'Bhudhro Ki dhani',
-    'budharon ki dhani site nokha': 'Bhudhro Ki dhani',
-    'budharon ki dhani site nokha ':'Bhudhro Ki dhani',
-    'bhudhro ki dhani':             'Bhudhro Ki dhani',
-    'bhudhro ki dhani ':            'Bhudhro Ki dhani',
-
-    // Haspur
-    'haspura':                 'Haspur',
-    'haspura klan':            'Haspur',
-    'haspur':                  'Haspur',
-
-    // Pahel
-    'pehal':                   'Pahel',
-    'pahel':                   'Pahel',
-
-    // Birmana Tal
-    'birmana tal':             'Birmana Tal',
+    'ghantiyal bari':                        'Bidasar',
+    'ratnaniya site':                        'Ratnania Cohra',
+    'ratnania johra':                        'Ratnania Cohra',
+    'khakholi site':                         'Khakholi',
+    'kunpalsir':                             'Kunpalsar',
+    'kherla nagar site plant 1':             'Kherla nagar-1',
+    'sindhu site plant no 1':               'Sindhu-1',
+    'sindhu site plant no 2':               'Sindhu-2',
+    'dausar site':                           'Dausar',
+    'budharon ki dhani nokha':              'Bhudhro Ki dhani',
+    'ghantiyal bari (bidasar)':             'Bidasar',
+    'budharon ki dhani nokha ':             'Bhudhro Ki dhani',
+    'sindhu site plant 1':                  'Sindhu-1',
+    'sindhu site plant 2':                  'Sindhu-2',
+    'kherla nagar site 1':                  'Kherla nagar-1',
+    'haspura':                              'Haspur',
+    'pehal':                                'Pahel',
     'birmana tal, dhadheru bhamuwan, bidasar': 'Birmana Tal',
-    'birmana tal ':            'Birmana Tal',
-
-    // Jetpura
-    'jetpura site':            'Jetpura',
-    'jetpura':                 'Jetpura',
-
-    // Udwala
-    'udwala site':             'Udwala',
-    'udwala':                  'Udwala',
-
-    // Badsar
-    'badsar':                  'Badsar',
-
-    // Rajaldesar
-    'rajaldesar':              'RaJaldesar',
-
-    // Chitawa
-    'chitawa-1':               'Chitawa-1',
-    'chitawa-2':               'Chitawa-2',
-    'chitawa-3':               'Chitawa-3',
-
-    // Lalasar
-    'lalasar':                 'Lalasar',
-
-    // Pilania Pau
-    'pilania pau':             'Pilania pau',
-
-    // Choti Serwa
-    'choti serva':             'Choti serwa',
-    'choti serwa':             'Choti serwa',
-
-    // Rohisa
-    'rohisa':                  'Rohisa',
-
-    // Khunkhuna
-    'khunkhuna':               'Khunkhuna',
-
-    // Dhirasar
-    'dhirasar':                'Dhirasar',
-
-    // Ramdevra
-    'ramdevra-2':              'Ramdevra-2',
-
-    // Purnadatal
-    'purnadatal':              'Purnadatal',
-
-    // Nadiya Tal
-    'nadiya tal':              'Nadiya Tal',
-    'nadiya tal ':             'Nadiya Tal',
-
-    // Keshloi Tal
-    'keshloi tal':             'Keshloi tal',
-
-    // Satra
-    'satra- -1':               'Satra-1',
-    'satra -1':                'Satra-1',
-    'satra-1':                 'Satra-1',
-    'satra - 2':               'Satra-2',
-    'satra- 2':                'Satra-2',
-    'satra-2':                 'Satra-2',
-
-    // Godwanti
-    'godwanti tal':            'Godwanti Tal',
-    'godwanti tal ':           'Godwanti Tal',
-
-    // Additional sites
-    'ankhisar-1':              'Ankhisar-1',
-    'mukam-1':                 'Mukam-1',
-    'mukam-2':                 'Mukam-2',
-    'jamola':                  'Jamola',
-    'krishna kumar mali saini':'Krishna Kumar Mali',
+    'khakholi site ':                       'Khakholi',
+    'ratnaniys site':                       'Ratnania Cohra',
+    'jetpura site':                         'Jetpura',
+    'udwala site':                          'Udwala',
+    'birmana tal':                          'Birmana Tal',
+    'budharon ki dhani site nokha':         'Bhudhro Ki dhani',
+    'gantiyal bari':                        'Bidasar',
+    'kunpalsir ':                           'Kunpalsar',
+    'ratnaniya site ':                      'Ratnania Cohra',
+    'krishna kumar mali saini':             'Godwanti Tal',
+    'nadiya tal':                           'Nadiya Tal',
+    'kherla nagar plant 1':                 'Kherla nagar-1',
+    'pehal ':                               'Pahel',
+    'haspura klan':                         'Haspur',
+    'kherla nagar site plant 2':            'Kherla nagar-2',
+    'ghantel':                              'Ghantel',
+    'bidaser site':                         'Bidasar',
+    'jamola':                               'Jamola',
+    'udwala':                               'Udwala',
+    'ratnania johra':                       'Ratnania Cohra',
+    'keshloi tal':                          'Keshloi tal',
+    'bhudhro ki dhani':                     'Bhudhro Ki dhani',
+    'haspur':                               'Haspur',
+    'jetpura':                              'Jetpura',
+    'pahel':                                'Pahel',
+    'khakholi':                             'Khakholi',
+    'kherla nagar-1':                       'Kherla nagar-1',
+    'sindhu-1':                             'Sindhu-1',
+    'sindhu-2':                             'Sindhu-2',
+    'dausar':                               'Dausar',
+    'kunpalsar':                            'Kunpalsar',
+    'nadiya tal ':                          'Nadiya Tal',
+    'kherla nagar-2':                       'Kherla nagar-2',
+    'badsar':                               'Badsar',
+    'ankhisar-1':                           'Ankhisar-1',
+    'rajaldesar':                           'Rajaldesar',
+    'mukam-2':                              'Mukam-2',
+    'dhirasar':                             'Dhirasar',
+    'ramdevra-2':                           'Ramdevra-2',
+    'mukam-1':                              'Mukam-1',
+    'purnadatal':                           'Purnadatal',
+    'chitawa-2':                            'Chitawa-2',
+    'chitawa-3':                            'Chitawa-3',
+    'chitawa-1':                            'Chitawa-1',
+    'rohisa':                               'Rohisa',
+    'pilania pau':                          'Pilania pau',
+    'lalasar':                              'Lalasar',
+    'choti serva':                          'Choti serwa',
+    'khunkhuna':                            'Khunkhuna',
+    'godwanti tal':                         'Godwanti Tal',
+    'satra- -1':                            'Satra-1',
+    'satra -1':                             'Satra-1',
+    'satra-1':                              'Satra-1',
+    'satra - 2':                            'Satra-2',
+    'satra- 2':                             'Satra-2',
+    'satra-2':                              'Satra-2',
+    'bidasar':                              'Bidasar',
+    'birmana tal ':                         'Birmana Tal',
+    'ghantel ':                             'Ghantel',
+    'choti serwa':                          'Choti serwa',
+    'pilania pau ':                         'Pilania pau',
+    'khunkhuna ':                           'Khunkhuna',
   };
   return MAP[key] || (raw||'').trim();
 }
@@ -982,6 +1105,14 @@ async function loadInverterData() {
     sel.innerHTML = `<option value="__all__">— All Sites Overview —</option>` +
       sites.map(s=>`<option value="${s}">${s}</option>`).join('');
 
+    computeInvLossMap();
+    // Update invLoss on each site object directly
+    if(SITES.length){
+      SITES.forEach(s => {
+        s.invLoss = INV_LOSS_MAP[normKey(s.name)] ?? null;
+      });
+      renderTable();
+    }
     renderInverterPage();
     document.getElementById('inv-refresh-btn').textContent='↻';
   } catch(e) {
@@ -1060,8 +1191,25 @@ function renderInvOverview() {
     {l:'Sites w/ Issues', v:sitesWithIssue, c:sitesWithIssue>0?'#fbbf24':'#22c55e'},
   ].map(s=>`<div class="stat-card"><div class="stat-label">${s.l}</div><div class="stat-value" style="color:${s.c}">${s.v}</div></div>`).join('');
 
+  // Portfolio alert summary at top
+  const allAlerts = computeAllAlerts();
+  let alertHtml = '';
+  if (allAlerts.length) {
+    const deadAlerts    = allAlerts.filter(a=>a.type==='dead');
+    const faultAlerts   = allAlerts.filter(a=>a.type==='fault');
+    const chronicAlerts = allAlerts.filter(a=>a.type==='chronic');
+    const degradeAlerts = allAlerts.filter(a=>a.type==='degrade');
+    alertHtml = `<div class="inv-alert-panel">
+      <div class="inv-alert-title">⚡ Portfolio Alerts — ${allAlerts.length} active</div>`;
+    if (deadAlerts.length)    alertHtml += `<div class="inv-alert-row"><span class="alert-badge alert-dead">DEAD ×${deadAlerts.length}</span><span style="color:#ef4444;margin-left:8px">${deadAlerts.map(a=>`${a.site} INV-${a.inv}`).join(', ')}</span></div>`;
+    if (faultAlerts.length)   alertHtml += `<div class="inv-alert-row"><span class="alert-badge alert-fault">FAULT? ×${faultAlerts.length}</span><span style="color:#eab308;margin-left:8px">${faultAlerts.map(a=>`${a.site} INV-${a.inv}`).join(', ')}</span></div>`;
+    if (chronicAlerts.length) alertHtml += `<div class="inv-alert-row"><span class="alert-badge alert-chronic">CHRONIC ×${chronicAlerts.length}</span><span style="color:#f97316;margin-left:8px">${chronicAlerts.map(a=>`${a.site} INV-${a.inv}`).join(', ')}</span></div>`;
+    if (degradeAlerts.length) alertHtml += `<div class="inv-alert-row"><span class="alert-badge alert-degrade">PR↓ ×${degradeAlerts.length}</span><span style="color:#a855f7;margin-left:8px">${degradeAlerts.map(a=>a.site).join(', ')}</span></div>`;
+    alertHtml += `</div>`;
+  }
+
   // Overview table
-  document.getElementById('inv-content').innerHTML=`
+  document.getElementById('inv-content').innerHTML= alertHtml + `
     <div style="margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">
       <div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:800;color:#eef4ff">All Sites — Latest Inverter Snapshot</div>
       <div style="font-size:10px;color:var(--text4)">Click a site row to drill in</div>
@@ -1089,10 +1237,11 @@ function renderInvOverview() {
           return `<div class="inv-mini-bar" style="height:${h}px;background:${c}"></div>`;
         }).join('');
         return `<div class="inv-ov-row" onclick="drillSite('${e.siteName}')">
-          <div style="display:flex;align-items:center;gap:6px">
+          <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
             <div style="width:5px;height:5px;border-radius:50%;background:${weakPct>15?'#ef4444':weakPct>7?'#eab308':'#22c55e'}"></div>
             <span style="font-size:11px;color:#c8d8e8">${e.siteName}</span>
             ${hasBreakdown?'<span style="color:var(--amber);font-size:9px">⚠</span>':''}
+            ${(()=>{const a=computeSiteAlerts(e.siteName);return a.filter(x=>x.type==='dead').length?'<span class="alert-badge alert-dead">DEAD</span>':a.filter(x=>x.type==='fault').length?'<span class="alert-badge alert-fault">FAULT?</span>':a.filter(x=>x.type==='chronic').length?'<span class="alert-badge alert-chronic">CHRONIC</span>':a.filter(x=>x.type==='degrade').length?'<span class="alert-badge alert-degrade">PR↓</span>':''})()}
           </div>
           <div class="tc" style="font-size:10px;color:var(--text4)">${e.dateRaw}</div>
           <div class="tc" style="font-size:11px;color:var(--sky)">${valid.length}</div>
@@ -1343,16 +1492,175 @@ function renderInvTrendView(siteName) {
         <span>${prRecs[0].dateRaw}</span><span>${prRecs[prRecs.length-1].dateRaw}</span>
       </div>
     </div>`;
+
+    // PR slope indicator
+    if (prRecs.length >= 4) {
+      const n = prRecs.length, xs = prRecs.map((_,i)=>i), ys = prRecs.map(r=>r.pr);
+      const meanX = xs.reduce((s,x)=>s+x,0)/n, meanY = ys.reduce((s,y)=>s+y,0)/n;
+      const slope = xs.reduce((s,x,i)=>s+(x-meanX)*(ys[i]-meanY),0)/xs.reduce((s,x)=>s+(x-meanX)**2,0);
+      const slopeClass = slope < -0.5 ? 'pr-slope-down' : slope > 0.3 ? 'pr-slope-up' : 'pr-slope-flat';
+      const slopeLabel = slope < -0.5 ? `↓ Degrading ${Math.abs(slope).toFixed(2)}%/day — check soiling or shading` : slope > 0.3 ? `↑ Improving ${slope.toFixed(2)}%/day` : `→ Stable (${slope.toFixed(2)}%/day)`;
+      html += `<div style="font-size:11px;class="${slopeClass}" style="margin-top:6px"><span class="${slopeClass}">${slopeLabel}</span></div>`;
+    }
+  }
+
+  // Site-specific alerts
+  const siteAlerts = computeSiteAlerts(siteName);
+  if (siteAlerts.length) {
+    html += `<div class="inv-alert-panel" style="margin-top:16px">
+      <div class="inv-alert-title">⚡ Alerts — ${siteName}</div>`;
+    siteAlerts.forEach(a => {
+      const cls = `alert-${a.type}`;
+      html += `<div class="inv-alert-row"><span class="alert-badge ${cls}">${a.label}</span><span style="margin-left:8px;color:var(--text2)">${a.msg}</span></div>`;
+    });
+    html += `</div>`;
+  }
+
+  // Cleaning effectiveness
+  const cleanEff = computeCleaningEffectiveness(siteName);
+  if (cleanEff.length) {
+    html += `<div class="clean-eff-panel">
+      <div class="inv-action-title">🧹 Cleaning Effectiveness — PR Before vs After</div>
+      <div class="clean-eff-row clean-eff-hdr">
+        <div>Cycle</div><div class="tc">Status</div><div class="tc">Avg PR Before</div><div class="tc">Avg PR After</div><div class="tc">Delta</div>
+      </div>`;
+    cleanEff.forEach(c => {
+      const col = parseFloat(c.delta) > 1 ? '#22c55e' : parseFloat(c.delta) < -0.5 ? '#ef4444' : '#64748b';
+      html += `<div class="clean-eff-row">
+        <div style="color:#38bdf8;font-weight:600">${c.cycle}</div>
+        <div class="tc" style="color:var(--text3)">${c.status}</div>
+        <div class="tc" style="color:var(--text2)">${c.avgBefore}%</div>
+        <div class="tc" style="color:var(--text2)">${c.avgAfter}%</div>
+        <div class="tc" style="color:${col};font-weight:700">${parseFloat(c.delta)>=0?'+':''}${c.delta}%</div>
+      </div>`;
+    });
+    html += `</div>`;
   }
 
   document.getElementById('inv-content').innerHTML = html;
 }
 
 // ═══════════════════════════════════════════════════════
+//  SMART ALERTS ENGINE
+// ═══════════════════════════════════════════════════════
+
+// Returns array of alert objects for a site
+function computeSiteAlerts(siteName) {
+  const alerts = [];
+  const recs = INV_DATA.filter(d => d.siteName === siteName)
+    .sort((a, b) => a.dateObj - b.dateObj);
+  if (!recs.length) return alerts;
+
+  const latest = recs[recs.length - 1];
+  const maxInv = Math.max(...recs.map(r => r.invGen.length));
+  const siteAvg = (vals) => { const v = vals.filter(x => x !== null && x > 0); return v.length ? v.reduce((s,x)=>s+x,0)/v.length : 0; };
+
+  // ── For each inverter ──
+  for (let i = 0; i < maxInv; i++) {
+    const allVals = recs.map(r => r.invGen[i] ?? null);
+    const recentVals = allVals.slice(-7);
+    const latestVal = allVals[allVals.length - 1];
+    const prevVal = allVals[allVals.length - 2] ?? null;
+
+    // Daily site avg per day (all inverters)
+    const dailyAvgs = recs.map(r => siteAvg(r.invGen));
+
+    // 1. ZERO GENERATION — inverter dead today
+    if (latestVal !== null && latestVal === 0) {
+      alerts.push({ type: 'dead', inv: i + 1, label: 'DEAD', msg: `INV-${i+1} reported zero generation today` });
+    }
+
+    // 2. SUDDEN DROP — was fine yesterday, dropped >20% today
+    if (latestVal !== null && prevVal !== null && prevVal > 0 && latestVal > 0) {
+      const dayAvgLatest = dailyAvgs[dailyAvgs.length - 1];
+      const dayAvgPrev = dailyAvgs[dailyAvgs.length - 2];
+      const ratioToday = dayAvgLatest > 0 ? latestVal / dayAvgLatest : 1;
+      const ratioYest = dayAvgPrev > 0 ? prevVal / dayAvgPrev : 1;
+      if (ratioYest >= 0.90 && ratioToday < 0.80) {
+        const drop = ((ratioYest - ratioToday) * 100).toFixed(0);
+        alerts.push({ type: 'fault', inv: i + 1, label: 'FAULT?', msg: `INV-${i+1} dropped ${drop}% vs avg overnight — was normal yesterday` });
+      }
+    }
+
+    // 3. CONSECUTIVE UNDERPERFORMANCE — below 88% of daily avg for 3+ days
+    if (recentVals.length >= 3) {
+      let streak = 0;
+      for (let d = recs.length - 1; d >= 0; d--) {
+        const v = recs[d].invGen[i];
+        const avg = dailyAvgs[d];
+        if (v !== null && v > 0 && avg > 0 && (v / avg) < 0.88) streak++;
+        else break;
+      }
+      if (streak >= 3) {
+        alerts.push({ type: 'chronic', inv: i + 1, label: 'CHRONIC', msg: `INV-${i+1} underperforming for ${streak} consecutive days` });
+      }
+    }
+  }
+
+  // 4. PR DEGRADATION TREND — linear regression on last 7 days PR
+  const prRecs = recs.slice(-7).filter(r => r.pr && r.pr > 0);
+  if (prRecs.length >= 4) {
+    const n = prRecs.length;
+    const xs = prRecs.map((_, i) => i);
+    const ys = prRecs.map(r => r.pr);
+    const meanX = xs.reduce((s,x)=>s+x,0)/n;
+    const meanY = ys.reduce((s,y)=>s+y,0)/n;
+    const slope = xs.reduce((s,x,i)=>s+(x-meanX)*(ys[i]-meanY),0) / xs.reduce((s,x)=>s+(x-meanX)**2,0);
+    if (slope < -0.8) { // losing >0.8% PR per day
+      alerts.push({ type: 'degrade', inv: null, label: 'PR↓', msg: `Site PR degrading at ${Math.abs(slope).toFixed(1)}%/day over last ${prRecs.length} days — check soiling or shading` });
+    }
+  }
+
+  return alerts;
+}
+
+// Portfolio-wide alert summary
+function computeAllAlerts() {
+  const sites = [...new Set(INV_DATA.map(d => d.siteName))];
+  const all = [];
+  sites.forEach(s => {
+    const alerts = computeSiteAlerts(s);
+    alerts.forEach(a => all.push({ ...a, site: s }));
+  });
+  return all;
+}
+
+// Cleaning effectiveness: compare avg PR 3 days before vs 3 days after each cleaning cycle
+function computeCleaningEffectiveness(siteName) {
+  const recs = INV_DATA.filter(d => d.siteName === siteName)
+    .sort((a, b) => a.dateObj - b.dateObj)
+    .filter(r => r.pr && r.pr > 0);
+  if (recs.length < 4) return [];
+
+  const sc = CLEANING_SCHED[normKey(siteName)];
+  if (!sc) return [];
+
+  const results = [];
+  ['c1', 'c2', 'c3'].forEach((cycle, ci) => {
+    const c = sc[cycle];
+    if (!c || !c.status || c.status.toLowerCase() === 'pending') return;
+    const endDate = parseCleanDate(c.end);
+    if (!endDate) return;
+
+    const before = recs.filter(r => r.dateObj < endDate).slice(-3);
+    const after = recs.filter(r => r.dateObj > endDate).slice(0, 3);
+    if (!before.length || !after.length) return;
+
+    const avgBefore = before.reduce((s,r)=>s+r.pr,0)/before.length;
+    const avgAfter = after.reduce((s,r)=>s+r.pr,0)/after.length;
+    const delta = avgAfter - avgBefore;
+    results.push({ cycle: `C${ci+1}`, status: c.status, avgBefore: avgBefore.toFixed(1), avgAfter: avgAfter.toFixed(1), delta: delta.toFixed(1) });
+  });
+  return results;
+}
+
+// ═══════════════════════════════════════════════════════
 //  BOOT
 // ═══════════════════════════════════════════════════════
 loadData();
+loadInverterData(); // load in background so Inv Loss column populates
 setInterval(loadData, 30*60*1000);
+setInterval(loadInverterData, 30*60*1000);
 </script>
 </body>
 </html>
