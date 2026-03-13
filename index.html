@@ -212,6 +212,31 @@ body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'IBM Pl
 .inv-empty-icon{font-size:32px;opacity:.3}
 .inv-empty-text{font-size:11px;letter-spacing:.05em}
 
+/* Alert badges */
+.alert-badge{display:inline-block;font-size:9px;font-weight:700;padding:2px 6px;border-radius:3px;letter-spacing:.06em;border:1px solid;margin-left:4px;vertical-align:middle}
+.alert-dead{color:#ff4444;border-color:#ff4444;background:#1a0505;animation:pulse-red 1.2s infinite}
+.alert-chronic{color:#f97316;border-color:#f97316;background:#1a0800}
+.alert-fault{color:#eab308;border-color:#eab308;background:#1a1200}
+.alert-degrade{color:#a855f7;border-color:#a855f7;background:#12051a}
+@keyframes pulse-red{0%,100%{opacity:1}50%{opacity:.4}}
+
+/* Alert summary panel */
+.inv-alert-panel{background:#0d0d0d;border:1px solid #2a2a2a;border-radius:8px;padding:14px 16px;margin-bottom:16px}
+.inv-alert-title{font-size:9px;color:var(--text4);text-transform:uppercase;letter-spacing:.12em;margin-bottom:10px}
+.inv-alert-row{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #1a1a1a;font-size:11px;flex-wrap:wrap}
+.inv-alert-row:last-child{border-bottom:none}
+
+/* Cleaning effectiveness */
+.clean-eff-panel{background:var(--bg3);border:1px solid var(--border2);border-radius:8px;padding:16px;margin-top:16px}
+.clean-eff-row{display:grid;grid-template-columns:160px 80px 80px 80px 1fr;gap:8px;padding:7px 0;border-bottom:1px solid var(--border);align-items:center;font-size:11px}
+.clean-eff-row:last-child{border-bottom:none}
+.clean-eff-hdr{font-size:9px;color:var(--text5);text-transform:uppercase;letter-spacing:.1em}
+
+/* PR trend slope indicator */
+.pr-slope-up{color:#22c55e}
+.pr-slope-down{color:#ef4444}
+.pr-slope-flat{color:#64748b}
+
 /* multi-site overview table */
 .inv-overview-table{background:var(--bg3);border:1px solid var(--border2);border-radius:8px;overflow:hidden}
 .inv-ov-hdr{display:grid;grid-template-columns:160px 70px 70px 80px 80px 80px 1fr;gap:6px;padding:8px 14px;background:#080c16;font-size:9px;color:var(--text5);text-transform:uppercase;letter-spacing:.1em;border-bottom:1px solid var(--border)}
@@ -1166,8 +1191,25 @@ function renderInvOverview() {
     {l:'Sites w/ Issues', v:sitesWithIssue, c:sitesWithIssue>0?'#fbbf24':'#22c55e'},
   ].map(s=>`<div class="stat-card"><div class="stat-label">${s.l}</div><div class="stat-value" style="color:${s.c}">${s.v}</div></div>`).join('');
 
+  // Portfolio alert summary at top
+  const allAlerts = computeAllAlerts();
+  let alertHtml = '';
+  if (allAlerts.length) {
+    const deadAlerts    = allAlerts.filter(a=>a.type==='dead');
+    const faultAlerts   = allAlerts.filter(a=>a.type==='fault');
+    const chronicAlerts = allAlerts.filter(a=>a.type==='chronic');
+    const degradeAlerts = allAlerts.filter(a=>a.type==='degrade');
+    alertHtml = `<div class="inv-alert-panel">
+      <div class="inv-alert-title">⚡ Portfolio Alerts — ${allAlerts.length} active</div>`;
+    if (deadAlerts.length)    alertHtml += `<div class="inv-alert-row"><span class="alert-badge alert-dead">DEAD ×${deadAlerts.length}</span><span style="color:#ef4444;margin-left:8px">${deadAlerts.map(a=>`${a.site} INV-${a.inv}`).join(', ')}</span></div>`;
+    if (faultAlerts.length)   alertHtml += `<div class="inv-alert-row"><span class="alert-badge alert-fault">FAULT? ×${faultAlerts.length}</span><span style="color:#eab308;margin-left:8px">${faultAlerts.map(a=>`${a.site} INV-${a.inv}`).join(', ')}</span></div>`;
+    if (chronicAlerts.length) alertHtml += `<div class="inv-alert-row"><span class="alert-badge alert-chronic">CHRONIC ×${chronicAlerts.length}</span><span style="color:#f97316;margin-left:8px">${chronicAlerts.map(a=>`${a.site} INV-${a.inv}`).join(', ')}</span></div>`;
+    if (degradeAlerts.length) alertHtml += `<div class="inv-alert-row"><span class="alert-badge alert-degrade">PR↓ ×${degradeAlerts.length}</span><span style="color:#a855f7;margin-left:8px">${degradeAlerts.map(a=>a.site).join(', ')}</span></div>`;
+    alertHtml += `</div>`;
+  }
+
   // Overview table
-  document.getElementById('inv-content').innerHTML=`
+  document.getElementById('inv-content').innerHTML= alertHtml + `
     <div style="margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">
       <div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:800;color:#eef4ff">All Sites — Latest Inverter Snapshot</div>
       <div style="font-size:10px;color:var(--text4)">Click a site row to drill in</div>
@@ -1195,10 +1237,11 @@ function renderInvOverview() {
           return `<div class="inv-mini-bar" style="height:${h}px;background:${c}"></div>`;
         }).join('');
         return `<div class="inv-ov-row" onclick="drillSite('${e.siteName}')">
-          <div style="display:flex;align-items:center;gap:6px">
+          <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
             <div style="width:5px;height:5px;border-radius:50%;background:${weakPct>15?'#ef4444':weakPct>7?'#eab308':'#22c55e'}"></div>
             <span style="font-size:11px;color:#c8d8e8">${e.siteName}</span>
             ${hasBreakdown?'<span style="color:var(--amber);font-size:9px">⚠</span>':''}
+            ${(()=>{const a=computeSiteAlerts(e.siteName);return a.filter(x=>x.type==='dead').length?'<span class="alert-badge alert-dead">DEAD</span>':a.filter(x=>x.type==='fault').length?'<span class="alert-badge alert-fault">FAULT?</span>':a.filter(x=>x.type==='chronic').length?'<span class="alert-badge alert-chronic">CHRONIC</span>':a.filter(x=>x.type==='degrade').length?'<span class="alert-badge alert-degrade">PR↓</span>':''})()}
           </div>
           <div class="tc" style="font-size:10px;color:var(--text4)">${e.dateRaw}</div>
           <div class="tc" style="font-size:11px;color:var(--sky)">${valid.length}</div>
@@ -1449,9 +1492,166 @@ function renderInvTrendView(siteName) {
         <span>${prRecs[0].dateRaw}</span><span>${prRecs[prRecs.length-1].dateRaw}</span>
       </div>
     </div>`;
+
+    // PR slope indicator
+    if (prRecs.length >= 4) {
+      const n = prRecs.length, xs = prRecs.map((_,i)=>i), ys = prRecs.map(r=>r.pr);
+      const meanX = xs.reduce((s,x)=>s+x,0)/n, meanY = ys.reduce((s,y)=>s+y,0)/n;
+      const slope = xs.reduce((s,x,i)=>s+(x-meanX)*(ys[i]-meanY),0)/xs.reduce((s,x)=>s+(x-meanX)**2,0);
+      const slopeClass = slope < -0.5 ? 'pr-slope-down' : slope > 0.3 ? 'pr-slope-up' : 'pr-slope-flat';
+      const slopeLabel = slope < -0.5 ? `↓ Degrading ${Math.abs(slope).toFixed(2)}%/day — check soiling or shading` : slope > 0.3 ? `↑ Improving ${slope.toFixed(2)}%/day` : `→ Stable (${slope.toFixed(2)}%/day)`;
+      html += `<div style="font-size:11px;class="${slopeClass}" style="margin-top:6px"><span class="${slopeClass}">${slopeLabel}</span></div>`;
+    }
+  }
+
+  // Site-specific alerts
+  const siteAlerts = computeSiteAlerts(siteName);
+  if (siteAlerts.length) {
+    html += `<div class="inv-alert-panel" style="margin-top:16px">
+      <div class="inv-alert-title">⚡ Alerts — ${siteName}</div>`;
+    siteAlerts.forEach(a => {
+      const cls = `alert-${a.type}`;
+      html += `<div class="inv-alert-row"><span class="alert-badge ${cls}">${a.label}</span><span style="margin-left:8px;color:var(--text2)">${a.msg}</span></div>`;
+    });
+    html += `</div>`;
+  }
+
+  // Cleaning effectiveness
+  const cleanEff = computeCleaningEffectiveness(siteName);
+  if (cleanEff.length) {
+    html += `<div class="clean-eff-panel">
+      <div class="inv-action-title">🧹 Cleaning Effectiveness — PR Before vs After</div>
+      <div class="clean-eff-row clean-eff-hdr">
+        <div>Cycle</div><div class="tc">Status</div><div class="tc">Avg PR Before</div><div class="tc">Avg PR After</div><div class="tc">Delta</div>
+      </div>`;
+    cleanEff.forEach(c => {
+      const col = parseFloat(c.delta) > 1 ? '#22c55e' : parseFloat(c.delta) < -0.5 ? '#ef4444' : '#64748b';
+      html += `<div class="clean-eff-row">
+        <div style="color:#38bdf8;font-weight:600">${c.cycle}</div>
+        <div class="tc" style="color:var(--text3)">${c.status}</div>
+        <div class="tc" style="color:var(--text2)">${c.avgBefore}%</div>
+        <div class="tc" style="color:var(--text2)">${c.avgAfter}%</div>
+        <div class="tc" style="color:${col};font-weight:700">${parseFloat(c.delta)>=0?'+':''}${c.delta}%</div>
+      </div>`;
+    });
+    html += `</div>`;
   }
 
   document.getElementById('inv-content').innerHTML = html;
+}
+
+// ═══════════════════════════════════════════════════════
+//  SMART ALERTS ENGINE
+// ═══════════════════════════════════════════════════════
+
+// Returns array of alert objects for a site
+function computeSiteAlerts(siteName) {
+  const alerts = [];
+  const recs = INV_DATA.filter(d => d.siteName === siteName)
+    .sort((a, b) => a.dateObj - b.dateObj);
+  if (!recs.length) return alerts;
+
+  const latest = recs[recs.length - 1];
+  const maxInv = Math.max(...recs.map(r => r.invGen.length));
+  const siteAvg = (vals) => { const v = vals.filter(x => x !== null && x > 0); return v.length ? v.reduce((s,x)=>s+x,0)/v.length : 0; };
+
+  // ── For each inverter ──
+  for (let i = 0; i < maxInv; i++) {
+    const allVals = recs.map(r => r.invGen[i] ?? null);
+    const recentVals = allVals.slice(-7);
+    const latestVal = allVals[allVals.length - 1];
+    const prevVal = allVals[allVals.length - 2] ?? null;
+
+    // Daily site avg per day (all inverters)
+    const dailyAvgs = recs.map(r => siteAvg(r.invGen));
+
+    // 1. ZERO GENERATION — inverter dead today
+    if (latestVal !== null && latestVal === 0) {
+      alerts.push({ type: 'dead', inv: i + 1, label: 'DEAD', msg: `INV-${i+1} reported zero generation today` });
+    }
+
+    // 2. SUDDEN DROP — was fine yesterday, dropped >20% today
+    if (latestVal !== null && prevVal !== null && prevVal > 0 && latestVal > 0) {
+      const dayAvgLatest = dailyAvgs[dailyAvgs.length - 1];
+      const dayAvgPrev = dailyAvgs[dailyAvgs.length - 2];
+      const ratioToday = dayAvgLatest > 0 ? latestVal / dayAvgLatest : 1;
+      const ratioYest = dayAvgPrev > 0 ? prevVal / dayAvgPrev : 1;
+      if (ratioYest >= 0.90 && ratioToday < 0.80) {
+        const drop = ((ratioYest - ratioToday) * 100).toFixed(0);
+        alerts.push({ type: 'fault', inv: i + 1, label: 'FAULT?', msg: `INV-${i+1} dropped ${drop}% vs avg overnight — was normal yesterday` });
+      }
+    }
+
+    // 3. CONSECUTIVE UNDERPERFORMANCE — below 88% of daily avg for 3+ days
+    if (recentVals.length >= 3) {
+      let streak = 0;
+      for (let d = recs.length - 1; d >= 0; d--) {
+        const v = recs[d].invGen[i];
+        const avg = dailyAvgs[d];
+        if (v !== null && v > 0 && avg > 0 && (v / avg) < 0.88) streak++;
+        else break;
+      }
+      if (streak >= 3) {
+        alerts.push({ type: 'chronic', inv: i + 1, label: 'CHRONIC', msg: `INV-${i+1} underperforming for ${streak} consecutive days` });
+      }
+    }
+  }
+
+  // 4. PR DEGRADATION TREND — linear regression on last 7 days PR
+  const prRecs = recs.slice(-7).filter(r => r.pr && r.pr > 0);
+  if (prRecs.length >= 4) {
+    const n = prRecs.length;
+    const xs = prRecs.map((_, i) => i);
+    const ys = prRecs.map(r => r.pr);
+    const meanX = xs.reduce((s,x)=>s+x,0)/n;
+    const meanY = ys.reduce((s,y)=>s+y,0)/n;
+    const slope = xs.reduce((s,x,i)=>s+(x-meanX)*(ys[i]-meanY),0) / xs.reduce((s,x)=>s+(x-meanX)**2,0);
+    if (slope < -0.8) { // losing >0.8% PR per day
+      alerts.push({ type: 'degrade', inv: null, label: 'PR↓', msg: `Site PR degrading at ${Math.abs(slope).toFixed(1)}%/day over last ${prRecs.length} days — check soiling or shading` });
+    }
+  }
+
+  return alerts;
+}
+
+// Portfolio-wide alert summary
+function computeAllAlerts() {
+  const sites = [...new Set(INV_DATA.map(d => d.siteName))];
+  const all = [];
+  sites.forEach(s => {
+    const alerts = computeSiteAlerts(s);
+    alerts.forEach(a => all.push({ ...a, site: s }));
+  });
+  return all;
+}
+
+// Cleaning effectiveness: compare avg PR 3 days before vs 3 days after each cleaning cycle
+function computeCleaningEffectiveness(siteName) {
+  const recs = INV_DATA.filter(d => d.siteName === siteName)
+    .sort((a, b) => a.dateObj - b.dateObj)
+    .filter(r => r.pr && r.pr > 0);
+  if (recs.length < 4) return [];
+
+  const sc = CLEANING_SCHED[normKey(siteName)];
+  if (!sc) return [];
+
+  const results = [];
+  ['c1', 'c2', 'c3'].forEach((cycle, ci) => {
+    const c = sc[cycle];
+    if (!c || !c.status || c.status.toLowerCase() === 'pending') return;
+    const endDate = parseCleanDate(c.end);
+    if (!endDate) return;
+
+    const before = recs.filter(r => r.dateObj < endDate).slice(-3);
+    const after = recs.filter(r => r.dateObj > endDate).slice(0, 3);
+    if (!before.length || !after.length) return;
+
+    const avgBefore = before.reduce((s,r)=>s+r.pr,0)/before.length;
+    const avgAfter = after.reduce((s,r)=>s+r.pr,0)/after.length;
+    const delta = avgAfter - avgBefore;
+    results.push({ cycle: `C${ci+1}`, status: c.status, avgBefore: avgBefore.toFixed(1), avgAfter: avgAfter.toFixed(1), delta: delta.toFixed(1) });
+  });
+  return results;
 }
 
 // ═══════════════════════════════════════════════════════
