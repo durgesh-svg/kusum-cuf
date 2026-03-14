@@ -268,7 +268,7 @@ body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'Inter'
 .chart-legend{display:flex;gap:16px;margin-top:14px;flex-wrap:wrap;padding-top:12px;border-top:1px solid var(--border2)}
 .chart-leg-item{display:flex;align-items:center;gap:5px;font-size:10px;color:var(--text4);font-weight:500}
 .chart-leg-item i{display:inline-block;width:10px;height:10px;border-radius:3px;flex-shrink:0}
-#chart-section{padding:16px 24px 0}
+#chart-section{padding:16px 24px 16px}
 
 /* multi-site overview table */
 .inv-overview-table{background:#fff;border:1px solid var(--border2);border-radius:12px;overflow:hidden;box-shadow:0 2px 8px rgba(0,80,160,.06)}
@@ -339,8 +339,6 @@ body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'Inter'
       </div>
     </div>
 
-    <div id="chart-section"></div>
-
     <div id="filterbar">
       <span class="filter-label">Filter</span>
       <div id="chips"></div>
@@ -368,6 +366,8 @@ body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'Inter'
       </div>
       <div id="table-body"></div>
     </div>
+
+    <div id="chart-section"></div>
 
     <div id="footer">
       <span>Auto-refreshes every 30 min · Source: Google Sheets · <span id="total-sites"></span> sites</span>
