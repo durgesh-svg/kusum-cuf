@@ -5,66 +5,66 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>PM KUSUM · Stockwell Solar · Dashboard</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&family=Syne:wght@700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet"/>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#070b12;--bg2:#090d18;--bg3:#0d1520;--bg4:#0c1018;
-  --border:#0f1a28;--border2:#1a2035;
-  --text:#e2e8f0;--text2:#c8d8e8;--text3:#64748b;--text4:#334155;--text5:#2a3a52;--text6:#1a2a3a;
-  --green:#22c55e;--lime:#84cc16;--yellow:#eab308;--red:#ef4444;
-  --orange:#f97316;--purple:#a855f7;--slate:#475569;--sky:#38bdf8;--amber:#fbbf24;
+  --bg:#dbeeff;--bg2:#f0f7ff;--bg3:#ffffff;--bg4:#f8fbff;
+  --border:#cde0f5;--border2:#dde8f5;
+  --text:#1e293b;--text2:#334155;--text3:#64748b;--text4:#94a3b8;--text5:#94a3b8;--text6:#cbd5e1;
+  --green:#16a34a;--lime:#65a30d;--yellow:#d97706;--red:#dc2626;
+  --orange:#ea580c;--purple:#9333ea;--slate:#64748b;--sky:#0284c7;--amber:#d97706;
 }
-body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'IBM Plex Mono','Courier New',monospace;font-size:12px}
+body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'Inter','Segoe UI',sans-serif;font-size:12px}
 ::-webkit-scrollbar{width:4px;height:4px}
 ::-webkit-scrollbar-track{background:var(--bg)}
-::-webkit-scrollbar-thumb{background:#1e2a3a;border-radius:2px}
+::-webkit-scrollbar-thumb{background:#b0cde8;border-radius:2px}
 
 /* ── TAB NAV ── */
-#tab-nav{display:flex;gap:0;border-bottom:1px solid var(--border2);background:var(--bg2);padding:0 24px}
-.tab-btn{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:11px 18px;border:none;background:none;color:var(--text4);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .15s}
-.tab-btn:hover{color:var(--text2)}
-.tab-btn.active{color:var(--sky);border-bottom-color:var(--sky)}
+#tab-nav{display:flex;gap:0;border-bottom:1px solid var(--border2);background:#fff;padding:0 24px;align-items:center;height:52px;box-shadow:0 1px 6px rgba(0,80,160,.06)}
+.tab-btn{font-family:'Inter',sans-serif;font-size:12px;font-weight:500;letter-spacing:0;text-transform:none;padding:6px 18px;border:1px solid transparent;background:none;color:var(--text3);cursor:pointer;border-radius:20px;transition:all .15s}
+.tab-btn:hover{color:var(--text2);background:var(--border2)}
+.tab-btn.active{color:#fff;background:var(--sky);border-color:var(--sky)}
 
 /* ── HEADER ── */
-#header{border-bottom:1px solid var(--border);padding:15px 24px 12px;background:var(--bg2)}
+#header{border-bottom:1px solid var(--border);padding:20px 24px 16px;background:#fff}
 .header-top{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px}
-.header-eyebrow{font-size:10px;color:var(--text5);letter-spacing:.18em;text-transform:uppercase;margin-bottom:4px}
-.header-title{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:#eef4ff;letter-spacing:-.02em}
-.header-sub{font-size:10px;color:var(--text5);margin-top:3px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.header-eyebrow{font-size:11px;color:var(--text4);letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px;font-weight:500}
+.header-title{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--text);letter-spacing:-.02em;margin-bottom:4px}
+.header-sub{font-size:11px;color:var(--text3);margin-top:2px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .live-dot{width:6px;height:6px;border-radius:50%;background:var(--green);display:inline-block;animation:pulse 2s infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
-.method-box{margin-top:10px;padding:10px 14px;background:var(--bg3);border:1px solid var(--border2);border-radius:6px;font-size:10px;color:var(--text3);line-height:1.9;max-width:660px;display:none}
+.method-box{margin-top:10px;padding:10px 14px;background:#f0f7ff;border:1px solid var(--border2);border-radius:8px;font-size:10px;color:var(--text3);line-height:1.9;max-width:660px;display:none}
 .method-box.open{display:block}
 
 /* ── STAT CARDS ── */
 .stats{display:flex;gap:8px;flex-wrap:wrap}
-.stat-card{background:var(--bg3);border:1px solid var(--border2);border-radius:6px;padding:10px 13px;min-width:82px}
-.stat-label{font-size:9px;color:var(--text4);text-transform:uppercase;letter-spacing:.1em;margin-bottom:3px}
+.stat-card{background:#ffffff;border:1px solid var(--border2);border-radius:12px;padding:14px 18px;min-width:110px;box-shadow:0 2px 12px rgba(0,80,160,.08)}
+.stat-label{font-size:11px;color:var(--text4);font-weight:500;letter-spacing:0;margin-bottom:4px}
 .stat-value{font-family:'Syne',sans-serif;font-size:16px;font-weight:800}
 .stat-sub{font-size:9px;color:var(--text4);margin-top:2px}
 
 /* ── LEGEND ── */
-.legend{display:flex;gap:12px;margin-top:12px;flex-wrap:wrap;align-items:center}
-.legend-item{display:flex;align-items:center;gap:5px;font-size:9px;color:var(--text5)}
-.legend-dot{width:8px;height:8px;border-radius:2px}
-.legend-line{width:1.5px;height:12px;background:#f0f6ff;opacity:.6}
+.legend{display:flex;gap:14px;margin-top:14px;flex-wrap:wrap;align-items:center;padding-top:14px;border-top:1px solid var(--border2)}
+.legend-item{display:flex;align-items:center;gap:5px;font-size:10px;color:var(--text4);font-weight:500}
+.legend-dot{width:10px;height:10px;border-radius:3px;flex-shrink:0}
+.legend-line{width:2px;height:12px;background:#1e293b;opacity:.2;border-radius:1px}
 
 /* ── FILTER BAR ── */
-#filterbar{padding:8px 24px;border-bottom:1px solid #0a0f18;background:var(--bg2);display:flex;align-items:center;gap:6px;flex-wrap:wrap}
-.filter-label{font-size:9px;color:var(--text5);letter-spacing:.12em;margin-right:4px}
-.chip{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:11px;font-size:10px;cursor:pointer;border:1px solid transparent;transition:all .15s;letter-spacing:.03em;white-space:nowrap;font-family:'IBM Plex Mono',monospace}
+#filterbar{padding:12px 24px;border-bottom:1px solid var(--border);background:#fff;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.filter-label{font-size:11px;color:var(--text4);font-weight:500;letter-spacing:0;margin-right:4px}
+.chip{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:11px;font-size:10px;cursor:pointer;border:1px solid transparent;transition:all .15s;letter-spacing:0;white-space:nowrap;font-family:'Inter',sans-serif}
 .chip-dot{width:5px;height:5px;border-radius:50%}
 .sort-wrap{margin-left:auto;display:flex;gap:3px;align-items:center}
-.sortbtn{background:none;border:none;color:var(--text4);cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.07em;padding:4px 7px;border-radius:3px;transition:all .15s;white-space:nowrap}
-.sortbtn:hover{color:#94a3b8;background:#0c1220}
-.sortbtn.on{color:var(--sky);background:#0a1929}
+.sortbtn{background:none;border:none;color:var(--text4);cursor:pointer;font-family:'Inter',sans-serif;font-size:10px;letter-spacing:0;padding:4px 7px;border-radius:6px;transition:all .15s;white-space:nowrap}
+.sortbtn:hover{color:var(--text2);background:var(--border2)}
+.sortbtn.on{color:var(--sky);background:#e0f0ff}
 
 /* ── CUF TABLE ── */
 #table-wrap{overflow-x:auto}
-.col-hdr{display:grid;grid-template-columns:26px 148px 62px 62px 62px 62px 62px 180px 80px 80px 72px 130px 54px 62px 58px 52px 52px 52px;gap:0 6px;padding:7px 24px;border-bottom:1px solid #0a0f18;font-size:9px;color:var(--text5);text-transform:uppercase;letter-spacing:.1em;background:#080c16;position:sticky;top:0;z-index:10}
-.trow{display:grid;grid-template-columns:26px 148px 62px 62px 62px 62px 62px 180px 80px 80px 72px 130px 54px 62px 58px 52px 52px 52px;gap:0 6px;padding:7px 24px;border-bottom:1px solid #090d16;align-items:center;cursor:pointer;transition:background .1s}
-.trow:hover{background:#0c1220}
+.col-hdr{display:grid;grid-template-columns:26px 148px 62px 62px 62px 62px 62px 180px 80px 80px 72px 130px 54px 62px 58px 52px 52px 52px;gap:0 6px;padding:7px 24px;border-bottom:1px solid var(--border);font-size:9px;color:var(--text4);text-transform:uppercase;letter-spacing:.1em;background:#e8f3ff;position:sticky;top:0;z-index:10}
+.trow{display:grid;grid-template-columns:26px 148px 62px 62px 62px 62px 62px 180px 80px 80px 72px 130px 54px 62px 58px 52px 52px 52px;gap:0 6px;padding:7px 24px;border-bottom:1px solid var(--border2);align-items:center;cursor:pointer;transition:background .1s;background:#fff}
+.trow:hover{background:#f0f8ff}
 .site-name{display:flex;align-items:center;gap:5px;overflow:hidden}
 .site-name span{font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .warn-badge{font-size:9px;color:var(--amber);flex-shrink:0}
@@ -73,55 +73,56 @@ body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'IBM Pl
 .tc{text-align:center}
 
 /* ── WATERFALL BAR ── */
-.wf-wrap{position:relative;height:18px;background:var(--bg3);border-radius:3px;overflow:visible;width:100%}
+.wf-wrap{position:relative;height:18px;background:#e8f0fb;border-radius:3px;overflow:visible;width:100%}
 .wf-seg{position:absolute;top:0;height:100%}
-.wf-line{position:absolute;top:-3px;height:calc(100% + 6px);width:1.5px;background:#f0f6ff;opacity:.65;z-index:3}
+.wf-line{position:absolute;top:-3px;height:calc(100% + 6px);width:1.5px;background:#1e3a5f;opacity:.5;z-index:3}
 
 /* ── CAL DOTS ── */
 .cal{display:flex;gap:2px}
 .cal-dot{width:5px;height:11px;border-radius:1px}
 
 /* ── CUF MODAL ── */
-#overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:50;display:none;align-items:center;justify-content:center;padding:20px}
+#overlay{position:fixed;inset:0;background:rgba(15,30,60,.6);z-index:50;display:none;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(2px)}
 #overlay.open{display:flex}
-#modal{background:var(--bg4);border:1px solid #1a2a3a;border-radius:10px;padding:26px;width:580px;max-height:90vh;overflow-y:auto}
+#modal{background:#fff;border:1px solid var(--border2);border-radius:16px;padding:26px;width:580px;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,60,140,.15)}
 .modal-hdr{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px}
-.modal-title{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#eef4ff}
+.modal-title{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--text)}
 .modal-sub{font-size:10px;color:var(--text4);margin-top:2px}
-.close-btn{background:var(--bg3);border:1px solid var(--border2);color:var(--slate);cursor:pointer;font-size:13px;padding:5px 11px;border-radius:4px;font-family:inherit}
+.close-btn{background:#f0f7ff;border:1px solid var(--border2);color:var(--text3);cursor:pointer;font-size:13px;padding:5px 11px;border-radius:8px;font-family:inherit;transition:all .15s}
+.close-btn:hover{background:var(--border2)}
 .modal-grid5{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:14px}
 .modal-grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:12px}
-.mcard{background:var(--bg3);border:1px solid var(--border2);border-radius:6px;padding:10px 12px}
+.mcard{background:#f8fbff;border:1px solid var(--border2);border-radius:10px;padding:10px 12px}
 .mcard-label{font-size:9px;color:var(--text4);text-transform:uppercase;letter-spacing:.08em;margin-bottom:3px}
 .mcard-value{font-family:'Syne',sans-serif;font-size:15px;font-weight:800}
-.pr-box{background:var(--bg3);border:1px solid var(--border2);border-radius:6px;padding:11px 14px;margin-bottom:12px;font-size:11px;color:var(--text3);line-height:1.8}
-.wf-bar-modal{height:24px;border-radius:4px;display:flex;background:var(--bg3);overflow:hidden;margin-bottom:10px}
-.clean-box{background:var(--bg3);border:1px solid var(--border2);border-radius:6px;padding:11px 14px;margin-bottom:10px}
-.remarks-box{background:#1a0f00;border:1px solid #3d2600;border-left:2px solid var(--amber);border-radius:6px;padding:11px 14px}
-.remarks-line{font-size:11px;color:var(--amber);line-height:1.9}
+.pr-box{background:#f8fbff;border:1px solid var(--border2);border-radius:10px;padding:11px 14px;margin-bottom:12px;font-size:11px;color:var(--text3);line-height:1.8}
+.wf-bar-modal{height:24px;border-radius:6px;display:flex;background:#e8f0fb;overflow:hidden;margin-bottom:10px}
+.clean-box{background:#f8fbff;border:1px solid var(--border2);border-radius:10px;padding:11px 14px;margin-bottom:10px}
+.remarks-box{background:#fffbeb;border:1px solid #fde68a;border-left:3px solid var(--amber);border-radius:10px;padding:11px 14px}
+.remarks-line{font-size:11px;color:#b45309;line-height:1.9}
 .section-label{font-size:9px;color:var(--text4);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px}
 
 
 /* ── CYCLE BADGES ── */
 .cyc-wrap{display:flex;flex-direction:column;gap:2px;align-items:center}
 .cyc-row{display:flex;gap:3px}
-.cyc{display:inline-flex;align-items:center;gap:2px;font-size:8px;padding:1px 5px;border-radius:3px;border:1px solid;white-space:nowrap;font-family:'IBM Plex Mono',monospace}
-.cyc-done{color:#22c55e;border-color:#22c55e;background:#051a0a}
-.cyc-partial{color:#fbbf24;border-color:#fbbf24;background:#1a1005}
-.cyc-pending{color:#ef4444;border-color:#ef4444;background:#1a0505}
-.cyc-vendor{color:#f97316;border-color:#f97316;background:#1a0800}
-.cyc-water{color:#38bdf8;border-color:#38bdf8;background:#051018}
-.cyc-others{color:#64748b;border-color:#64748b;background:#0d1520}
-.cyc-blank{color:#1a2a3a;border-color:#1a2a3a;background:transparent}
+.cyc{display:inline-flex;align-items:center;gap:2px;font-size:8px;padding:1px 5px;border-radius:4px;border:1px solid;white-space:nowrap;font-family:'Inter',sans-serif;font-weight:500}
+.cyc-done{color:#15803d;border-color:#86efac;background:#f0fdf4}
+.cyc-partial{color:#b45309;border-color:#fde68a;background:#fffbeb}
+.cyc-pending{color:#b91c1c;border-color:#fca5a5;background:#fef2f2}
+.cyc-vendor{color:#c2410c;border-color:#fdba74;background:#fff7ed}
+.cyc-water{color:#0369a1;border-color:#7dd3fc;background:#f0f9ff}
+.cyc-others{color:#64748b;border-color:#cbd5e1;background:#f8fafc}
+.cyc-blank{color:#cbd5e1;border-color:#e2e8f0;background:transparent}
 .cyc-alert{animation:cycpulse 1.5s infinite}
 @keyframes cycpulse{0%,100%{opacity:1}50%{opacity:.4}}
 
 /* ── FOOTER ── */
-#footer{padding:12px 24px;border-top:1px solid #0a0f18;font-size:10px;color:var(--text6);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+#footer{padding:12px 24px;border-top:1px solid var(--border);font-size:10px;color:var(--text4);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;background:var(--bg2)}
 
 /* ── LOADING / ERROR ── */
-#loading,#error-msg{min-height:60vh;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace}
-#loading{flex-direction:column;gap:12px;color:var(--text4)}
+#loading,#error-msg{min-height:60vh;display:flex;align-items:center;justify-content:center;font-family:'Inter',sans-serif}
+#loading{flex-direction:column;gap:12px;color:var(--text3)}
 .spinner{font-size:32px;animation:spin 1.5s linear infinite}
 @keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
 #error-msg{flex-direction:column;gap:8px;color:var(--red);text-align:center;padding:40px;max-width:500px;margin:auto}
@@ -137,15 +138,15 @@ body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'IBM Pl
 
 /* INV controls bar */
 #inv-controls{padding:10px 24px;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-#inv-site-select{background:var(--bg3);border:1px solid var(--border2);color:var(--text2);font-family:'IBM Plex Mono',monospace;font-size:11px;padding:5px 10px;border-radius:4px;cursor:pointer;min-width:200px}
-#inv-date-select{background:var(--bg3);border:1px solid var(--border2);color:var(--text2);font-family:'IBM Plex Mono',monospace;font-size:11px;padding:5px 10px;border-radius:4px;cursor:pointer;min-width:130px}
-#inv-date-select option, #inv-site-select option{background:var(--bg3)}
+#inv-site-select{background:#fff;border:1px solid var(--border2);color:var(--text);font-family:'Inter',sans-serif;font-size:11px;padding:5px 10px;border-radius:8px;cursor:pointer;min-width:200px}
+#inv-date-select{background:#fff;border:1px solid var(--border2);color:var(--text);font-family:'Inter',sans-serif;font-size:11px;padding:5px 10px;border-radius:8px;cursor:pointer;min-width:130px}
+#inv-date-select option, #inv-site-select option{background:#fff}
 .inv-ctrl-label{font-size:9px;color:var(--text5);letter-spacing:.12em;text-transform:uppercase}
-#inv-refresh-btn{background:var(--bg3);border:1px solid var(--border2);color:var(--text4);font-family:'IBM Plex Mono',monospace;font-size:11px;padding:5px 10px;border-radius:4px;cursor:pointer;transition:all .15s}
+#inv-refresh-btn{background:#fff;border:1px solid var(--border2);color:var(--text3);font-family:'Inter',sans-serif;font-size:11px;padding:5px 10px;border-radius:8px;cursor:pointer;transition:all .15s}
 #inv-refresh-btn:hover{color:var(--sky);border-color:var(--sky)}
 .inv-mode-wrap{margin-left:auto;display:flex;gap:3px}
-.inv-mode-btn{background:none;border:1px solid var(--border2);color:var(--text4);font-family:'IBM Plex Mono',monospace;font-size:10px;padding:4px 10px;border-radius:3px;cursor:pointer;transition:all .15s}
-.inv-mode-btn.on{color:var(--sky);background:#0a1929;border-color:var(--sky)}
+.inv-mode-btn{background:none;border:1px solid var(--border2);color:var(--text3);font-family:'Inter',sans-serif;font-size:10px;padding:4px 10px;border-radius:20px;cursor:pointer;transition:all .15s}
+.inv-mode-btn.on{color:#fff;background:var(--sky);border-color:var(--sky)}
 
 /* INV summary cards */
 #inv-summary{display:flex;gap:8px;flex-wrap:wrap;padding:14px 24px;background:var(--bg2);border-bottom:1px solid var(--border)}
@@ -155,57 +156,57 @@ body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'IBM Pl
 
 /* INV site header */
 .inv-site-hdr{display:flex;align-items:baseline;gap:12px;margin-bottom:14px;flex-wrap:wrap}
-.inv-site-name{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;color:#eef4ff}
+.inv-site-name{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;color:var(--text)}
 .inv-site-meta{font-size:10px;color:var(--text4)}
 
 /* Bar chart */
-.inv-bar-chart{background:var(--bg3);border:1px solid var(--border2);border-radius:8px;padding:16px;margin-bottom:14px}
+.inv-bar-chart{background:#fff;border:1px solid var(--border2);border-radius:12px;padding:16px;margin-bottom:14px;box-shadow:0 2px 8px rgba(0,80,160,.06)}
 .inv-chart-title{font-size:9px;color:var(--text4);text-transform:uppercase;letter-spacing:.12em;margin-bottom:14px}
 .inv-bars{display:flex;align-items:flex-end;gap:6px;height:120px;width:100%}
 .inv-bar-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;height:100%}
 .inv-bar-outer{width:100%;flex:1;display:flex;align-items:flex-end;position:relative}
 .inv-bar-inner{width:100%;border-radius:3px 3px 0 0;transition:height .3s ease;min-height:2px;position:relative}
 .inv-bar-inner:hover .inv-bar-tooltip{display:block}
-.inv-bar-tooltip{display:none;position:absolute;bottom:calc(100% + 4px);left:50%;transform:translateX(-50%);background:#0d1a2a;border:1px solid var(--border2);border-radius:4px;padding:4px 8px;font-size:9px;color:var(--text2);white-space:nowrap;z-index:5;pointer-events:none}
+.inv-bar-tooltip{display:none;position:absolute;bottom:calc(100% + 4px);left:50%;transform:translateX(-50%);background:#1e293b;border:1px solid #334155;border-radius:6px;padding:4px 8px;font-size:9px;color:#f1f5f9;white-space:nowrap;z-index:5;pointer-events:none}
 .inv-bar-label{font-size:9px;color:var(--text4);text-align:center}
 .inv-bar-val{font-size:9px;color:var(--text3);text-align:center}
-.inv-avg-line{position:absolute;left:0;right:0;border-top:1px dashed rgba(56,189,248,.5);z-index:2;pointer-events:none}
+.inv-avg-line{position:absolute;left:0;right:0;border-top:1.5px dashed rgba(2,132,199,.4);z-index:2;pointer-events:none}
 
 /* INV table */
-.inv-table{background:var(--bg3);border:1px solid var(--border2);border-radius:8px;overflow:hidden;margin-bottom:14px}
-.inv-table-hdr{display:grid;grid-template-columns:70px 90px 60px 90px 80px 1fr 110px;gap:6px;padding:8px 14px;background:#080c16;font-size:9px;color:var(--text5);text-transform:uppercase;letter-spacing:.1em;border-bottom:1px solid var(--border)}
-.inv-table-row{display:grid;grid-template-columns:70px 90px 60px 90px 80px 1fr 110px;gap:6px;padding:8px 14px;border-bottom:1px solid var(--border);align-items:center;transition:background .1s}
+.inv-table{background:#fff;border:1px solid var(--border2);border-radius:12px;overflow:hidden;margin-bottom:14px;box-shadow:0 2px 8px rgba(0,80,160,.06)}
+.inv-table-hdr{display:grid;grid-template-columns:80px 90px 90px 80px 80px 1fr 120px;gap:6px;padding:8px 14px;background:#e8f3ff;font-size:9px;color:var(--text4);text-transform:uppercase;letter-spacing:.1em;border-bottom:1px solid var(--border)}
+.inv-table-row{display:grid;grid-template-columns:80px 90px 90px 80px 80px 1fr 120px;gap:6px;padding:8px 14px;border-bottom:1px solid var(--border2);align-items:center;transition:background .1s}
 .inv-table-row:last-child{border-bottom:none}
-.inv-table-row:hover{background:#0c1220}
-.inv-health-bar{height:6px;border-radius:3px;background:var(--border2);overflow:hidden}
+.inv-table-row:hover{background:#f0f8ff}
+.inv-health-bar{height:6px;border-radius:3px;background:#dde8f5;overflow:hidden}
 .inv-health-fill{height:100%;border-radius:3px;transition:width .3s}
 .inv-status-badge{display:inline-flex;align-items:center;gap:4px;font-size:9px;padding:2px 7px;border-radius:10px;border:1px solid}
 
 /* Trend sparkline area */
-.inv-trend-section{background:var(--bg3);border:1px solid var(--border2);border-radius:8px;padding:16px;margin-bottom:14px}
+.inv-trend-section{background:#fff;border:1px solid var(--border2);border-radius:12px;padding:16px;margin-bottom:14px;box-shadow:0 2px 8px rgba(0,80,160,.06)}
 .inv-trend-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-top:12px}
-.inv-spark-card{background:var(--bg4);border:1px solid var(--border);border-radius:6px;padding:10px 12px}
+.inv-spark-card{background:#f8fbff;border:1px solid var(--border2);border-radius:10px;padding:10px 12px}
 .inv-spark-name{font-size:10px;color:var(--text3);margin-bottom:2px}
-.inv-spark-val{font-family:'Syne',sans-serif;font-size:14px;font-weight:800;margin-bottom:6px}
+.inv-spark-val{font-family:'Syne',sans-serif;font-size:14px;font-weight:800;margin-bottom:6px;color:var(--text)}
 .inv-spark-svg{width:100%;height:32px}
 
 /* Corrective action panel */
-.inv-action-panel{background:var(--bg3);border:1px solid var(--border2);border-radius:8px;padding:16px}
+.inv-action-panel{background:#fff;border:1px solid var(--border2);border-radius:12px;padding:16px;box-shadow:0 2px 8px rgba(0,80,160,.06)}
 .inv-action-title{font-size:9px;color:var(--text4);text-transform:uppercase;letter-spacing:.12em;margin-bottom:12px}
-.inv-action-row{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);flex-wrap:wrap}
+.inv-action-row{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border2);flex-wrap:wrap}
 .inv-action-row:last-child{border-bottom:none}
 .inv-action-inv{font-size:10px;color:var(--sky);min-width:80px;flex-shrink:0}
 .inv-action-issue{font-size:11px;color:var(--text2);flex:1;line-height:1.5}
 .inv-action-status{flex-shrink:0}
 
 /* Status badges */
-.badge-open{color:#ef4444;border-color:#ef4444;background:#1a0505}
-.badge-progress{color:#fbbf24;border-color:#fbbf24;background:#1a1005}
-.badge-resolved{color:#22c55e;border-color:#22c55e;background:#051a0a}
-.badge-monitor{color:#a855f7;border-color:#a855f7;background:#12051a}
+.badge-open{color:#b91c1c;border-color:#fca5a5;background:#fef2f2}
+.badge-progress{color:#b45309;border-color:#fde68a;background:#fffbeb}
+.badge-resolved{color:#15803d;border-color:#86efac;background:#f0fdf4}
+.badge-monitor{color:#7e22ce;border-color:#d8b4fe;background:#faf5ff}
 
 /* Breakdown alert */
-.inv-breakdown-alert{background:#1a0800;border:1px solid #5a2000;border-left:3px solid var(--orange);border-radius:6px;padding:10px 14px;margin-bottom:14px;font-size:11px;color:var(--orange);line-height:1.8}
+.inv-breakdown-alert{background:#fff7ed;border:1px solid #fdba74;border-left:3px solid var(--orange);border-radius:10px;padding:10px 14px;margin-bottom:14px;font-size:11px;color:#c2410c;line-height:1.8}
 
 /* empty state */
 .inv-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 24px;color:var(--text4);gap:10px}
@@ -214,21 +215,21 @@ body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'IBM Pl
 
 /* Alert badges */
 .alert-badge{display:inline-block;font-size:9px;font-weight:700;padding:2px 6px;border-radius:3px;letter-spacing:.06em;border:1px solid;margin-left:4px;vertical-align:middle}
-.alert-dead{color:#ff4444;border-color:#ff4444;background:#1a0505;animation:pulse-red 1.2s infinite}
-.alert-chronic{color:#f97316;border-color:#f97316;background:#1a0800}
-.alert-fault{color:#eab308;border-color:#eab308;background:#1a1200}
-.alert-degrade{color:#a855f7;border-color:#a855f7;background:#12051a}
+.alert-dead{color:#b91c1c;border-color:#fca5a5;background:#fef2f2;animation:pulse-red 1.2s infinite}
+.alert-chronic{color:#c2410c;border-color:#fdba74;background:#fff7ed}
+.alert-fault{color:#a16207;border-color:#fde68a;background:#fefce8}
+.alert-degrade{color:#7e22ce;border-color:#d8b4fe;background:#faf5ff}
 @keyframes pulse-red{0%,100%{opacity:1}50%{opacity:.4}}
 
 /* Alert summary panel */
-.inv-alert-panel{background:#0d0d0d;border:1px solid #2a2a2a;border-radius:8px;padding:14px 16px;margin-bottom:16px}
+.inv-alert-panel{background:#fff;border:1px solid var(--border2);border-radius:12px;padding:14px 16px;margin-bottom:16px;box-shadow:0 2px 8px rgba(0,80,160,.06)}
 .inv-alert-title{font-size:9px;color:var(--text4);text-transform:uppercase;letter-spacing:.12em;margin-bottom:10px}
-.inv-alert-row{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #1a1a1a;font-size:11px;flex-wrap:wrap}
+.inv-alert-row{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--border2);font-size:11px;flex-wrap:wrap}
 .inv-alert-row:last-child{border-bottom:none}
 
 /* Cleaning effectiveness */
-.clean-eff-panel{background:var(--bg3);border:1px solid var(--border2);border-radius:8px;padding:16px;margin-top:16px}
-.clean-eff-row{display:grid;grid-template-columns:160px 80px 80px 80px 1fr;gap:8px;padding:7px 0;border-bottom:1px solid var(--border);align-items:center;font-size:11px}
+.clean-eff-panel{background:#fff;border:1px solid var(--border2);border-radius:12px;padding:16px;margin-top:16px;box-shadow:0 2px 8px rgba(0,80,160,.06)}
+.clean-eff-row{display:grid;grid-template-columns:160px 80px 80px 80px 1fr;gap:8px;padding:7px 0;border-bottom:1px solid var(--border2);align-items:center;font-size:11px}
 .clean-eff-row:last-child{border-bottom:none}
 .clean-eff-hdr{font-size:9px;color:var(--text5);text-transform:uppercase;letter-spacing:.1em}
 
@@ -237,12 +238,44 @@ body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'IBM Pl
 .pr-slope-down{color:#ef4444}
 .pr-slope-flat{color:#64748b}
 
+/* ── NAV BRAND ── */
+.nav-brand{font-family:'Syne',sans-serif;font-size:15px;font-weight:800;color:var(--sky);display:flex;align-items:center;gap:6px;letter-spacing:-.01em;white-space:nowrap}
+.nav-brand-icon{font-size:18px}
+.nav-brand-sub{font-weight:400;color:var(--text4);font-size:12px;font-family:'Inter',sans-serif}
+.nav-pills{display:flex;gap:4px;align-items:center;margin-left:20px}
+.nav-actions{margin-left:auto;display:flex;align-items:center;gap:8px}
+.nav-refresh-btn{background:#fff;border:1px solid var(--border2);color:var(--text3);font-family:'Inter',sans-serif;font-size:11px;font-weight:500;padding:5px 12px;border-radius:20px;cursor:pointer;transition:all .15s}
+.nav-refresh-btn:hover{color:var(--sky);border-color:var(--sky)}
+.method-toggle-btn{font-size:10px;color:var(--text4);background:#fff;border:1px solid var(--border2);border-radius:8px;padding:2px 8px;cursor:pointer;font-family:'Inter',sans-serif;transition:all .15s;margin-left:4px}
+.method-toggle-btn:hover{border-color:var(--sky);color:var(--sky)}
+
+/* ── STAT CARDS UPGRADED ── */
+.stat-value{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;line-height:1.1}
+
+/* ── CHART CARD ── */
+.chart-card{background:#fff;border-radius:16px;border:1px solid var(--border2);box-shadow:0 2px 16px rgba(0,80,160,.08);padding:20px 24px;margin:0 0 0 0}
+.chart-card-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.chart-card-title{font-family:'Syne',sans-serif;font-size:16px;font-weight:800;color:var(--text)}
+.chart-filter-badge{font-size:11px;font-weight:500;color:var(--sky);background:#e0f0ff;padding:3px 10px;border-radius:20px;border:1px solid #b8dcf8}
+.chart-body{display:flex;flex-direction:column;gap:5px;max-height:420px;overflow-y:auto;padding-right:4px}
+.chart-row{display:flex;align-items:center;gap:12px;padding:3px 0;cursor:pointer;border-radius:6px;transition:background .1s}
+.chart-row:hover{background:#f0f8ff}
+.chart-site-label{font-size:11px;color:var(--text2);font-weight:500;min-width:150px;max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:right;flex-shrink:0}
+.chart-bar-wrap{flex:1;position:relative;height:20px;display:flex;align-items:center}
+.chart-bar{height:14px;border-radius:4px;min-width:2px;transition:width .3s ease}
+.chart-tgt-line{position:absolute;top:0;bottom:0;width:2px;background:#1e293b;opacity:.2;border-radius:1px}
+.chart-bar-val{font-size:11px;font-weight:600;margin-left:8px;white-space:nowrap;flex-shrink:0}
+.chart-legend{display:flex;gap:16px;margin-top:14px;flex-wrap:wrap;padding-top:12px;border-top:1px solid var(--border2)}
+.chart-leg-item{display:flex;align-items:center;gap:5px;font-size:10px;color:var(--text4);font-weight:500}
+.chart-leg-item i{display:inline-block;width:10px;height:10px;border-radius:3px;flex-shrink:0}
+#chart-section{padding:16px 24px 16px}
+
 /* multi-site overview table */
-.inv-overview-table{background:var(--bg3);border:1px solid var(--border2);border-radius:8px;overflow:hidden}
-.inv-ov-hdr{display:grid;grid-template-columns:160px 70px 70px 80px 80px 80px 1fr;gap:6px;padding:8px 14px;background:#080c16;font-size:9px;color:var(--text5);text-transform:uppercase;letter-spacing:.1em;border-bottom:1px solid var(--border)}
-.inv-ov-row{display:grid;grid-template-columns:160px 70px 70px 80px 80px 80px 1fr;gap:6px;padding:8px 14px;border-bottom:1px solid var(--border);align-items:center;cursor:pointer;transition:background .1s}
+.inv-overview-table{background:#fff;border:1px solid var(--border2);border-radius:12px;overflow:hidden;box-shadow:0 2px 8px rgba(0,80,160,.06)}
+.inv-ov-hdr{display:grid;grid-template-columns:160px 70px 70px 80px 80px 80px 1fr;gap:6px;padding:8px 14px;background:#e8f3ff;font-size:9px;color:var(--text4);text-transform:uppercase;letter-spacing:.1em;border-bottom:1px solid var(--border)}
+.inv-ov-row{display:grid;grid-template-columns:160px 70px 70px 80px 80px 80px 1fr;gap:6px;padding:8px 14px;border-bottom:1px solid var(--border2);align-items:center;cursor:pointer;transition:background .1s}
 .inv-ov-row:last-child{border-bottom:none}
-.inv-ov-row:hover{background:#0c1220}
+.inv-ov-row:hover{background:#f0f8ff}
 .inv-mini-bars{display:flex;gap:2px;align-items:flex-end;height:20px}
 .inv-mini-bar{width:6px;border-radius:1px 1px 0 0;min-height:2px}
 </style>
@@ -260,8 +293,20 @@ body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'IBM Pl
 
   <!-- TAB NAV -->
   <div id="tab-nav">
-    <button class="tab-btn active" onclick="switchTab('cuf')" id="tab-cuf">⬡ CUF Dashboard</button>
-    <button class="tab-btn" onclick="switchTab('inv')" id="tab-inv">⚡ Inverter Health</button>
+    <div class="nav-brand">
+      <span class="nav-brand-icon">☀</span>
+      <span>PM KUSUM</span>
+      <span class="nav-brand-sub">· Stockwell Solar</span>
+    </div>
+    <div class="nav-pills">
+      <button class="tab-btn active" onclick="switchTab('cuf')" id="tab-cuf">⬡ CUF Dashboard</button>
+      <button class="tab-btn" onclick="switchTab('inv')" id="tab-inv">⚡ Inverter Health</button>
+    </div>
+    <div class="nav-actions">
+      <span class="live-dot"></span>
+      <span id="last-fetch" style="font-size:11px;color:var(--text4)"></span>
+      <button onclick="loadData()" id="refresh-btn" class="nav-refresh-btn">↻ Refresh</button>
+    </div>
   </div>
 
   <!-- ═══════ CUF PAGE ═══════ -->
@@ -269,18 +314,13 @@ body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'IBM Pl
     <div id="header">
       <div class="header-top">
         <div>
-          <div class="header-eyebrow">PM KUSUM · Rajasthan · <span id="report-month"></span></div>
+          <div class="header-eyebrow">PM KUSUM · Rajasthan · <span style="color:var(--sky);font-weight:600" id="report-month"></span></div>
           <div class="header-title">CUF Loss Waterfall — Live Dashboard</div>
           <div class="header-sub">
-            <span>Benchmark PR: <span style="color:var(--sky)" id="bench-pr-label"></span></span>
-            <span style="color:var(--text6)">·</span>
-            <span>Target CUF = radiation × PR ÷ 24h</span>
-            <button onclick="toggleMethod()" style="font-size:9px;color:var(--text4);background:var(--bg3);border:1px solid var(--border2);border-radius:3px;padding:1px 6px;cursor:pointer;font-family:inherit" id="method-btn">method ▼</button>
-            <span style="display:flex;align-items:center;gap:4px;margin-left:8px">
-              <span class="live-dot"></span>
-              <span style="font-size:9px;color:var(--text4)">Live · <span id="last-fetch"></span></span>
-              <button onclick="loadData()" style="font-size:9px;color:var(--text4);background:var(--bg3);border:1px solid var(--border2);border-radius:3px;padding:1px 6px;cursor:pointer;font-family:inherit;margin-left:2px" id="refresh-btn">↻</button>
-            </span>
+            Benchmark PR: <span style="color:var(--sky);font-weight:600" id="bench-pr-label"></span>
+            <span style="color:var(--border)">·</span>
+            Target CUF = radiation × PR ÷ 24h
+            <button onclick="toggleMethod()" id="method-btn" class="method-toggle-btn">method ▼</button>
           </div>
           <div class="method-box" id="method-box"></div>
         </div>
@@ -300,10 +340,10 @@ body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'IBM Pl
     </div>
 
     <div id="filterbar">
-      <span class="filter-label">FILTER</span>
+      <span class="filter-label">Filter</span>
       <div id="chips"></div>
       <div class="sort-wrap">
-        <span class="filter-label">SORT</span>
+        <span class="filter-label">Sort</span>
         <div id="sort-btns"></div>
       </div>
     </div>
@@ -318,14 +358,16 @@ body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'IBM Pl
         <div class="tc">Grid Loss</div><div class="tc">Plant Loss</div>
         <div class="tc">Unaccntd</div><div class="tc">Cleaning Cycles</div>
         <div class="tr">Gen MWh</div>
-      <div class="tr" style="color:#a855f7">Inv Loss</div>
-      <div class="tr" style="color:#38bdf8">Last Day</div>
-      <div class="tr" style="color:#64748b">W1</div>
-      <div class="tr" style="color:#64748b">W2</div>
-      <div class="tr" style="color:#64748b">W3</div>
+      <div class="tr" style="color:#9333ea">Inv Loss</div>
+      <div class="tr" style="color:#0284c7">Last Day</div>
+      <div class="tr" style="color:var(--text4)">W1</div>
+      <div class="tr" style="color:var(--text4)">W2</div>
+      <div class="tr" style="color:var(--text4)">W3</div>
       </div>
       <div id="table-body"></div>
     </div>
+
+    <div id="chart-section"></div>
 
     <div id="footer">
       <span>Auto-refreshes every 30 min · Source: Google Sheets · <span id="total-sites"></span> sites</span>
@@ -458,23 +500,23 @@ const CONFIG = {
 // ═══════════════════════════════════════════════════════
 function cufColor(cuf, tgt) {
   const g = tgt - cuf;
-  if (g <= 0)  return '#22c55e';
-  if (g < 0.5) return '#84cc16';
-  if (g < 2)   return '#eab308';
-  return '#ef4444';
+  if (g <= 0)  return '#16a34a';
+  if (g < 0.5) return '#65a30d';
+  if (g < 2)   return '#d97706';
+  return '#dc2626';
 }
 function prColor(pr) {
-  if (!pr)      return '#475569';
-  if (pr >= 85) return '#22c55e';
-  if (pr >= 80) return '#84cc16';
-  if (pr >= 75) return '#eab308';
-  return '#ef4444';
+  if (!pr)      return '#64748b';
+  if (pr >= 85) return '#16a34a';
+  if (pr >= 80) return '#65a30d';
+  if (pr >= 75) return '#d97706';
+  return '#dc2626';
 }
 function invHealthColor(pct) {
-  if (pct >= 97) return '#22c55e';
-  if (pct >= 93) return '#84cc16';
-  if (pct >= 85) return '#eab308';
-  return '#ef4444';
+  if (pct >= 97) return '#16a34a';
+  if (pct >= 93) return '#65a30d';
+  if (pct >= 85) return '#d97706';
+  return '#dc2626';
 }
 
 // ═══════════════════════════════════════════════════════
@@ -750,7 +792,7 @@ async function loadData() {
 // ═══════════════════════════════════════════════════════
 //  CUF RENDER
 // ═══════════════════════════════════════════════════════
-function renderAll(){ renderHeader(); renderFilters(); renderTable(); }
+function renderAll(){ renderHeader(); renderFilters(); renderChart(); renderTable(); }
 
 function renderHeader(){
   document.getElementById('report-month').textContent=CONFIG.REPORT_MONTH;
@@ -761,29 +803,32 @@ function renderHeader(){
      <span style="color:var(--sky)">Dynamic target</span> = site's actual radiation × ${CONFIG.BENCHMARK_PR}% ÷ 24. A 7.1 kWh/m² site targets ${((7.1/24)*CONFIG.BENCHMARK_PR).toFixed(1)}% CUF; a 6.2 kWh/m² site targets ${((6.2/24)*CONFIG.BENCHMARK_PR).toFixed(1)}%.<br>
      <span style="color:var(--sky)">Benchmark ${CONFIG.BENCHMARK_PR}% PR</span> = mean of your 6 cleanest sites. Updates monthly.`;
   const stats=[
-    {l:'Avg DC CUF', v:`${SUMMARY.avgDcCuf}%`, c:SUMMARY.avgDcCuf>=22?'#84cc16':'#ef4444'},
-    {l:'Avg PR',     v:SUMMARY.avgPR?`${SUMMARY.avgPR}%`:'—', c:SUMMARY.avgPR>=82?'#22c55e':'#eab308'},
-    {l:'≥ Target',   v:`${SUMMARY.above} sites`, c:'#22c55e'},
-    {l:'< Target',   v:`${SUMMARY.below} sites`, c:'#ef4444'},
-    {l:'Grid Lost',  v:`${SUMMARY.gridMwh} MWh`, c:'#f97316'},
-    {l:'Plant Lost', v:`${SUMMARY.plantMwh} MWh`, c:'#a855f7'},
-    {l:'Portfolio',  v:`${SUMMARY.genMwh} MWh`, c:'#64748b'},
+    {l:'Avg DC CUF', v:`${SUMMARY.avgDcCuf}%`, c:SUMMARY.avgDcCuf>=22?'#65a30d':'#dc2626'},
+    {l:'Avg PR',     v:SUMMARY.avgPR?`${SUMMARY.avgPR}%`:'—', c:SUMMARY.avgPR>=82?'#16a34a':'#d97706'},
+    {l:'≥ Target',   v:`${SUMMARY.above} sites`, c:'#16a34a'},
+    {l:'< Target',   v:`${SUMMARY.below} sites`, c:'#dc2626'},
+    {l:'Grid Lost',  v:`${SUMMARY.gridMwh} MWh`, c:'#ea580c'},
+    {l:'Plant Lost', v:`${SUMMARY.plantMwh} MWh`, c:'#9333ea'},
+    {l:'Portfolio',  v:`${SUMMARY.genMwh} MWh`, c:'#0284c7'},
   ];
   document.getElementById('stats-row').innerHTML=stats.map(s=>
-    `<div class="stat-card"><div class="stat-label">${s.l}</div><div class="stat-value" style="color:${s.c}">${s.v}</div></div>`
+    `<div class="stat-card" style="border-left:3px solid ${s.c}">
+      <div class="stat-label">${s.l}</div>
+      <div class="stat-value" style="color:${s.c}">${s.v}</div>
+    </div>`
   ).join('');
 }
 
 function renderFilters(){
   const chips=[
-    ['all','All Sites','#334155'],['above','≥ Target','#22c55e'],['below','< Target','#ef4444'],
-    ['grid','Grid Issues','#f97316'],['plant','Plant Issues','#a855f7'],
-    ['cleaning','Cleaning Active','#38bdf8'],['norad','No Radiation','#475569'],['issues','Has Remarks','#fbbf24'],
+    ['all','All Sites','#64748b'],['above','≥ Target','#16a34a'],['below','< Target','#dc2626'],
+    ['grid','Grid Issues','#ea580c'],['plant','Plant Issues','#9333ea'],
+    ['cleaning','Cleaning Active','#0284c7'],['norad','No Radiation','#94a3b8'],['issues','Has Remarks','#d97706'],
   ];
   document.getElementById('chips').innerHTML=chips.map(([v,l,c])=>
     `<span class="chip" onclick="setFilter('${v}')" id="chip-${v}"
-      style="background:${currentFilter===v?c+'18':'transparent'};border-color:${currentFilter===v?c:'#111f30'};color:${currentFilter===v?c:'#334155'}">
-      <span class="chip-dot" style="background:${c}"></span>${l}
+      style="background:${currentFilter===v?c:'#fff'};border-color:${currentFilter===v?c:c+'55'};color:${currentFilter===v?'#fff':c}">
+      <span class="chip-dot" style="background:${currentFilter===v?'rgba(255,255,255,.7)':c}"></span>${l}
     </span>`
   ).join('');
   const sorts=[['cuf','DC CUF'],['pr','Actual PR'],['gap','Gap'],['grid','Grid'],['plant','Plant'],['clean','Cleaning']];
@@ -791,8 +836,8 @@ function renderFilters(){
     `<button class="sortbtn${currentSort===k?' on':''}" onclick="setSort('${k}')">${l} ↕</button>`
   ).join('');
 }
-function setFilter(v){ currentFilter=v; renderFilters(); renderTable(); }
-function setSort(k){ currentSort=k; renderFilters(); renderTable(); }
+function setFilter(v){ currentFilter=v; renderFilters(); renderChart(); renderTable(); }
+function setSort(k){ currentSort=k; renderFilters(); renderChart(); renderTable(); }
 function toggleMethod(){
   const box=document.getElementById('method-box');
   const btn=document.getElementById('method-btn');
@@ -833,41 +878,86 @@ function renderTable(){
     const uPct=(d.unaccounted||0)/MAX*100;
     const wfSegs=`
       <div class="wf-seg" style="left:0;width:${cPct}%;background:${cc};border-radius:3px 0 0 3px"></div>
-      ${exPct>0?`<div class="wf-seg" style="left:${tPct}%;width:${exPct}%;background:#22c55e;opacity:.35"></div>`:''}
-      ${gPct>0.1?`<div class="wf-seg" style="left:${cPct+exPct}%;width:${gPct}%;background:#f97316;opacity:.9"></div>`:''}
-      ${pPct>0.1?`<div class="wf-seg" style="left:${cPct+exPct+gPct}%;width:${pPct}%;background:#a855f7;opacity:.9"></div>`:''}
-      ${uPct>0.1?`<div class="wf-seg" style="left:${cPct+exPct+gPct+pPct}%;width:${uPct}%;background:#475569;opacity:.7"></div>`:''}
+      ${exPct>0?`<div class="wf-seg" style="left:${tPct}%;width:${exPct}%;background:#16a34a;opacity:.3"></div>`:''}
+      ${gPct>0.1?`<div class="wf-seg" style="left:${cPct+exPct}%;width:${gPct}%;background:#ea580c;opacity:.85"></div>`:''}
+      ${pPct>0.1?`<div class="wf-seg" style="left:${cPct+exPct+gPct}%;width:${pPct}%;background:#9333ea;opacity:.85"></div>`:''}
+      ${uPct>0.1?`<div class="wf-seg" style="left:${cPct+exPct+gPct+pPct}%;width:${uPct}%;background:#64748b;opacity:.6"></div>`:''}
       <div class="wf-line" style="left:${tPct}%"></div>`;
     const calDots=(d.cleaning.days||[]).filter(x=>x<=d.n_days);
     const calHtml=Array.from({length:d.n_days},(_,i)=>
-      `<div class="cal-dot" title="Mar ${i+1}" style="background:${calDots.includes(i+1)?'#38bdf8':'#1a2035'}"></div>`
+      `<div class="cal-dot" title="Mar ${i+1}" style="background:${calDots.includes(i+1)?'#0284c7':'#dde8f5'}"></div>`
     ).join('');
-    return `<div class="trow" onclick="openModal('${d.name}')">
-      <div style="font-size:10px;color:var(--text6)">${rank}</div>
+    const rowBg = (SITES.findIndex(s=>s.name===d.name)%2===1) ? '#fafcff' : '#fff';
+    return `<div class="trow" onclick="openModal('${d.name}')" style="background:${rowBg}">
+      <div style="font-size:10px;color:var(--text4);font-weight:500">${rank}</div>
       <div class="site-name">
-        <div style="width:5px;height:5px;border-radius:50%;flex-shrink:0;background:${cc}"></div>
-        <span style="color:${d.dc_cuf?'#c8d8e8':'#475569'}">${d.name}</span>
+        <div style="width:6px;height:6px;border-radius:50%;flex-shrink:0;background:${cc}"></div>
+        <span style="color:${d.dc_cuf?'var(--text)':'var(--text3)'};font-weight:${d.dc_cuf?'600':'400'}">${d.name}</span>
         ${d.remarks?'<span class="warn-badge">⚠</span>':''}
         ${!d.dc_cuf?'<span class="ac-badge">AC</span>':''}
       </div>
-      <div class="tr" style="font-weight:600;font-size:13px;color:${cc}">${d.dc_cuf?d.dc_cuf.toFixed(1)+'%':'—'}</div>
-      <div class="tr" style="font-size:12px;color:${d.actual_pr?prColor(d.actual_pr):'#1a2a3a'}">${d.actual_pr?d.actual_pr+'%':'—'}</div>
-      <div class="tr" style="font-size:11px;color:var(--text4)">${d.target_cuf?d.target_cuf.toFixed(1)+'%':'≈'+CONFIG.FLAT_TARGET+'%'}</div>
-      <div class="tr" style="font-size:11px;font-weight:600;color:${below?'#ef4444':'#22c55e'}">${below?'−'+(d.effTgt-d.cuf).toFixed(1)+'%':'+' +(d.cuf-d.effTgt).toFixed(1)+'%'}</div>
-      <div class="tr" style="font-size:11px;color:var(--text4)">${d.avg_rad?d.avg_rad+' <span style="font-size:9px;color:var(--text6)">kWh/m²</span>':'—'}</div>
+      <div class="tr" style="font-weight:700;font-size:13px;color:${cc}">${d.dc_cuf?d.dc_cuf.toFixed(1)+'%':'—'}</div>
+      <div class="tr" style="font-size:12px;color:${d.actual_pr?prColor(d.actual_pr):'var(--text4)'}">${d.actual_pr?d.actual_pr+'%':'—'}</div>
+      <div class="tr" style="font-size:11px;color:var(--text3)">${d.target_cuf?d.target_cuf.toFixed(1)+'%':'≈'+CONFIG.FLAT_TARGET+'%'}</div>
+      <div class="tr" style="font-size:11px;font-weight:600;color:${below?'#dc2626':'#16a34a'}">${below?'−'+(d.effTgt-d.cuf).toFixed(1)+'%':'+' +(d.cuf-d.effTgt).toFixed(1)+'%'}</div>
+      <div class="tr" style="font-size:11px;color:var(--text3)">${d.avg_rad?d.avg_rad+' <span style="font-size:9px;color:var(--text4)">kWh/m²</span>':'—'}</div>
       <div style="padding-left:6px"><div class="wf-wrap">${wfSegs}</div></div>
-      <div class="tc">${d.l_grid>0?`<div style="color:${d.l_grid>=3?'#f97316':'#7a4520'};font-weight:600;font-size:11px">−${d.l_grid.toFixed(2)}%</div><div style="font-size:9px;color:var(--text5)">${(d.grid_kwh/1000).toFixed(1)} MWh</div>`:'<span style="color:var(--text6)">—</span>'}</div>
-      <div class="tc">${d.l_plant>0?`<div style="color:${d.l_plant>=3?'#a855f7':'#5a3a7a'};font-weight:600;font-size:11px">−${d.l_plant.toFixed(2)}%</div><div style="font-size:9px;color:var(--text5)">${(d.plant_kwh/1000).toFixed(1)} MWh</div>`:'<span style="color:var(--text6)">—</span>'}</div>
-      <div class="tc">${d.unaccounted>0.1?`<div style="color:#475569;font-size:11px">−${d.unaccounted.toFixed(2)}%</div>`:d.unaccounted===null?'<span style="color:var(--text6);font-size:10px">n/a</span>':'<span style="color:var(--text6)">~0</span>'}</div>
+      <div class="tc">${d.l_grid>0?`<div style="color:${d.l_grid>=3?'#ea580c':'#c2410c'};font-weight:600;font-size:11px">−${d.l_grid.toFixed(2)}%</div><div style="font-size:9px;color:var(--text4)">${(d.grid_kwh/1000).toFixed(1)} MWh</div>`:'<span style="color:var(--text6)">—</span>'}</div>
+      <div class="tc">${d.l_plant>0?`<div style="color:${d.l_plant>=3?'#9333ea':'#7e22ce'};font-weight:600;font-size:11px">−${d.l_plant.toFixed(2)}%</div><div style="font-size:9px;color:var(--text4)">${(d.plant_kwh/1000).toFixed(1)} MWh</div>`:'<span style="color:var(--text6)">—</span>'}</div>
+      <div class="tc">${d.unaccounted>0.1?`<div style="color:#64748b;font-size:11px">−${d.unaccounted.toFixed(2)}%</div>`:d.unaccounted===null?'<span style="color:var(--text4);font-size:10px">n/a</span>':'<span style="color:var(--text6)">~0</span>'}</div>
       <div class="tc" style="font-size:10px">${buildCleaningHTML(d.name)}</div>
-      <div class="tr" style="font-size:11px;color:var(--text5)">${d.gen_mwh.toFixed(0)}</div>
-      <div class="tr" style="font-size:11px;font-weight:600;color:${d.invLoss>2?'#a855f7':d.invLoss>0.5?'#7a3fa0':'#22c55e'}">${d.invLoss!==null&&d.invLoss>0?'−'+d.invLoss.toFixed(2)+'%':'<span style=\"color:var(--text6)\">—</span>'}</div>
-      <div class="tr" style="font-size:11px;font-weight:600;color:${d.lastDayCuf?cufColor(d.lastDayCuf,d.effTgt):'#1a2a3a'}">${d.lastDayCuf?d.lastDayCuf.toFixed(1)+'%':'—'}</div>
-      <div class="tr" style="font-size:11px;color:${d.w1Cuf?cufColor(d.w1Cuf,d.effTgt):'#1a2a3a'}">${d.w1Cuf?d.w1Cuf.toFixed(1)+'%':'—'}</div>
-      <div class="tr" style="font-size:11px;color:${d.w2Cuf?cufColor(d.w2Cuf,d.effTgt):'#1a2a3a'}">${d.w2Cuf?d.w2Cuf.toFixed(1)+'%':'—'}</div>
-      <div class="tr" style="font-size:11px;color:${d.w3Cuf?cufColor(d.w3Cuf,d.effTgt):'#1a2a3a'}">${d.w3Cuf?d.w3Cuf.toFixed(1)+'%':'—'}</div>
+      <div class="tr" style="font-size:11px;color:var(--text3);font-weight:500">${d.gen_mwh.toFixed(0)}</div>
+      <div class="tr" style="font-size:11px;font-weight:600;color:${d.invLoss>2?'#9333ea':d.invLoss>0.5?'#7e22ce':'#16a34a'}">${d.invLoss!==null&&d.invLoss>0?'−'+d.invLoss.toFixed(2)+'%':'<span style=\"color:var(--text6)\">—</span>'}</div>
+      <div class="tr" style="font-size:11px;font-weight:600;color:${d.lastDayCuf?cufColor(d.lastDayCuf,d.effTgt):'var(--text4)'}">${d.lastDayCuf?d.lastDayCuf.toFixed(1)+'%':'—'}</div>
+      <div class="tr" style="font-size:11px;color:${d.w1Cuf?cufColor(d.w1Cuf,d.effTgt):'var(--text4)'}">${d.w1Cuf?d.w1Cuf.toFixed(1)+'%':'—'}</div>
+      <div class="tr" style="font-size:11px;color:${d.w2Cuf?cufColor(d.w2Cuf,d.effTgt):'var(--text4)'}">${d.w2Cuf?d.w2Cuf.toFixed(1)+'%':'—'}</div>
+      <div class="tr" style="font-size:11px;color:${d.w3Cuf?cufColor(d.w3Cuf,d.effTgt):'var(--text4)'}">${d.w3Cuf?d.w3Cuf.toFixed(1)+'%':'—'}</div>
     </div>`;
   }).join('');
+}
+
+// ═══════════════════════════════════════════════════════
+//  CHART — Site Performance Bar Chart
+// ═══════════════════════════════════════════════════════
+function renderChart(){
+  const el=document.getElementById('chart-section');
+  if(!el) return;
+  const data=getFiltered();
+  if(!data.length){el.innerHTML='';return;}
+  const maxCuf=Math.max(...data.map(d=>d.dc_cuf||0),30);
+  const filterLabels={
+    all:'All Sites',above:'≥ Target',below:'< Target',
+    grid:'Grid Issues',plant:'Plant Issues',cleaning:'Cleaning Active',
+    norad:'No Radiation',issues:'Has Remarks'
+  };
+  const label=filterLabels[currentFilter]||'All Sites';
+  const rows=data.map(d=>{
+    const cc=cufColor(d.cuf,d.effTgt);
+    const barW=((d.dc_cuf||0)/maxCuf)*100;
+    const tgtW=(d.effTgt/maxCuf)*100;
+    return `<div class="chart-row" onclick="openModal('${d.name.replace(/'/g,"\\'")}')">
+      <div class="chart-site-label" title="${d.name}">${d.name}</div>
+      <div class="chart-bar-wrap">
+        <div class="chart-bar" style="width:${barW}%;background:${cc}"></div>
+        <div class="chart-tgt-line" style="left:${tgtW}%"></div>
+        <span class="chart-bar-val" style="color:${cc}">${d.dc_cuf?d.dc_cuf.toFixed(1)+'%':'—'}</span>
+      </div>
+    </div>`;
+  }).join('');
+  el.innerHTML=`<div class="chart-card">
+    <div class="chart-card-hdr">
+      <div class="chart-card-title">Site Performance — DC CUF %</div>
+      <span class="chart-filter-badge">${label} · ${data.length} site${data.length!==1?'s':''}</span>
+    </div>
+    <div class="chart-body">${rows}</div>
+    <div class="chart-legend">
+      <span class="chart-leg-item"><i style="background:#16a34a"></i>≥ Target</span>
+      <span class="chart-leg-item"><i style="background:#65a30d"></i>Within 0.5%</span>
+      <span class="chart-leg-item"><i style="background:#d97706"></i>0.5–2% below</span>
+      <span class="chart-leg-item"><i style="background:#dc2626"></i>>2% below</span>
+      <span class="chart-leg-item"><i style="background:#1e293b;opacity:.2;width:2px;height:12px;border-radius:1px"></i>Target line</span>
+    </div>
+  </div>`;
 }
 
 // CUF MODAL
@@ -881,46 +971,46 @@ function openModal(name){
     {l:'DC CUF',      v:d.dc_cuf?d.dc_cuf.toFixed(2)+'%':'—',    c:cc},
     {l:'Actual PR',   v:d.actual_pr?d.actual_pr+'%':'n/a',         c:d.actual_pr?prColor(d.actual_pr):'#334155'},
     {l:'Target CUF',  v:d.target_cuf?d.target_cuf.toFixed(2)+'%':'≈'+CONFIG.FLAT_TARGET+'%', c:'#38bdf8'},
-    {l:'vs Target',   v:d.gap<=0?'+'+Math.abs(d.gap).toFixed(2)+'%':'−'+d.gap.toFixed(2)+'%', c:d.gap<=0?'#22c55e':'#ef4444'},
+    {l:'vs Target',   v:d.gap<=0?'+'+Math.abs(d.gap).toFixed(2)+'%':'−'+d.gap.toFixed(2)+'%', c:d.gap<=0?'#16a34a':'#dc2626'},
     {l:'Avg Radiation',v:d.avg_rad?d.avg_rad+' kWh/m²':'—',       c:'#64748b'},
   ].map(m=>`<div class="mcard"><div class="mcard-label">${m.l}</div><div class="mcard-value" style="color:${m.c}">${m.v}</div></div>`).join('');
   const prBox=document.getElementById('m-pr-box');
   if(d.actual_pr){
     prBox.style.display='block';
-    prBox.style.borderLeft=`2px solid ${prColor(d.actual_pr)}`;
+    prBox.style.borderLeft=`3px solid ${prColor(d.actual_pr)}`;
     prBox.innerHTML=`<div class="section-label" style="margin-bottom:5px">PR Interpretation</div>
       Converting <span style="color:${prColor(d.actual_pr)};font-weight:600">${d.actual_pr}%</span> of available irradiation.
-      Benchmark is <span style="color:#38bdf8;font-weight:600">${CONFIG.BENCHMARK_PR}%</span>.
+      Benchmark is <span style="color:var(--sky);font-weight:600">${CONFIG.BENCHMARK_PR}%</span>.
       ${d.actual_pr>=CONFIG.BENCHMARK_PR
-        ?'<span style="color:#22c55e">✓ Above benchmark — module & inverter health is good.</span>'
-        :`<span style="color:#eab308">Gap of ${(CONFIG.BENCHMARK_PR-d.actual_pr).toFixed(1)}% — investigate soiling, shading, or inverter losses.</span>`}
-      ${d.gap>0&&(d.l_grid+d.l_plant)>=d.gap*0.8?'<div style="color:#f97316;margin-top:4px">⚡ CUF gap mostly explained by grid/plant outages — fix availability first.</div>':''}`;
+        ?'<span style="color:#16a34a">✓ Above benchmark — module & inverter health is good.</span>'
+        :`<span style="color:#d97706">Gap of ${(CONFIG.BENCHMARK_PR-d.actual_pr).toFixed(1)}% — investigate soiling, shading, or inverter losses.</span>`}
+      ${d.gap>0&&(d.l_grid+d.l_plant)>=d.gap*0.8?'<div style="color:#ea580c;margin-top:4px">⚡ CUF gap mostly explained by grid/plant outages — fix availability first.</div>':''}`;
   } else { prBox.style.display='none'; }
   const T=37;
   document.getElementById('m-wf-bar').innerHTML=
-    `<div style="flex:${d.ac_cuf/T};background:${cc}"></div>
-     <div style="flex:${d.l_grid/T};background:#f97316"></div>
-     <div style="flex:${d.l_plant/T};background:#a855f7"></div>
-     <div style="flex:${(d.unaccounted||0)/T};background:#475569"></div>`;
+    `<div style="flex:${d.ac_cuf/T};background:${cc};border-radius:4px 0 0 4px"></div>
+     <div style="flex:${d.l_grid/T};background:#ea580c"></div>
+     <div style="flex:${d.l_plant/T};background:#9333ea"></div>
+     <div style="flex:${(d.unaccounted||0)/T};background:#64748b;border-radius:0 4px 4px 0"></div>`;
   document.getElementById('m-loss-cards').innerHTML=[
     {l:'Actual CUF', v:d.ac_cuf.toFixed(2)+'%', sub:d.gen_mwh+' MWh', c:cc},
-    {l:'Grid Loss',  v:d.l_grid>0?'−'+d.l_grid.toFixed(2)+'%':'—', sub:d.grid_kwh>0?(d.grid_kwh/1000).toFixed(1)+' MWh':'', c:'#f97316'},
-    {l:'Plant Loss', v:d.l_plant>0?'−'+d.l_plant.toFixed(2)+'%':'—', sub:d.plant_kwh>0?(d.plant_kwh/1000).toFixed(1)+' MWh':'', c:'#a855f7'},
-    {l:'Unaccounted',v:d.unaccounted>0.1?'−'+d.unaccounted.toFixed(2)+'%':'—', sub:'soiling/shading/inv', c:'#475569'},
-  ].map(x=>`<div class="mcard" style="border-left:2px solid ${x.c}"><div class="mcard-label">${x.l}</div>
+    {l:'Grid Loss',  v:d.l_grid>0?'−'+d.l_grid.toFixed(2)+'%':'—', sub:d.grid_kwh>0?(d.grid_kwh/1000).toFixed(1)+' MWh':'', c:'#ea580c'},
+    {l:'Plant Loss', v:d.l_plant>0?'−'+d.l_plant.toFixed(2)+'%':'—', sub:d.plant_kwh>0?(d.plant_kwh/1000).toFixed(1)+' MWh':'', c:'#9333ea'},
+    {l:'Unaccounted',v:d.unaccounted>0.1?'−'+d.unaccounted.toFixed(2)+'%':'—', sub:'soiling/shading/inv', c:'#64748b'},
+  ].map(x=>`<div class="mcard" style="border-left:3px solid ${x.c}"><div class="mcard-label">${x.l}</div>
     <div class="mcard-value" style="color:${x.c}">${x.v}</div>
-    ${x.sub?`<div style="font-size:9px;color:var(--text6);margin-top:2px">${x.sub}</div>`:''}</div>`).join('');
+    ${x.sub?`<div style="font-size:9px;color:var(--text4);margin-top:2px">${x.sub}</div>`:''}</div>`).join('');
   const cleanBox=document.getElementById('m-clean-box');
   if(d.cleaning){
     cleanBox.style.display='block';
     const calDots=d.cleaning.days.filter(x=>x<=d.n_days);
     const calHtml=Array.from({length:d.n_days},(_,i)=>
-      `<div class="cal-dot" style="background:${calDots.includes(i+1)?'#38bdf8':'#1a2035'}"></div>`
+      `<div class="cal-dot" style="background:${calDots.includes(i+1)?'#0284c7':'#dde8f5'}"></div>`
     ).join('');
     cleanBox.innerHTML=`<div class="section-label">Cleaning — March 2026 (Est. from Feb pattern)</div>
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
         <div class="cal">${calHtml}</div>
-        <span style="font-size:11px;color:#38bdf8">${d.cleanDays} day${d.cleanDays!==1?'s':''} in window</span>
+        <span style="font-size:11px;color:#0284c7;font-weight:600">${d.cleanDays} day${d.cleanDays!==1?'s':''} in window</span>
       </div>
       <div style="font-size:10px;color:var(--text4)">Feb TDS: <span style="color:#94a3b8">${d.cleaning.tds}</span></div>`;
   } else { cleanBox.style.display='none'; }
@@ -1068,45 +1158,12 @@ function parseDate(str) {
   return new Date(y, parseInt(m[2])-1, parseInt(m[1]));
 }
 
-// STRINGS_MAP: keyed by normKey(siteName) → array of string counts per inverter
-let STRINGS_MAP = {};
-
-// Returns string count for site+inverter index (default 1 if unknown)
-function getStrings(siteName, invIdx) {
-  const s = STRINGS_MAP[normKey(siteName)];
-  return (s && s[invIdx] && s[invIdx] > 0) ? s[invIdx] : 1;
-}
-
-// Normalize kWh to kWh-per-string for fair comparison
-function perString(kWh, siteName, invIdx) {
-  return kWh / getStrings(siteName, invIdx);
-}
-
 async function loadInverterData() {
   document.getElementById('inv-refresh-btn').textContent='…';
   document.getElementById('inv-content').innerHTML=
     `<div class="inv-empty"><div class="spinner" style="font-size:24px">◌</div><div class="inv-empty-text">Loading inverter data…</div></div>`;
   try {
-    // Load Strings tab alongside DGR data
-    const [rows, strRows] = await Promise.all([
-      fetchTab(CONFIG.INV_SHEET_ID, CONFIG.INV_TAB),
-      fetchTab(CONFIG.INV_SHEET_ID, "Strings").catch(() => []),
-    ]);
-
-    // Build STRINGS_MAP from Strings tab
-    // Row 0 = headers (Site, Inverter 1, Inverter 2...)
-    // Row 1+ = data
-    STRINGS_MAP = {};
-    for (let r = 1; r < strRows.length; r++) {
-      const row = strRows[r];
-      const name = (row[0] || '').trim();
-      if (!name) continue;
-      const counts = [];
-      for (let i = 1; i < row.length; i++) {
-        counts.push(toNum(row[i]) || 0);
-      }
-      STRINGS_MAP[normKey(name)] = counts;
-    }
+    const rows = await fetchTab(CONFIG.INV_SHEET_ID, CONFIG.INV_TAB);
     // rows[0] = headers, rows[1+] = data
     INV_DATA = [];
     for (let r = 1; r < rows.length; r++) {
@@ -1244,7 +1301,7 @@ function renderInvOverview() {
   // Overview table
   document.getElementById('inv-content').innerHTML= alertHtml + `
     <div style="margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">
-      <div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:800;color:#eef4ff">All Sites — Latest Inverter Snapshot</div>
+      <div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:800;color:var(--text)">All Sites — Latest Inverter Snapshot</div>
       <div style="font-size:10px;color:var(--text4)">Click a site row to drill in</div>
     </div>
     <div class="inv-overview-table">
@@ -1301,28 +1358,18 @@ function renderInvDayView(siteName, dateStr) {
   }
   // Use most recent record for this date
   const rec = records[records.length-1];
-  const valid = rec.invGen.map((v,i)=>({
-    idx: i,
-    kWh: v,
-    strings: getStrings(siteName, i),
-    kWhPerStr: v > 0 ? v / getStrings(siteName, i) : 0,
-  })).filter(x=>x.kWh!==null&&x.kWh>0);
-
-  // All comparisons use kWh/string for fairness
-  const avgPS = valid.length ? valid.reduce((s,x)=>s+x.kWhPerStr,0)/valid.length : 0;
-  const maxPS = valid.length ? Math.max(...valid.map(x=>x.kWhPerStr)) : 1;
-  const minPS = valid.length ? Math.min(...valid.map(x=>x.kWhPerStr)) : 0;
-  const deviation = avgPS>0 ? ((maxPS-minPS)/avgPS*100).toFixed(1) : 0;
-  const weakInvs = valid.filter(x=>avgPS>0&&x.kWhPerStr<avgPS*0.85);
-  // Keep raw avg for display
+  const valid = rec.invGen.map((v,i)=>({idx:i,kWh:v})).filter(x=>x.kWh!==null&&x.kWh>0);
   const avg = valid.length ? valid.reduce((s,x)=>s+x.kWh,0)/valid.length : 0;
   const maxKwh = valid.length ? Math.max(...valid.map(x=>x.kWh)) : 1;
+  const minKwh = valid.length ? Math.min(...valid.map(x=>x.kWh)) : 0;
+  const deviation = avg>0 ? ((maxKwh-minKwh)/avg*100).toFixed(1) : 0;
+  const weakInvs = valid.filter(x=>avg>0&&x.kWh<avg*0.85);
 
   // Summary
   document.getElementById('inv-summary').innerHTML=[
     {l:'Inverters Active', v:valid.length, c:'#38bdf8'},
-    {l:'Avg kWh/String', v:avgPS>0?avgPS.toFixed(1)+' kWh':'—', c:'#64748b'},
-    {l:'Spread (per-string)', v:deviation+'%', c:parseFloat(deviation)>15?'#ef4444':parseFloat(deviation)>8?'#eab308':'#22c55e'},
+    {l:'Avg Generation', v:avg>0?avg.toFixed(0)+' kWh':'—', c:'#64748b'},
+    {l:'Max/Min Spread', v:deviation+'%', c:parseFloat(deviation)>15?'#ef4444':parseFloat(deviation)>8?'#eab308':'#22c55e'},
     {l:'Underperforming', v:weakInvs.length, c:weakInvs.length>0?'#ef4444':'#22c55e'},
     {l:'PR', v:rec.pr?rec.pr+'%':'—', c:prColor(rec.pr)},
     {l:'Total Gen', v:rec.totalGen?rec.totalGen.toFixed(0)+' kWh':'—', c:'#64748b'},
@@ -1332,7 +1379,7 @@ function renderInvDayView(siteName, dateStr) {
   // Build content
   let html = `<div class="inv-site-hdr">
     <div class="inv-site-name">${siteName}</div>
-    <div class="inv-site-meta">${dateStr} · ${rec.weather||'—'} · <span style="color:#64748b;font-size:10px">Bars normalised per-string</span></div>
+    <div class="inv-site-meta">${dateStr} · ${rec.weather||'—'}</div>
   </div>`;
 
   // Breakdown alert
@@ -1345,24 +1392,26 @@ function renderInvDayView(siteName, dateStr) {
     </div>`;
   }
 
-  // Bar chart — heights based on kWh/string, tooltip shows both
+  // Bar chart
   html += `<div class="inv-bar-chart">
-    <div class="inv-chart-title">Inverter Comparison — ${dateStr} &nbsp;<span style="color:var(--text5);font-size:9px">(normalised: kWh ÷ strings)</span>
-      <span style="margin-left:12px;color:var(--text5)">Avg: <span style="color:#38bdf8">${avgPS>0?avgPS.toFixed(1)+' kWh/str':'—'}</span></span>
+    <div class="inv-chart-title">Inverter Generation Comparison — ${dateStr}
+      <span style="margin-left:12px;color:var(--text5)">Avg: <span style="color:#38bdf8">${avg>0?avg.toFixed(0)+' kWh':'—'}</span></span>
+      <span style="margin-left:10px;color:var(--text5)">── dashed line = avg</span>
     </div>
     <div class="inv-bars" style="position:relative">`;
-  const avgPct = maxPS>0?(avgPS/maxPS)*100:0;
+  const avgPct = maxKwh>0?(avg/maxKwh)*100:0;
+  // avg line overlay
   html += `<div style="position:absolute;left:0;right:0;bottom:${avgPct}%;height:1px;border-top:1px dashed rgba(56,189,248,.45);z-index:2;pointer-events:none"></div>`;
   valid.forEach(x=>{
-    const pct = maxPS>0?(x.kWhPerStr/maxPS)*100:0;
-    const isWeak = avgPS>0&&x.kWhPerStr<avgPS*0.85;
-    const isLow  = avgPS>0&&x.kWhPerStr<avgPS*0.93&&!isWeak;
+    const pct = maxKwh>0?(x.kWh/maxKwh)*100:0;
+    const isWeak = avg>0&&x.kWh<avg*0.85;
+    const isLow  = avg>0&&x.kWh<avg*0.93&&!isWeak;
     const col = isWeak?'#ef4444':isLow?'#eab308':'#22c55e';
-    const diff = avgPS>0?((x.kWhPerStr-avgPS)/avgPS*100):0;
+    const diff = avg>0?((x.kWh-avg)/avg*100):0;
     html += `<div class="inv-bar-wrap">
       <div class="inv-bar-outer">
         <div class="inv-bar-inner" style="width:100%;height:${pct}%;background:${col};opacity:.85">
-          <div class="inv-bar-tooltip">INV-${x.idx+1}<br>${x.kWh.toFixed(0)} kWh · ${x.strings} strings<br>${x.kWhPerStr.toFixed(1)} kWh/str<br>${diff>=0?'+':''}${diff.toFixed(1)}% vs avg</div>
+          <div class="inv-bar-tooltip">INV-${x.idx+1}<br>${x.kWh.toFixed(0)} kWh<br>${diff>=0?'+':''}${diff.toFixed(1)}% vs avg</div>
         </div>
       </div>
       <div class="inv-bar-label" style="color:${isWeak?'#ef4444':isLow?'#eab308':'#64748b'}">INV${x.idx+1}</div>
@@ -1371,33 +1420,37 @@ function renderInvDayView(siteName, dateStr) {
   });
   html += `</div></div>`;
 
-  // Detailed table — comparisons on per-string basis
+  // Detailed table
   html += `<div class="inv-table">
     <div class="inv-table-hdr">
       <div>Inverter</div>
       <div class="tr">Generation</div>
-      <div class="tr">Strings</div>
-      <div class="tr">kWh/String</div>
-      <div class="tr">vs Avg</div>
+      <div class="tr">vs Average</div>
+      <div class="tr">vs Best</div>
+      <div class="tc">Health</div>
       <div>Performance Bar</div>
       <div class="tc">Status</div>
     </div>`;
-  valid.sort((a,b)=>b.kWhPerStr-a.kWhPerStr).forEach(x=>{
-    const vsAvg = avgPS>0?((x.kWhPerStr-avgPS)/avgPS*100):0;
-    const vsBest = maxPS>0?((x.kWhPerStr/maxPS)*100):100;
-    const isWeak = avgPS>0&&x.kWhPerStr<avgPS*0.85;
-    const isLow  = avgPS>0&&x.kWhPerStr<avgPS*0.93&&!isWeak;
+  valid.sort((a,b)=>b.kWh-a.kWh).forEach(x=>{
+    const vsAvg = avg>0?((x.kWh-avg)/avg*100):0;
+    const vsBest = maxKwh>0?((x.kWh/maxKwh)*100):100;
+    const isWeak = avg>0&&x.kWh<avg*0.85;
+    const isLow  = avg>0&&x.kWh<avg*0.93&&!isWeak;
     const col = isWeak?'#ef4444':isLow?'#eab308':'#22c55e';
-    let statusLabel, statusHtml;
+    let statusHtml, statusLabel;
     if (isWeak) { statusLabel='Investigate'; statusHtml='badge-open'; }
     else if (isLow) { statusLabel='Monitor'; statusHtml='badge-monitor'; }
     else { statusLabel='Normal'; statusHtml='badge-resolved'; }
     html += `<div class="inv-table-row">
       <div style="font-size:11px;color:#38bdf8">INV-${x.idx+1}</div>
       <div class="tr" style="font-size:12px;font-weight:600;color:${col}">${x.kWh.toFixed(0)} kWh</div>
-      <div class="tr" style="font-size:11px;color:#64748b">${x.strings}</div>
-      <div class="tr" style="font-size:12px;font-weight:700;color:${col}">${x.kWhPerStr.toFixed(1)}</div>
       <div class="tr" style="font-size:11px;color:${vsAvg<-8?'#ef4444':vsAvg<-3?'#eab308':'#22c55e'}">${vsAvg>=0?'+':''}${vsAvg.toFixed(1)}%</div>
+      <div class="tr" style="font-size:11px;color:var(--text3)">${vsBest.toFixed(1)}%</div>
+      <div class="tc">
+        <div class="inv-health-bar" style="width:60px;margin:auto">
+          <div class="inv-health-fill" style="width:${vsBest}%;background:${col}"></div>
+        </div>
+      </div>
       <div>
         <div class="inv-health-bar">
           <div class="inv-health-fill" style="width:${vsBest}%;background:${col}"></div>
@@ -1590,60 +1643,60 @@ function computeSiteAlerts(siteName) {
 
   const latest = recs[recs.length - 1];
   const maxInv = Math.max(...recs.map(r => r.invGen.length));
+  const siteAvg = (vals) => { const v = vals.filter(x => x !== null && x > 0); return v.length ? v.reduce((s,x)=>s+x,0)/v.length : 0; };
 
-  // Per-string daily avg across all inverters for a record
-  const siteAvgPS = (rec) => {
-    const vals = rec.invGen.map((v,i) => v > 0 ? v / getStrings(siteName, i) : null).filter(v => v !== null);
-    return vals.length ? vals.reduce((s,v)=>s+v,0)/vals.length : 0;
-  };
-
+  // ── For each inverter ──
   for (let i = 0; i < maxInv; i++) {
-    const latestPS = latest.invGen[i] > 0 ? latest.invGen[i] / getStrings(siteName, i) : null;
-    const prev = recs.length >= 2 ? recs[recs.length - 2] : null;
-    const prevPS = prev && prev.invGen[i] > 0 ? prev.invGen[i] / getStrings(siteName, i) : null;
+    const allVals = recs.map(r => r.invGen[i] ?? null);
+    const recentVals = allVals.slice(-7);
+    const latestVal = allVals[allVals.length - 1];
+    const prevVal = allVals[allVals.length - 2] ?? null;
 
-    // 1. ZERO GENERATION
-    if (latest.invGen[i] !== null && latest.invGen[i] === 0) {
+    // Daily site avg per day (all inverters)
+    const dailyAvgs = recs.map(r => siteAvg(r.invGen));
+
+    // 1. ZERO GENERATION — inverter dead today
+    if (latestVal !== null && latestVal === 0) {
       alerts.push({ type: 'dead', inv: i + 1, label: 'DEAD', msg: `INV-${i+1} reported zero generation today` });
     }
 
-    // 2. SUDDEN DROP (per-string)
-    if (latestPS !== null && prevPS !== null) {
-      const sitePS_today = siteAvgPS(latest);
-      const sitePS_prev  = siteAvgPS(prev);
-      const ratioToday = sitePS_today > 0 ? latestPS / sitePS_today : 1;
-      const ratioYest  = sitePS_prev  > 0 ? prevPS  / sitePS_prev  : 1;
+    // 2. SUDDEN DROP — was fine yesterday, dropped >20% today
+    if (latestVal !== null && prevVal !== null && prevVal > 0 && latestVal > 0) {
+      const dayAvgLatest = dailyAvgs[dailyAvgs.length - 1];
+      const dayAvgPrev = dailyAvgs[dailyAvgs.length - 2];
+      const ratioToday = dayAvgLatest > 0 ? latestVal / dayAvgLatest : 1;
+      const ratioYest = dayAvgPrev > 0 ? prevVal / dayAvgPrev : 1;
       if (ratioYest >= 0.90 && ratioToday < 0.80) {
         const drop = ((ratioYest - ratioToday) * 100).toFixed(0);
-        alerts.push({ type: 'fault', inv: i + 1, label: 'FAULT?', msg: `INV-${i+1} dropped ${drop}% vs site avg (per-string) overnight — was normal yesterday` });
+        alerts.push({ type: 'fault', inv: i + 1, label: 'FAULT?', msg: `INV-${i+1} dropped ${drop}% vs avg overnight — was normal yesterday` });
       }
     }
 
-    // 3. CONSECUTIVE UNDERPERFORMANCE (per-string)
-    if (recs.length >= 3) {
+    // 3. CONSECUTIVE UNDERPERFORMANCE — below 88% of daily avg for 3+ days
+    if (recentVals.length >= 3) {
       let streak = 0;
       for (let d = recs.length - 1; d >= 0; d--) {
         const v = recs[d].invGen[i];
-        const vPS = v > 0 ? v / getStrings(siteName, i) : null;
-        const avgPS = siteAvgPS(recs[d]);
-        if (vPS !== null && avgPS > 0 && (vPS / avgPS) < 0.88) streak++;
+        const avg = dailyAvgs[d];
+        if (v !== null && v > 0 && avg > 0 && (v / avg) < 0.88) streak++;
         else break;
       }
       if (streak >= 3) {
-        alerts.push({ type: 'chronic', inv: i + 1, label: 'CHRONIC', msg: `INV-${i+1} underperforming for ${streak} consecutive days (per-string basis)` });
+        alerts.push({ type: 'chronic', inv: i + 1, label: 'CHRONIC', msg: `INV-${i+1} underperforming for ${streak} consecutive days` });
       }
     }
   }
 
-  // 4. PR DEGRADATION TREND
+  // 4. PR DEGRADATION TREND — linear regression on last 7 days PR
   const prRecs = recs.slice(-7).filter(r => r.pr && r.pr > 0);
   if (prRecs.length >= 4) {
     const n = prRecs.length;
     const xs = prRecs.map((_, i) => i);
     const ys = prRecs.map(r => r.pr);
-    const meanX = xs.reduce((s,x)=>s+x,0)/n, meanY = ys.reduce((s,y)=>s+y,0)/n;
+    const meanX = xs.reduce((s,x)=>s+x,0)/n;
+    const meanY = ys.reduce((s,y)=>s+y,0)/n;
     const slope = xs.reduce((s,x,i)=>s+(x-meanX)*(ys[i]-meanY),0) / xs.reduce((s,x)=>s+(x-meanX)**2,0);
-    if (slope < -0.8) {
+    if (slope < -0.8) { // losing >0.8% PR per day
       alerts.push({ type: 'degrade', inv: null, label: 'PR↓', msg: `Site PR degrading at ${Math.abs(slope).toFixed(1)}%/day over last ${prRecs.length} days — check soiling or shading` });
     }
   }
