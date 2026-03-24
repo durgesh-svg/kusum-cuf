@@ -1840,7 +1840,10 @@ async function dgrFetch(path) {
   const res = await fetch(`${DGR_URL}/rest/v1/${path}`, {
     headers: { 'apikey': DGR_KEY, 'Authorization': `Bearer ${DGR_KEY}`, 'Accept': 'application/json' }
   });
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  if (!res.ok) {
+    const txt = await res.text().catch(()=>'');
+    throw new Error(`HTTP ${res.status}: ${txt.slice(0,120)}`);
+  }
   return res.json();
 }
 
@@ -1850,10 +1853,24 @@ async function loadDGRData() {
   try {
     const d14 = new Date(); d14.setDate(d14.getDate() - 13);
     const from = d14.toISOString().slice(0,10);
-    const [sites, subs] = await Promise.all([
-      dgrFetch('site_config?select=site_name,inverter_count,total_modules&active=eq.true&order=site_name'),
-      dgrFetch(`dgr_submissions?select=id,site_name,submission_date,status,grid_outage,grid_outage_minutes,grid_outage_reason,plant_outage,plant_outage_details,wti_c,oti_c,mog_level,silica_gel,modules_cleaned_today,total_gen_kwh&submission_date=gte.${from}&order=submission_date.desc&limit=2000`)
-    ]);
+
+    // Fetch sites — fallback to select=* if specific columns fail
+    let sites = [];
+    try {
+      sites = await dgrFetch('site_config?select=site_name,inverter_count,total_modules&order=site_name');
+    } catch(e1) {
+      sites = await dgrFetch('site_config?select=site_name&order=site_name');
+    }
+
+    // Fetch submissions — fallback to core columns only
+    let subs = [];
+    try {
+      subs = await dgrFetch(`dgr_submissions?select=id,site_name,submission_date,status,grid_outage,grid_outage_minutes,grid_outage_reason,plant_outage,plant_outage_details,wti_c,oti_c,mog_level,silica_gel,modules_cleaned_today,total_gen_kwh&submission_date=gte.${from}&order=submission_date.desc&limit=2000`);
+    } catch(e2) {
+      // fallback: only columns that definitely exist
+      subs = await dgrFetch(`dgr_submissions?select=id,site_name,submission_date,status,grid_outage,grid_outage_minutes,total_gen_kwh&submission_date=gte.${from}&order=submission_date.desc&limit=2000`);
+    }
+
     DGR_SITES = sites || [];
     DGR_SUBS = subs || [];
     DGR_LOADED = true;
